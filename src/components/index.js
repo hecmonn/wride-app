@@ -1,12 +1,26 @@
-import React, { PropTypes } from 'react'
-import {H1} from 'native-base';
+import {StackNavigator} from 'react-navigation';
+import RootNavigator from './RootNavigator';
 
-class App extends React.Component {
-    render () {
-        return(
-            <H1>Hi from App</H1>
-        )
+const MainNavigator=StackNavigator({
+    Root: {
+        screen: RootNavigator,
+        navigationOptions:{
+            style:{
+                backgroundColor:'blue'
+            }
+        }
     }
-}
+},{
+    navigationOptions:{
+        header:null,
+        style:{
+            backgroundColor: 'white'
+        },
+        cardStyle:{
+            backgroundColor: 'yellow'
+        },
+        backgroundColor: 'blue'
+    }
+});
 
-export default App;
+export default MainNavigator;
