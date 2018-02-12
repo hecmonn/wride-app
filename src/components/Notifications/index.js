@@ -1,23 +1,22 @@
 import React, { PropTypes } from 'react'
 import {Container,Header,Content,H1,Text,Body,Title} from 'native-base';
-import Who from './Who';
-import Navigator from './Navigator';
 
-class Profile extends React.Component {
+
+class Notifications extends React.Component {
     render () {
-        const {navigation}=this.props;
         return(
             <Container>
                 <Header>
                     <Body>
-                        <Title>Profile</Title>
+                        <Title>Notifications</Title>
                     </Body>
                 </Header>
-                <Who navigation={navigation} />
-                <Navigator />
+                <Content>
+                    <Text>Notifications</Text>
+                </Content>
             </Container>
         )
     }
 }
 
-export default Profile;
+export default Notifications;

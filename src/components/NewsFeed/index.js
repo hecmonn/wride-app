@@ -7,6 +7,7 @@ class NewsFeed extends React.Component {
             <Container>
                 <Content>
                     <Post />
+                    <Post />
                 </Content>
             </Container>
         )
