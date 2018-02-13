@@ -11,13 +11,13 @@ class Home extends React.Component {
         const {navigation}=this.props;
         return(
             <Container>
-                <Header>
+                <Header style={{backgroundColor:'white'}}>
                     <Left/>
                     <Body>
                         <Title>W</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={()=>navigation.navigate('Write')}>
+                        <Button transparent onPress={()=>navigation.navigate('Editor')}>
                             <Icon name='ios-leaf-outline'/>
                         </Button>
                     </Right>

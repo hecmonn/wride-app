@@ -58,7 +58,6 @@ const RootNavigator=TabNavigator({
     tabBarPosition: 'bottom',
     tabBarOptions:{
         showLabel:false,
-        backgroundColor: 'yellow'
     },
     style:{
         backgroundColor: 'yellow'
@@ -67,5 +66,7 @@ const RootNavigator=TabNavigator({
         backgroundColor: 'yellow'
     }
 })
+
+
 
 export default RootNavigator;

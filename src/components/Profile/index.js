@@ -8,13 +8,15 @@ class Profile extends React.Component {
         const {navigation}=this.props;
         return(
             <Container>
-                <Header>
+                <Header style={{backgroundColor:'white'}}>
                     <Body>
                         <Title>Profile</Title>
                     </Body>
                 </Header>
-                <Who navigation={navigation} />
-                <Navigator />
+                <Content>
+                    <Who navigation={navigation} />
+                    <Navigator />
+                </Content>
             </Container>
         )
     }
