@@ -7,6 +7,8 @@ import createLogger from 'redux-logger';
 //import Home from './src/components/Home';
 import {rootReducer} from './src/reducers';
 import Main from './src/components';
+//import Main from './src/components/Login';
+
 
 const store=createStore(
   rootReducer

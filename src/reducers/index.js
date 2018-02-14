@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
-import dummy from './dummy'
+import users from './users';
+import auth from './auth';
 export const rootReducer=combineReducers({
-    dummy
+    users,
+    auth
 });

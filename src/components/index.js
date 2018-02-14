@@ -1,8 +1,13 @@
 import {StackNavigator} from 'react-navigation';
 import RootNavigator from './RootNavigator';
 import Settings from './Profile/Settings';
-import Editor from './Editor'
+import Login from './Login';
+import Register from './Register';
+import Editor from './Editor';
+
+const logged=0;
 const MainNavigator=StackNavigator({
+    Login:{screen:Login},
     Root: {
         screen: RootNavigator,
         navigationOptions:{
@@ -27,7 +32,9 @@ const MainNavigator=StackNavigator({
             }
         }
     },
+    Register:{screen:Register}
 },{
+    initialRouteName:logged?'Root':'Login',
     navigationOptions:{
         header:null,
         style:{
