@@ -52,8 +52,12 @@ const registrationOpt={
         }
     }
 }
-
-class RegistrtionForm extends React.Component {
+class RegistrationForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={}
+        this.handleSubmit=this.handleSubmit.bind(this);
+    }
     handleSubmit(e){
         let value=this._form.getValue();
         console.log('value:',value)
@@ -63,7 +67,7 @@ class RegistrtionForm extends React.Component {
         return (
             <Container>
                 <Form
-                    ref={c => this._form = c}
+                    ref={c=>this._form=c}
                     type={registration}
                     options={registrationOpt}
                 />
@@ -75,4 +79,4 @@ class RegistrtionForm extends React.Component {
     }
 }
 
-export default RegistrtionForm;
+export default RegistrationForm;
