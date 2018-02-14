@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react'
-import {Container,Header,Content,H1,Text,Body,Title,Icon,Input,Right,Left,Button,Item,Label,Form} from 'native-base';
+import {Container,Header,Content,H1,Text,Body,Title,Icon,Input,Right,Left,Button,Item,Label} from 'native-base';
+import {View} from 'react-native';
+import {connect} from 'react-redux';
+import RegistrationForm from './form.js';
 
 class Register extends React.Component {
     constructor(props){
@@ -12,6 +15,15 @@ class Register extends React.Component {
             password:'',
             confirm_password:''
         }
+        this.handleChange=this.handleChange.bind(this);
+        this.handleSubmit=this.handleSubmit.bind(this);
+    }
+    handleChange(e){
+        this.setState({[e.target.name]:e.target.value});
+    }
+    handleSubmit(e){
+        let value=this._form.getValue();
+        console.log('value:',value)
     }
     render () {
         const {navigation}=this.props;
@@ -30,7 +42,7 @@ class Register extends React.Component {
                 </Header>
                 <Content>
                     <Text style={{color:'#757575',fontSize:40,fontWeight:'bold',margin:10}}>Almost there...</Text>
-                    <Form>
+                    {/*<Form>
                         <Item stackedLabel>
                             <Label>First Name</Label>
                             <Input />
@@ -58,12 +70,18 @@ class Register extends React.Component {
                         <Button full transparent style={{borderWidth:1,borderColor:'#a8a8a8'}}>
                             <Text style={{color:'#757575'}}>Register</Text>
                         </Button>
-                    </Form>
-
+                    </Form>*/}
+                    <RegistrationForm handleSubmit={this.handleSubmit}/>
                 </Content>
             </Container>
         )
     }
 }
 
-export default Register;
+let mapStateToProps=state=>{
+    return{
+        user:state.user
+    }
+}
+
+export default connect(mapStateToProps)(Register);
