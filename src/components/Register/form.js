@@ -2,7 +2,10 @@ import t from 'tcomb-form-native';
 import React,{PropTypes} from 'react';
 import {Platform} from 'react-native';
 import {Container,Button,Text} from 'native-base';
+import {connect} from 'react-redux';
+import {saveUser} from '../../actions/users';
 const Form=t.form.Form;
+
 Form.stylesheet.textbox.normal={
     color: 'black',
     fontSize: 17,
@@ -19,6 +22,7 @@ Form.stylesheet.textbox.normal={
     height: 36,
     paddingVertical: Platform.OS === "ios" ? 7 : 0,
     paddingHorizontal: 7,
+    marginHorizontal: 10,
     borderBottomColor: '#a8a8a8',
     borderBottomWidth: 1,
     marginBottom: 5
@@ -48,7 +52,22 @@ const registrationOpt={
             label:'First name'
         },
         lname:{
-            label:'Last name'
+            label:'Last name',
+            autoCorrect: false
+        },
+        username:{
+            autoCorrect:false,
+            autoCapitalize:'none'
+        },
+        email:{
+            autoCorrect:false,
+            autoCapitalize:'none'
+        },
+        password:{
+            secureTextEntry: true
+        },
+        confirm_password:{
+            secureTextEntry: true
         }
     }
 }
@@ -59,11 +78,14 @@ class RegistrationForm extends React.Component {
         this.handleSubmit=this.handleSubmit.bind(this);
     }
     handleSubmit(e){
-        let value=this._form.getValue();
-        console.log('value:',value)
+        let user_info=this._form.getValue();
+        const {fname,lname,email,username,password,confirm_password}=user_info;
+        this.props.saveUser(user_info);
+
     }
     render () {
         //const {handleSubmit}=this.props;
+        console.log(this.props);
         return (
             <Container>
                 <Form
@@ -79,4 +101,9 @@ class RegistrationForm extends React.Component {
     }
 }
 
-export default RegistrationForm;
+let mapStateToProps=state=>{
+    return{
+        user:state.users
+    }
+}
+export default connect(mapStateToProps,{saveUser})(RegistrationForm);

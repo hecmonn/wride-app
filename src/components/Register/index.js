@@ -5,26 +5,6 @@ import {connect} from 'react-redux';
 import RegistrationForm from './form.js';
 
 class Register extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            fname:'',
-            lname:'',
-            email:'',
-            username:'',
-            password:'',
-            confirm_password:''
-        }
-        this.handleChange=this.handleChange.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
-    }
-    handleChange(e){
-        this.setState({[e.target.name]:e.target.value});
-    }
-    handleSubmit(e){
-        let value=this._form.getValue();
-        console.log('value:',value)
-    }
     render () {
         const {navigation}=this.props;
         return(
@@ -42,35 +22,6 @@ class Register extends React.Component {
                 </Header>
                 <Content>
                     <Text style={{color:'#757575',fontSize:40,fontWeight:'bold',margin:10}}>Almost there...</Text>
-                    {/*<Form>
-                        <Item stackedLabel>
-                            <Label>First Name</Label>
-                            <Input />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Last Name</Label>
-                            <Input />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Email</Label>
-                            <Input />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Username</Label>
-                            <Input />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Password</Label>
-                            <Input />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Confirm password</Label>
-                            <Input />
-                        </Item>
-                        <Button full transparent style={{borderWidth:1,borderColor:'#a8a8a8'}}>
-                            <Text style={{color:'#757575'}}>Register</Text>
-                        </Button>
-                    </Form>*/}
                     <RegistrationForm handleSubmit={this.handleSubmit}/>
                 </Content>
             </Container>
@@ -78,10 +29,5 @@ class Register extends React.Component {
     }
 }
 
-let mapStateToProps=state=>{
-    return{
-        user:state.user
-    }
-}
 
-export default connect(mapStateToProps)(Register);
+export default Register;
