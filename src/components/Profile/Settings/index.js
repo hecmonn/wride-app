@@ -1,7 +1,18 @@
 import React, { PropTypes } from 'react'
+import {AsyncStorage} from 'react-native';
+import {connect} from 'react-redux';
 import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right} from 'native-base';
+import {logout} from '../../../actions/auth';
 
 class Settings extends React.Component {
+    logout=()=>{
+        this.props.logout();
+        AsyncStorage.removeItem('auth')
+        .then(r=>{
+            this.props.navigation.navigate('Login');
+        })
+        .done();
+    }
     render () {
         const {navigation}=this.props;
         return(
@@ -16,13 +27,21 @@ class Settings extends React.Component {
                         <Title>Settings</Title>
                     </Body>
                     <Right/>
+
                 </Header>
                 <Content>
-                    <Text>Settings</Text>
+                    <Button onPress={this.logout}>
+                        <Text>Logout</Text>
+                    </Button>
                 </Content>
             </Container>
         )
     }
 }
 
-export default Settings;
+let mapStateToProps=state=>{
+    return{
+        auth:state.auth._55
+    }
+}
+export default connect(mapStateToProps,{logout})(Settings);

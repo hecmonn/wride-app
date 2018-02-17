@@ -5,36 +5,14 @@ import Login from './Login';
 import Register from './Register';
 import Editor from './Editor';
 
-const logged=0;
 const MainNavigator=StackNavigator({
     Login:{screen:Login},
-    Root: {
-        screen: RootNavigator,
-        navigationOptions:{
-            style:{
-                backgroundColor:'blue'
-            }
-        }
-    },
-    Settings: {
-        screen: Settings,
-        navigationOptions:{
-            style:{
-                backgroundColor:'blue'
-            }
-        }
-    },
-    Editor: {
-        screen: Editor,
-        navigationOptions:{
-            style:{
-                backgroundColor:'blue'
-            }
-        }
-    },
+    Root: {screen: RootNavigator},
+    Settings: {screen: Settings},
+    Editor: {screen: Editor},
     Register:{screen:Register}
 },{
-    initialRouteName:logged?'Root':'Login',
+    initialRouteName: 'Login',
     navigationOptions:{
         header:null,
         style:{

@@ -1,25 +1,63 @@
-const defaultState={
-    isLogged: false,
-    username: '',
-    password: ''
-};
+import {AsyncStorage} from 'react-native';
+import jwtDecode from 'jwt-decode';
 
-let auth = (state=defaultState,action={})=>{
+
+/*try{
+    AsyncStorage.getItem('auth')
+    .then(r=>{
+        if(r!==null){
+            const decodedToken=jwtDecode(r);
+            defaultState={
+                ...decodedToken
+            }
+            console.log(decodedToken,'----from auth reducers')
+        } else{
+            defaultState={
+                isLogged: false,
+                username: '',
+                password: ''
+            }
+            console.log('no token from reducers')
+        }
+    })
+    .done();
+
+} catch(e){
+    console.log(e);
+}*/
+
+async function auth(state=[],action={}){
+    const r= await AsyncStorage.getItem('auth');
+    if(r!==null){
+        state={
+            ...jwtDecode(r),
+            isLogged:true
+        }
+    } else{
+        state={
+            isLogged: false
+        }
+        console.log('no token but trynna')
+    }
     switch(action.type){
-        case 'LOGIN':
-            return Object.assing({},state,{
-                isLogged: true,
-                username: action.username,
-                password: action.password
-            });
-        case 'LOGOUT':
-            return Object.assing({},state,{
-                isLogged:false,
-                username:'',
-                password:''
-            });
+        case 'SET_LOGIN':
+            return {
+                ...action.data
+            };
+        case 'SET_AUTH':
+            console.log(action.data,'----from auth reducer')
+            return {
+                isLogged:true,
+                ...action.data
+            }
+        case 'SET_LOGOUT':
+            return{
+                isLogged:false
+            }
         default: return state;
     }
 };
+
+
 
 export default auth;

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import {connect} from 'react-redux';
 import {Container,Header,Content,H1,Text,Body,Title} from 'native-base';
 import Who from './Who';
 import Navigator from './Navigator';
@@ -6,6 +7,9 @@ import Navigator from './Navigator';
 class Profile extends React.Component {
     render () {
         const {navigation}=this.props;
+        //const p_user=this.props.puser;
+        //const a_user=this.props.auth;
+        //if(p_user.username===a_user.username) own_profile=true;
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
@@ -22,4 +26,10 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+let mapStateToProps=state=>{
+    return{
+        auth:state.auth
+    }
+}
+
+export default connect(mapStateToProps,null)(Profile);

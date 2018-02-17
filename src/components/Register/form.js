@@ -85,7 +85,6 @@ class RegistrationForm extends React.Component {
     }
     render () {
         //const {handleSubmit}=this.props;
-        console.log(this.props);
         return (
             <Container>
                 <Form

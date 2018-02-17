@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import {Header,Left,Right,Body,Content,Text,Container,Button,Icon} from 'native-base';
+import EditorForm from './form.js';
 
 class Editor extends React.Component {
 	render () {
@@ -22,7 +23,7 @@ class Editor extends React.Component {
 					</Right>
 				</Header>
 				<Content>
-					<Text>TextEditor</Text>
+					<EditorForm />
 				</Content>
 			</Container>
 		)

@@ -1,39 +1,25 @@
 import React, { Component } from 'react';
+import {AsyncStorage} from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label,Button,Icon,Text,Body } from 'native-base';
-
+import LoginForm from './form.js';
 class Login extends Component {
+    async componentWillMount() {
+        await AsyncStorage.getItem('auth')
+        .then(r=>{
+            if(r!==null) this.props.navigation.navigate('Root');
+        })
+        .done();
+    }
     render() {
+
         const {navigation}=this.props;
         return (
             <Container style={{backgroundColor:'white'}}>
                 <Header style={{backgroundColor:'white'}}/>
                 <Content>
-                    <Text style={{color:'#757575',fontWeight:'bold',fontSize:100}}>Wride.</Text>
-                    <Form style={{marginBottom:10}}>
-                        <Item floatingLabel>
-                            <Label>Username</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
-                            <Label>Password</Label>
-                            <Input />
-                        </Item>
-                    </Form>
-                    <Button full transparent style={{borderWidth:1,borderColor:'#a8a8a8'}}>
-                        <Text style={{color:'#757575'}}>Login</Text>
-                    </Button>
-                    <Button full style={{marginBottom:10}}>
-                        <Icon name='logo-facebook' />
-                        <Text style={{color:'white'}}>Continue with facebook</Text>
-                    </Button>
-                    <Body>
-                        <Text
-                            onPress={()=>{navigation.navigate('Register')}}
-                            style={{color:'#757575',fontSize:16}}
-                        >
-                            Do not have an account?
-                        </Text>
-                    </Body>
+                        <Text style={{color:'#757575',fontWeight:'bold',fontSize:100}}>Wride.</Text>
+                        <LoginForm navigation={navigation}/>
+
                 </Content>
             </Container>
         );
