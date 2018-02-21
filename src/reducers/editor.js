@@ -1,6 +1,7 @@
 const defaultState={
     post:'',
-    title:''
+    title:'',
+    submitted:false
 };
 
 let editor= (state=defaultState,action={})=>{

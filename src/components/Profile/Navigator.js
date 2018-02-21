@@ -44,11 +44,6 @@ const ProfileNavigator=TabNavigator({
         screen: Likes
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
-                /*<Icon
-                    name={focused?'ios-home':'ios-home-outline'}
-                    style={{color:'#464646'}}
-                    size={16}
-                />*/
                 <Container>
                     <Text style={{fontWeight:focused?'bold':'normal'}}>Likes</Text>
                     <Text note>32</Text>

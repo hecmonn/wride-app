@@ -2,14 +2,29 @@ import React, { PropTypes } from 'react'
 import {connect} from 'react-redux';
 import {Container,Header,Content,H1,Text,Body,Title} from 'native-base';
 import Who from './Who';
+import {getOwnPosts} from '../../actions/newsfeed';
 import Navigator from './Navigator';
 
 class Profile extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            loading:false,
+            wrides:[]
+        }
+    }
+    componentWillMount() {
+        const {username}=this.props.auth;
+        this.setState({loading:true});
+        this.props.getOwnPosts(username)
+        .then(r=>{
+            this.setState({loading:false,wrides:r.data.wrides})
+        });
+    }
     render () {
         const {navigation}=this.props;
-        //const p_user=this.props.puser;
-        //const a_user=this.props.auth;
-        //if(p_user.username===a_user.username) own_profile=true;
+        const {loading,wrides}=this.state;
+
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
@@ -19,7 +34,7 @@ class Profile extends React.Component {
                 </Header>
                 <Content>
                     <Who navigation={navigation} />
-                    <Navigator />
+                    <Navigator screenProps={wrides}/>
                 </Content>
             </Container>
         )
@@ -28,8 +43,9 @@ class Profile extends React.Component {
 
 let mapStateToProps=state=>{
     return{
-        auth:state.auth
+        auth: state.auth._55,
+        newsfeed: state.newsfeed
     }
 }
 
-export default connect(mapStateToProps,null)(Profile);
+export default connect(mapStateToProps,{getOwnPosts})(Profile);

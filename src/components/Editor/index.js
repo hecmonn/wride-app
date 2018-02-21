@@ -23,7 +23,7 @@ class Editor extends React.Component {
 					</Right>
 				</Header>
 				<Content>
-					<EditorForm />
+					<EditorForm navigation={navigation}/>
 				</Content>
 			</Container>
 		)

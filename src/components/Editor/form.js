@@ -44,12 +44,15 @@ class EditorForm extends React.Component {
         this.state={}
         this.handleSubmit=this.handleSubmit.bind(this);
     }
-    handleSubmit(e){
+    handleSubmit=(e)=>{
         let content=this._form.getValue();
         const {username}=this.props.auth;
         console.log(content);
-        //this.props.savePost(content);
-
+        this.props.savePost({...content,username})
+        .then(r=>{
+            console.log(this.props,'---entering post');
+            if(r.data.submitted) this.props.navigation.navigate('Root');
+        });
     }
     render () {
         //const {handleSubmit}=this.props;

@@ -3,20 +3,36 @@ import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1} from 'native
 import NewsFeed from '../NewsFeed';
 import {AsyncStorage} from 'react-native';
 import {connect} from 'react-redux';
+import {getHomePosts} from '../../actions/newsfeed';
+import isEmpty from 'is-empty';
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            token:''
+            token:'',
+            wrides:[]
         }
     }
     componentWillMount() {
         const {isLogged,username} =this.props.auth;
-        if(!isLogged) this.props.navigation.navigate('Login');
+        if(!isLogged) {
+            this.props.navigation.navigate('Login');
+        }
+
+        //this.props.getHomePosts(username);
+        //.then(r=>this.setState({wrides:r.data.wrides}));
+        //console.log(this.props.newsfeed);
+    }
+    componentDidMount() {
+        const{username}=this.props.auth;
+        this.props.getHomePosts(username)
+        .then(r=>this.setState({wrides:r.data.wrides}));
     }
     render () {
         const {navigation}=this.props;
+        const {wrides}=this.state;
+        console.log(wrides);
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
@@ -26,11 +42,11 @@ class Home extends React.Component {
                     </Body>
                     <Right>
                         <Button transparent onPress={()=>navigation.navigate('Editor')}>
-                            <Icon name='ios-leaf-outline'/>
+                            <Icon style={{color:'#757575'}} name='ios-leaf-outline'/>
                         </Button>
                     </Right>
                 </Header>
-                <NewsFeed />
+                {isEmpty(wrides)?<H1>loading..</H1>:<NewsFeed screenProps={wrides}/>}
             </Container>
         )
     }
@@ -38,8 +54,9 @@ class Home extends React.Component {
 
 let mapStateToProps=state=>{
     return{
-        auth: state.auth._55
+        auth: state.auth._55,
+        newsfeed: state.newsfeed
     }
 }
 
-export default connect(mapStateToProps,{})(Home);
+export default connect(mapStateToProps,{getHomePosts})(Home);

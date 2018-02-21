@@ -81,7 +81,6 @@ class LoginForm extends React.Component {
     render () {
         const {isLoading,error}=this.state;
         const {navigation}=this.props;
-        console.log(this.props.auth,'---from login form')
         return (
             <Container>
                 <Form
