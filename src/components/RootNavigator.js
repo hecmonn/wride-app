@@ -56,15 +56,6 @@ const RootNavigator=TabNavigator({
     }
 },{
     tabBarPosition: 'bottom',
-    tabBarOptions:{
-        showLabel:false,
-    },
-    style:{
-        backgroundColor: 'yellow'
-    },
-    cardStyle:{
-        backgroundColor: 'yellow'
-    }
 })
 
 

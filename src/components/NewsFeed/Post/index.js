@@ -1,24 +1,29 @@
 import React, { PropTypes } from 'react';
 import {Image} from 'react-native';
 import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H3} from 'native-base';
-import {prettyName} from '../../../../lib/helpers'
+import {prettyName} from '../../../../lib/helpers';
+
 
 class Post extends React.Component {
     constructor(props){
         super(props);
         this.state={
             liked:false,
-            shared:false
+            shared:false,
+            navigation:[]
         }
     }
     render () {
         const {content,title,fname,lname,username,created_date,id,is_liked,is_shared}=this.props.wride;
+        const {navigation}=this.props;
         const name=prettyName(fname,lname);
         return(
             <Card>
                 <CardItem>
                     <Left>
-                        <Thumbnail source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />
+                        <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
+                            <Thumbnail source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />
+                        </Button>
                         <Body>
                             <Text>{name}</Text>
                             <Text note>{username}</Text>

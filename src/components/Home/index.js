@@ -11,7 +11,8 @@ class Home extends React.Component {
         super(props);
         this.state={
             token:'',
-            wrides:[]
+            wrides:[],
+            loading:true
         }
     }
     componentWillMount() {
@@ -27,12 +28,11 @@ class Home extends React.Component {
     componentDidMount() {
         const{username}=this.props.auth;
         this.props.getHomePosts(username)
-        .then(r=>this.setState({wrides:r.data.wrides}));
+        .then(r=>this.setState({wrides:r.data.wrides,loading:false}));
     }
     render () {
         const {navigation}=this.props;
-        const {wrides}=this.state;
-        console.log(wrides);
+        const {wrides,loading}=this.state;
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
@@ -46,7 +46,7 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {isEmpty(wrides)?<H1>loading..</H1>:<NewsFeed screenProps={wrides}/>}
+                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} screenProps={wrides}/>}
             </Container>
         )
     }

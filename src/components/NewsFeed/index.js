@@ -13,11 +13,13 @@ class NewsFeed extends React.Component {
         }
     }
 
-    wridesList=(wrides)=>(
-        <Content>
-            {wrides.map((r,i)=><Post wride={r} key={i} />)}
-        </Content>
-    )
+    wridesList=(wrides)=>{
+        const {posts,navigation}=wrides;
+        return(
+            <Content>
+                {posts.map((r,i)=><Post navigation={this.props.navigation} wride={r} key={i} />)}
+            </Content>
+    )}
     empty=(
         <Container>
             <Body>
@@ -26,11 +28,12 @@ class NewsFeed extends React.Component {
         </Container>
     );
     render () {
+
         const {loading,postsReceived,wrides}=this.state;
         return(
             <Container>
                 <Content>
-                    {isEmpty(this.props.screenProps)?this.empty:this.wridesList(this.props.screenProps)}
+                    {isEmpty(this.props.screenProps)?this.empty:this.wridesList({posts:this.props.screenProps,navigation:this.props.navigation})}
                 </Content>
             </Container>
         )
