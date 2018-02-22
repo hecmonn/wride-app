@@ -6,7 +6,6 @@ export function setProfile(data){
 }
 
 export function getProfile(data){
-    console.log(data,'---actions profile')
     return dispatch=>{
         return fetch('http://localhost:5005/api/get-profile',{
             method:'post',

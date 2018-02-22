@@ -17,13 +17,11 @@ class Home extends React.Component {
     }
     componentWillMount() {
         const {isLogged,username} =this.props.auth;
+        this.setState({username});
         if(!isLogged) {
             this.props.navigation.navigate('Login');
         }
 
-        //this.props.getHomePosts(username);
-        //.then(r=>this.setState({wrides:r.data.wrides}));
-        //console.log(this.props.newsfeed);
     }
     componentDidMount() {
         const{username}=this.props.auth;
@@ -32,7 +30,7 @@ class Home extends React.Component {
     }
     render () {
         const {navigation}=this.props;
-        const {wrides,loading}=this.state;
+        const {wrides,loading,username}=this.state;
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
@@ -41,6 +39,9 @@ class Home extends React.Component {
                         <Title>W</Title>
                     </Body>
                     <Right>
+                        <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
+                            <Icon style={{color:'#757575'}} name='ios-person-outline'/>
+                        </Button>
                         <Button transparent onPress={()=>navigation.navigate('Editor')}>
                             <Icon style={{color:'#757575'}} name='ios-leaf-outline'/>
                         </Button>

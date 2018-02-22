@@ -12,7 +12,11 @@ class NewsFeed extends React.Component {
             wrides:[]
         }
     }
-
+    componentWillReceiveProps(nextProps){
+        if(nextProps.screenProps){
+            this.setState({loading:false})
+        }
+    }
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
         return(

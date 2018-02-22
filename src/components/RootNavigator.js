@@ -1,5 +1,5 @@
 import React from 'react';
-import {TabNavigator} from 'react-navigation';
+import {TabNavigator,TabBarBottom} from 'react-navigation';
 import {Icon} from 'native-base';
 import Home from './Home';
 import Profile from './Profile';
@@ -42,7 +42,7 @@ const RootNavigator=TabNavigator({
             )
         }
     },
-    Profile:{
+    /*Profile:{
         screen: Profile
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
@@ -51,12 +51,22 @@ const RootNavigator=TabNavigator({
                     style={{color: '#464646'}}
                     size={16}
                 />
-            )
+            ),
+            tabBarOnPress: ({jumpToIndex,scene})=>{
+                //console.log('onPress:', route);
+                jumpToIndex(scene.index,{username:'hecmonn'});
+            }
         }
-    }
+    }*/
 },{
+    tabBarComponent:TabBarBottom,
     tabBarPosition: 'bottom',
-})
+    swipeEnabled: true,
+    tabBarOptions:{
+        showLabel: false,
+        activeTintColor: 'black'
+    }
+});
 
 
 

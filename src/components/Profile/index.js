@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import {connect} from 'react-redux';
-import {Container,Header,Content,H1,Text,Body,Title} from 'native-base';
+import {Container,Header,Content,H1,Text,Body,Title,Left,Button,Icon,Right} from 'native-base';
 import Who from './Who';
 import {getOwnPosts} from '../../actions/newsfeed';
 import {getProfile} from '../../actions/profile';
+import {getFollowing,getUnFollow} from '../../actions/follow';
 import Navigator from './Navigator';
 
 class Profile extends React.Component {
@@ -12,79 +13,53 @@ class Profile extends React.Component {
         this.state={
             loading:false,
             wrides:[],
-            username_param:null,
             username:'',
-            own_profile:false,
-            name:'',
-            user_profile:{}
+            own_profile: true,
+            user_profile:{},
+            following:'',
         }
     }
     componentWillMount() {
         const {username,name,email}=this.props.auth;
-        console.log(this.props.auth,'---cwm');
-        this.setState({username,name,email,loading:true,user_profile:this.props.auth});
-        this.props.getOwnPosts(username)
-        .then(r=>{
-            this.setState({loading:false,wrides:r.data.wrides})
-        });
+        this.setState({username});
+        let username_param=this.props.navigation.state.params.username;
+        if(username!==username_param) {
+            this.props.getFollowing({username,username_param})
+            .then(r=>{
+                    this.setState({following:r.data.following,own_profile:false})
+                    this.props.getProfile(username_param)
+                    .then(r=>{
+                        this.setState({user_profile:r.data.user})
+                        this.props.getOwnPosts(username_param)
+                        .then(r=>{
+                            this.setState({loading:false,wrides:r.data.wrides})
+                        });
+                    });
+                }
+            );
+        }
     }
 
-    componentDidMount() {
-        const {username,username_param}=this.state;
-        console.log(username,username_param);
-        if(username!==username_param){
-            this.props.getProfile(username_param)
-            .then(r=>{
-                console.log(r.data,'---us profile');
-                this.setState({user_profile:r.data.user});
-                this.props.getOwnPosts(username_param)
-                .then(r=>{
-                    this.setState({wrides:r.data.wrides});
-                })
-            })
-            console.log('not equal profile')
-            this.setState({search:true})
-        }
-    }
-    componentWillReceiveProps(nextProps){
-        const {username}=this.state;
-        console.log(username,'--cwrp');
-        if(typeof nextProps.navigation.state.params!=='undefined'){
-            let username_param=nextProps.navigation.state.params.username
-            //console.log(this.props.auth,'----cwrp');
-            console.log(username_param,'---us par')
-            /*if(username!==username_param){
-                this.props.getProfile(username_param)
-                .then(r=>{
-                    console.log(r.data,'---us profile');
-                    this.setState({user_profile:r.data.user});
-                    this.props.getOwnPosts(username_param)
-                    .then(r=>{
-                        this.setState({wrides:r.data.wrides});
-                    })
-                })
-                console.log('not equal profile')
-                this.setState({search:true})
-            }*/
-        }
-    }
     render () {
         const {navigation}=this.props;
-        const {loading,wrides,username_param,username,name,email,user_profile}=this.state;
-        //if(username_param!==null &&username!==username_param) {
-        //    user_profile={search:true}
-        //    this.props.getProfile(username_param)
-        //    .then(r=>console.log(r))
-        //}
+        const {loading,username,own_profile,user_profile,wrides,following}=this.state;
+        const username_param=this.props.navigation.state.params.username;
+        console.log(following,'---following being passed')
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>
+                    <Left>
+                        <Button onPress={()=>{navigation.goBack()}} transparent>
+                            <Icon name="ios-arrow-back" />
+                        </Button>
+                    </Left>
                     <Body>
-                        <Title>Profile</Title>
+                        <Title>{username_param}</Title>
                     </Body>
+                    <Right/>
                 </Header>
                 <Content>
-                    <Who person={user_profile} navigation={navigation} />
+                    <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
                     <Navigator screenProps={wrides}/>
                 </Content>
             </Container>
@@ -99,4 +74,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getOwnPosts,getProfile})(Profile);
+export default connect(mapStateToProps,{getOwnPosts,getProfile,getFollowing,getUnFollow})(Profile);

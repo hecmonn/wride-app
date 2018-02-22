@@ -11,28 +11,19 @@ const ProfileNavigator=TabNavigator({
     NewsFeed:{
         screen: NewsFeed
         ,navigationOptions:{
-            tabBarIcon: ({focused}) => (
-                /*<Icon
-                    name={focused?'ios-home':'ios-home-outline'}
-                    style={{color:'#464646'}}
-                    size={16}
-                />*/
+            tabBarIcon: (props) => {
+                return(
                 <Container>
-                    <Text style={{fontWeight:focused?'bold':'normal'}}>Posts</Text>
+                    <Text style={{fontWeight:props.focused?'bold':'normal'}}>Posts</Text>
                     <Text note>100</Text>
                 </Container>
-            )
+            )}
         }
     },
     Followers:{
         screen: Followers
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
-                /*<Icon
-                    name={focused?'ios-home':'ios-home-outline'}
-                    style={{color:'#464646'}}
-                    size={16}
-                />*/
                 <Container>
                     <Text style={{fontWeight:focused?'bold':'normal'}}>Followers</Text>
                     <Text note>543</Text>
