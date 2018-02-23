@@ -8,13 +8,30 @@ class Post extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            liked:false,
-            shared:false,
-            navigation:[]
+            liked: this.props.wride.is_liked,
+            shared: this.props.wride.is_shared
         }
     }
+    actionPost=(action)=>{
+        const {id,username}=this.props.wride;
+        const {auser}=this.props;
+        const{liked,shared}=this.state;
+        //console.log(liked,'----',shared,'--id:',id,'----auser',auser);
+        this.props.postAction({id,auser,action,liked,shared})
+        .then(r=>{
+            console.log(r);
+            switch(r.data.wydn){
+                case 'liked': this.setState({liked:1});
+                case 'shared': this.setState({shared:1});
+                case 'unliked': this.setState({liked:0});
+                case 'unshared': this.setState({shared:0});
+                default: this.setState({liked,shared});
+            }
+        });
+    }
     render () {
-        const {content,title,fname,lname,username,created_date,id,is_liked,is_shared}=this.props.wride;
+        const {content,title,fname,lname,username,created_date,id,shares_cnt,likes_cnt}=this.props.wride;
+        const {liked,shared}=this.state;
         const {navigation}=this.props;
         const name=prettyName(fname,lname);
         return(
@@ -38,15 +55,15 @@ class Post extends React.Component {
                 </CardItem>
                 <CardItem>
                     <Left>
-                        <Button transparent>
-                            <Icon style={{color:'#757575'}} name={is_liked?'ios-thumbs-up':'ios-thumbs-up-outline'} />
-                            <Text style={{fontWeight:is_liked?'bold':'normal',color:'#757575'}}>12 Likes</Text>
+                        <Button transparent onPress={()=>{this.actionPost(1)}}>
+                            <Icon style={{color:'#757575'}} name={liked?'ios-thumbs-up':'ios-thumbs-up-outline'} />
+                            <Text style={{fontWeight:liked?'bold':'normal',color:'#757575'}}>{likes_cnt>0 && likes_cnt} Likes</Text>
                         </Button>
                     </Left>
                     <Body>
-                        <Button transparent>
-                            <Icon style={{color:'#757575'}}name={is_shared?'ios-swap':'ios-swap-outline'} />
-                            <Text style={{fontWeight:is_shared?'bold':'normal',color:'#757575'}}>Shared</Text>
+                        <Button transparent onPress={()=>{this.actionPost(2)}}>
+                            <Icon style={{color:'#757575'}}name={liked?'ios-swap':'ios-swap-outline'} />
+                            <Text style={{fontWeight:shared?'bold':'normal',color:'#757575'}}>{shares_cnt>0 && shares_cnt} Shares</Text>
                         </Button>
                     </Body>
                     <Right>

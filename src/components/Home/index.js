@@ -10,7 +10,6 @@ class Home extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            token:'',
             wrides:[],
             loading:true
         }
@@ -47,7 +46,7 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} screenProps={wrides}/>}
+                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} username={username} screenProps={wrides}/>}
             </Container>
         )
     }

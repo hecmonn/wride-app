@@ -21,7 +21,8 @@ class Profile extends React.Component {
     }
     componentWillMount() {
         const {username,name,email}=this.props.auth;
-        this.setState({username});
+        this.setState({username,name,user_profile:{username,name}});
+
         let username_param=this.props.navigation.state.params.username;
         if(username!==username_param) {
             this.props.getFollowing({username,username_param})
@@ -37,6 +38,11 @@ class Profile extends React.Component {
                     });
                 }
             );
+        } else {
+            this.props.getOwnPosts(username)
+            .then(r=>{
+                this.setState({wrides:r.data.wrides});
+            })
         }
     }
 
@@ -44,7 +50,7 @@ class Profile extends React.Component {
         const {navigation}=this.props;
         const {loading,username,own_profile,user_profile,wrides,following}=this.state;
         const username_param=this.props.navigation.state.params.username;
-        console.log(following,'---following being passed')
+
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>

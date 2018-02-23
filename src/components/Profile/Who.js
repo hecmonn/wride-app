@@ -27,7 +27,6 @@ class Who extends React.Component {
 
     followerBtn=()=>{
         const {following,followLabel,unFollowLoading}=this.state;
-        console.log(following,'--follower btn')
         return(
             <Button small style={{backgroundColor:'white',borderColor:following?'#000aff':'#757575',borderWidth:1,borderRadius:5}} onPress={()=>this.unFollow()}>
                 <Text style={{color:following?'#000aff':'#757575', fontWeight:'bold'}}>{unFollowLoading?'loading...':followLabel}</Text>

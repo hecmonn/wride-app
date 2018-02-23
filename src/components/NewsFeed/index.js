@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import {FlatList} from 'react-native';
+import {connect} from 'react-redux';
 import {Container,Content,Header,Body,H1,Text} from 'native-base';
+import {postAction} from '../../actions/newsfeed';
 import Post from './Post';
 import isEmpty from 'is-empty';
 class NewsFeed extends React.Component {
@@ -19,9 +21,11 @@ class NewsFeed extends React.Component {
     }
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
+        const {username}=this.props;
+        console.log(username,'---from wl')
         return(
             <Content>
-                {posts.map((r,i)=><Post navigation={this.props.navigation} wride={r} key={i} />)}
+                {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} />)}
             </Content>
     )}
     empty=(
@@ -32,7 +36,6 @@ class NewsFeed extends React.Component {
         </Container>
     );
     render () {
-
         const {loading,postsReceived,wrides}=this.state;
         return(
             <Container>
@@ -44,4 +47,9 @@ class NewsFeed extends React.Component {
     }
 }
 
-export default NewsFeed;
+let mapStateToProps=state=>{
+    return {
+        newsfeed:state.newsfeed
+    }
+}
+export default connect(mapStateToProps,{postAction})(NewsFeed);
