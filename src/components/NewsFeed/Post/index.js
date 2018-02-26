@@ -9,29 +9,39 @@ class Post extends React.Component {
         super(props);
         this.state={
             liked: this.props.wride.is_liked,
-            shared: this.props.wride.is_shared
+            shared: this.props.wride.is_shared,
+            likes_cnt: this.props.wride.likes_cnt,
+            shares_cnt: this.props.wride.shares_cnt,
         }
     }
     actionPost=(action)=>{
         const {id,username}=this.props.wride;
         const {auser}=this.props;
-        const{liked,shared}=this.state;
-        //console.log(liked,'----',shared,'--id:',id,'----auser',auser);
+        const{liked,shared,likes_cnt,shares_cnt}=this.state;
         this.props.postAction({id,auser,action,liked,shared})
         .then(r=>{
-            console.log(r);
+            console.log(r.data.wydn,'---wydn');
             switch(r.data.wydn){
-                case 'liked': this.setState({liked:1});
-                case 'shared': this.setState({shared:1});
-                case 'unliked': this.setState({liked:0});
-                case 'unshared': this.setState({shared:0});
+                case 'liked':
+                    this.setState({liked:1,likes_cnt:likes_cnt+1})
+                    break;
+                case 'shared':
+                    this.setState({shared:1,shares_cnt:shares_cnt+1})
+                    break;
+                case 'unliked':
+                    this.setState({liked:0,likes_cnt:likes_cnt-1})
+                    break;
+                case 'unshared':
+                    this.setState({shared:0,shares_cnt:shares_cnt-1})
+                    break;
                 default: this.setState({liked,shared});
             }
         });
     }
     render () {
-        const {content,title,fname,lname,username,created_date,id,shares_cnt,likes_cnt}=this.props.wride;
-        const {liked,shared}=this.state;
+        const {content,title,fname,lname,username,created_date,id}=this.props.wride;
+        const {liked,shared,shares_cnt,likes_cnt}=this.state;
+        console.log(title,'---liked: ',likes_cnt,' shared: ',shares_cnt);
         const {navigation}=this.props;
         const name=prettyName(fname,lname);
         return(
