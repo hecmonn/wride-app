@@ -38,7 +38,8 @@ Form.stylesheet.controlLabel.normal= {
 const loginForm=t.struct({
     identifier:t.String,
     password:t.String
-})
+});
+
 const loginFormOpt={
     fields:{
         identifier:{
@@ -99,8 +100,7 @@ class LoginForm extends React.Component {
                 <Body>
                     <Text
                         onPress={()=>{navigation.navigate('Register')}}
-                        style={{color:'#757575',fontSize:16}}
-                    >
+                        style={{color:'#757575',fontSize:16}}>
                         Do not have an account?
                     </Text>
                 </Body>

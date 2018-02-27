@@ -15,14 +15,7 @@ const MainNavigator=StackNavigator({
 },{
     initialRouteName: 'Login',
     navigationOptions:{
-        header:null,
-        style:{
-            backgroundColor: 'white'
-        },
-        cardStyle:{
-            backgroundColor: 'yellow'
-        },
-        backgroundColor: 'blue'
+        header:null
     }
 });
 

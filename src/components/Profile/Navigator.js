@@ -11,13 +11,14 @@ const ProfileNavigator=TabNavigator({
     NewsFeed:{
         screen: NewsFeed
         ,navigationOptions:{
-            tabBarIcon: (props) => {
+            tabBarIcon: ({focused}) => {
                 return(
-                <Container>
-                    <Text style={{fontWeight:props.focused?'bold':'normal'}}>Posts</Text>
-                    <Text note>100</Text>
-                </Container>
-            )}
+                    <Container>
+                        <Text style={{fontWeight:focused?'bold':'normal'}}>Posts</Text>
+                        <Text note>x</Text>
+                    </Container>
+                )
+            }
         }
     },
     Followers:{
@@ -26,7 +27,7 @@ const ProfileNavigator=TabNavigator({
             tabBarIcon: ({focused}) => (
                 <Container>
                     <Text style={{fontWeight:focused?'bold':'normal'}}>Followers</Text>
-                    <Text note>543</Text>
+                    <Text note>x</Text>
                 </Container>
             )
         }
@@ -37,7 +38,7 @@ const ProfileNavigator=TabNavigator({
             tabBarIcon: ({focused}) => (
                 <Container>
                     <Text style={{fontWeight:focused?'bold':'normal'}}>Likes</Text>
-                    <Text note>32</Text>
+                    <Text note>x</Text>
                 </Container>
             )
         }

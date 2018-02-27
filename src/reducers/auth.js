@@ -1,37 +1,12 @@
 import {AsyncStorage} from 'react-native';
 import jwtDecode from 'jwt-decode';
 
-
-/*try{
-    AsyncStorage.getItem('auth')
-    .then(r=>{
-        if(r!==null){
-            const decodedToken=jwtDecode(r);
-            defaultState={
-                ...decodedToken
-            }
-            console.log(decodedToken,'----from auth reducers')
-        } else{
-            defaultState={
-                isLogged: false,
-                username: '',
-                password: ''
-            }
-            console.log('no token from reducers')
-        }
-    })
-    .done();
-
-} catch(e){
-    console.log(e);
-}*/
-
 async function auth(state=[],action={}){
     const r= await AsyncStorage.getItem('auth');
     if(r!==null){
         state={
             ...jwtDecode(r),
-            isLogged:true
+            isLogged: true
         }
     } else{
         state={
@@ -41,15 +16,12 @@ async function auth(state=[],action={}){
     }
     switch(action.type){
         case 'SET_LOGIN':
-            return {
-                ...action.data
+            return{
+                ...action.data,
+                ...state
             };
         case 'SET_AUTH':
-            console.log(action.data,'----from auth reducer')
-            return {
-                isLogged:true,
-                ...action.data
-            }
+            return state;
         case 'SET_LOGOUT':
             return{
                 isLogged:false
@@ -57,7 +29,5 @@ async function auth(state=[],action={}){
         default: return state;
     }
 };
-
-
 
 export default auth;

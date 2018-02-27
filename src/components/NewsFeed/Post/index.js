@@ -20,19 +20,18 @@ class Post extends React.Component {
         const{liked,shared,likes_cnt,shares_cnt}=this.state;
         this.props.postAction({id,auser,action,liked,shared})
         .then(r=>{
-            console.log(r.data.wydn,'---wydn');
             switch(r.data.wydn){
                 case 'liked':
-                    this.setState({liked:1,likes_cnt:likes_cnt+1})
+                    this.setState({liked:1,likes_cnt:likes_cnt+1});
                     break;
                 case 'shared':
-                    this.setState({shared:1,shares_cnt:shares_cnt+1})
+                    this.setState({shared:1,shares_cnt:shares_cnt+1});
                     break;
                 case 'unliked':
-                    this.setState({liked:0,likes_cnt:likes_cnt-1})
+                    this.setState({liked:0,likes_cnt:likes_cnt-1});
                     break;
                 case 'unshared':
-                    this.setState({shared:0,shares_cnt:shares_cnt-1})
+                    this.setState({shared:0,shares_cnt:shares_cnt-1});
                     break;
                 default: this.setState({liked,shared});
             }
@@ -41,7 +40,6 @@ class Post extends React.Component {
     render () {
         const {content,title,fname,lname,username,created_date,id}=this.props.wride;
         const {liked,shared,shares_cnt,likes_cnt}=this.state;
-        console.log(title,'---liked: ',likes_cnt,' shared: ',shares_cnt);
         const {navigation}=this.props;
         const name=prettyName(fname,lname);
         return(

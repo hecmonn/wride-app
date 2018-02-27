@@ -39,3 +39,24 @@ export function getUnFollow(data){
         .then(data=>dispatch(setUnFollow(data)))
     }
 }
+
+export function setFollowers(data){
+    return {
+        type:'SET_FOLLOWERS',
+        data
+    }
+}
+
+export function getFollowers(data){
+    return dispatch=>{
+        return fetch('http://localhost:5005/api/get-followers',{
+            method:'post',
+            body:JSON.stringify({data}),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>dispatch(setFollowers(data)))
+    }
+}

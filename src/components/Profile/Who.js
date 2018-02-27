@@ -48,7 +48,6 @@ class Who extends React.Component {
     }
     render () {
         const {navigation,ownProfile,following}=this.props;
-        //console.log(this.props.person,'---who profile');
         const {name,username,bio}=this.props.person;
         return(
             <Content style={{padding:10,backgroundColor:'white'}}>

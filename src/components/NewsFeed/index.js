@@ -15,14 +15,13 @@ class NewsFeed extends React.Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.screenProps){
+        if(nextProps.screenProps.wrides){
             this.setState({loading:false})
         }
     }
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
         const {username}=this.props;
-        console.log(username,'---from wl')
         return(
             <Content>
                 {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} />)}
@@ -40,7 +39,7 @@ class NewsFeed extends React.Component {
         return(
             <Container>
                 <Content>
-                    {isEmpty(this.props.screenProps)?this.empty:this.wridesList({posts:this.props.screenProps,navigation:this.props.navigation})}
+                    {isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides,navigation:this.props.navigation})}
                 </Content>
             </Container>
         )

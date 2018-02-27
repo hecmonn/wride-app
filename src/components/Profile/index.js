@@ -66,7 +66,7 @@ class Profile extends React.Component {
                 </Header>
                 <Content>
                     <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
-                    <Navigator screenProps={wrides}/>
+                    <Navigator screenProps={{wrides,username_param,username,getUnFollow}}/>
                 </Content>
             </Container>
         )

@@ -4,10 +4,16 @@ import auth from './auth';
 import newsfeed from './newsfeed';
 import profile from './profile';
 import follow from './follow';
+import followers from './followers';
+import likes from './likes';
+import notifications from './notifications';
 export const rootReducer=combineReducers({
     users,
     auth,
     newsfeed,
     profile,
-    follow
+    follow,
+    followers,
+    likes,
+    notifications
 });
