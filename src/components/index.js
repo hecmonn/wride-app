@@ -9,7 +9,7 @@ const MainNavigator=StackNavigator({
     Login:{screen:Login},
     Root: {screen: RootNavigator},
     Settings: {screen: Settings},
-    Editor: {screen: Editor},
+    Editor: {screen: Editor,mode:'modal'},
     Register:{screen:Register},
     Profile:{screen:Profile},
 },{

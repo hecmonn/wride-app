@@ -5,6 +5,7 @@ import Home from './Home';
 import Profile from './Profile';
 import Inspiration from './Inspiration';
 import Notifications from './Notifications';
+import TabNotifications from './Notifications/Tab';
 const RootNavigator=TabNavigator({
     Home:{
         screen: Home
@@ -34,11 +35,7 @@ const RootNavigator=TabNavigator({
         screen: Notifications
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
-                <Icon
-                    name={focused?'ios-notifications':'ios-notifications-outline'}
-                    style={{color: '#464646'}}
-                    size={16}
-                />
+                <TabNotifications focused={focused} />
             )
         }
     },

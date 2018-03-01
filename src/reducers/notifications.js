@@ -3,6 +3,10 @@ let notifications=(state={},action={})=>{
         case 'SET_NOTIFICATIONS':
             return action.data;
 
+        case 'SET_UNREAD_NOTIFICATIONS':
+            return action.data;
+
+
         default: return state;
     }
 }

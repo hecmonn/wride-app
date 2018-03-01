@@ -6,21 +6,21 @@ class Tab extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            likes:0
+            posts:0
         }
     }
     componentWillReceiveProps(nextProps){
-        if(typeof nextProps.profile.user!=='undefined' && nextProps.profile.user!==this.props.profile.likes){
-            this.setState({likes:nextProps.profile.user.likes});
+        if(typeof nextProps.profile.user!=='undefined' && nextProps.profile.user!==this.props.profile.posts){
+            this.setState({posts:nextProps.profile.user.posts});
         }
     }
     render () {
         const {focused}=this.props;
-        const {likes}=this.state;
+        const {posts}=this.state;
         return(
             <Container>
-                <Text style={{fontWeight:focused?'bold':'normal'}}>Likes</Text>
-                <Text note>{likes}</Text>
+                <Text style={{fontWeight:focused?'bold':'normal'}}>Posts</Text>
+                <Text note>{posts}</Text>
             </Container>
         )
     }
@@ -28,6 +28,7 @@ class Tab extends React.Component {
 
 let mapStateToProps=state=>{
     return{
+        auth:state.auth._55,
         profile: state.profile
     }
 }

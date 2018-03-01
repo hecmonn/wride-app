@@ -21,29 +21,19 @@ class Profile extends React.Component {
     }
     componentWillMount() {
         const {username,name,email}=this.props.auth;
-        this.setState({username,name,user_profile:{username,name}});
-
         let username_param=this.props.navigation.state.params.username;
-        if(username!==username_param) {
-            this.props.getFollowing({username,username_param})
+        this.props.getFollowing({username,username_param})
+        .then(r=>{
+            this.setState({following:r.data.following,own_profile:username==username_param})
+            this.props.getProfile(username_param)
             .then(r=>{
-                    this.setState({following:r.data.following,own_profile:false})
-                    this.props.getProfile(username_param)
-                    .then(r=>{
-                        this.setState({user_profile:r.data.user})
-                        this.props.getOwnPosts(username_param)
-                        .then(r=>{
-                            this.setState({loading:false,wrides:r.data.wrides})
-                        });
-                    });
-                }
-            );
-        } else {
-            this.props.getOwnPosts(username)
-            .then(r=>{
-                this.setState({wrides:r.data.wrides});
-            })
-        }
+                this.setState({user_profile:r.data.user})
+                this.props.getOwnPosts(username_param)
+                .then(r=>{
+                    this.setState({loading:false,wrides:r.data.wrides})
+                });
+            });
+        });
     }
 
     render () {

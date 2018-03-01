@@ -1,28 +1,35 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {Container,Text} from 'native-base';
-import {getStats} from '../../../actions/profile';
+import {Text,Container} from 'native-base';
+
 class Tab extends React.Component {
     constructor(props){
         super(props);
-        this.state={}
+        this.state={
+            followers:0
+        }
     }
-    componentWillMount() {
-        this.props.getStats()
+    componentWillReceiveProps(nextProps){
+        if(typeof nextProps.profile.user!=='undefined' && nextProps.profile.user!==this.props.profile.followers){
+            this.setState({followers:nextProps.profile.user.followers});
+        }
     }
     render () {
+        const {focused}=this.props;
+        const {followers}=this.state;
         return(
             <Container>
-                <Text style={{fontWeight:focused?'bold':'normal'}}>Posts</Text>
-                <Text note>100</Text>
+                <Text style={{fontWeight:focused?'bold':'normal'}}>Followers</Text>
+                <Text note>{followers}</Text>
             </Container>
         )
     }
 }
+
 let mapStateToProps=state=>{
     return{
-        stats:state.stats
+        profile: state.profile
     }
 }
 
-export default connect(mapStateToProps,{getStats})(Tab);
+export default connect(mapStateToProps,null)(Tab);

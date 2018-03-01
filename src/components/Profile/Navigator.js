@@ -6,29 +6,24 @@ import About from './About';
 import NewsFeed from '../NewsFeed';
 import Followers from './Followers';
 import Likes from './Likes';
+import TabFollowers from './Followers/Tab';
+import TabLikes from './Likes/Tab';
+import TabPosts from './Tab';
 
 const ProfileNavigator=TabNavigator({
     NewsFeed:{
         screen: NewsFeed
         ,navigationOptions:{
-            tabBarIcon: ({focused}) => {
-                return(
-                    <Container>
-                        <Text style={{fontWeight:focused?'bold':'normal'}}>Posts</Text>
-                        <Text note>x</Text>
-                    </Container>
-                )
-            }
+            tabBarIcon: ({focused}) => (
+                <TabPosts focused={focused} />
+            )
         }
     },
     Followers:{
         screen: Followers
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
-                <Container>
-                    <Text style={{fontWeight:focused?'bold':'normal'}}>Followers</Text>
-                    <Text note>x</Text>
-                </Container>
+                <TabFollowers focused={focused} />
             )
         }
     },
@@ -36,10 +31,7 @@ const ProfileNavigator=TabNavigator({
         screen: Likes
         ,navigationOptions:{
             tabBarIcon: ({focused}) => (
-                <Container>
-                    <Text style={{fontWeight:focused?'bold':'normal'}}>Likes</Text>
-                    <Text note>x</Text>
-                </Container>
+                <TabLikes focused={focused} />
             )
         }
     },

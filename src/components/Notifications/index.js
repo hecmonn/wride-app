@@ -9,7 +9,8 @@ class Notifications extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            notifications:[]
+            notifications:[],
+            cleared:0
         }
     }
     componentWillMount() {
@@ -18,6 +19,12 @@ class Notifications extends React.Component {
         .then(r=>{
             this.setState({notifications:r.data.notifications});
         });
+    }
+    componentWillUnmount(){
+        const {username}=this.props.auth;
+        console.log('about to unmoount');
+        this.props.clearNotifications(username)
+        .then(r=>this.setState({cleared:1}));
     }
     empty=(
         <Body>
