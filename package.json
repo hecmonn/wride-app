@@ -20,6 +20,9 @@
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
+    "dateformat": "^3.0.3",
+    "datetime": "0.0.3",
+    "elapsed": "0.0.7",
     "expo": "^25.0.0",
     "ionicons": "^3.0.0",
     "jwt-decode": "^2.2.0",

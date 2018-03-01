@@ -46,7 +46,7 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides}}/>}
+                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading}}/>}
             </Container>
         )
     }

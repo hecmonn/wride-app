@@ -24,7 +24,7 @@ class Profile extends React.Component {
         let username_param=this.props.navigation.state.params.username;
         this.props.getFollowing({username,username_param})
         .then(r=>{
-            this.setState({following:r.data.following,own_profile:username==username_param})
+            this.setState({following:r.data.following,own_profile:username==username_param,username})
             this.props.getProfile(username_param)
             .then(r=>{
                 this.setState({user_profile:r.data.user})

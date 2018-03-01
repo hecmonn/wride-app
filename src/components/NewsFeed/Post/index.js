@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Image} from 'react-native';
 import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H3} from 'native-base';
-import {prettyName} from '../../../../lib/helpers';
+import {prettyName,elapsedTime} from '../../../../lib/helpers';
 
 
 class Post extends React.Component {
@@ -41,6 +41,7 @@ class Post extends React.Component {
         const {content,title,fname,lname,username,created_date,id}=this.props.wride;
         const {liked,shared,shares_cnt,likes_cnt}=this.state;
         const {navigation}=this.props;
+        const elapsed=elapsedTime(created_date);
         const name=prettyName(fname,lname);
         return(
             <Card>
@@ -75,7 +76,7 @@ class Post extends React.Component {
                         </Button>
                     </Body>
                     <Right>
-                        <Text style={{color:'#757575'}}>11h ago</Text>
+                        <Text style={{color:'#757575',fontSize:12}}>{elapsed} ago</Text>
                     </Right>
                 </CardItem>
             </Card>
