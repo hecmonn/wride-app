@@ -1,33 +1,72 @@
 import React, { PropTypes } from 'react';
-import {Header,Left,Right,Body,Content,Text,Container,Button,Icon} from 'native-base';
+import {connect} from 'react-redux';
+import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item} from 'native-base';
 import EditorForm from './form.js';
+import {savePost} from '../../actions/editor';
 
 class Editor extends React.Component {
+	constructor(props){
+		super(props);
+		this.state={
+			title:'',
+			content:''
+		}
+	}
+	handleSubmit(e){
+		const {title,content}=this.state;
+		const {username}=this.props.auth;
+		this.props.savePost({content,title,username})
+        .then(r=>{
+            if(r.data.submitted) this.props.navigation.navigate('Root');
+        });
+	}
 	render () {
 		const {navigation}=this.props;
+		const {title,content}=this.state;
 		return(
-			<Container>
+			<Container style={{backgroundColor:'white'}}>
 				<Header style={{backgroundColor:'white'}}>
 					<Left>
 						<Button onPress={()=>{navigation.goBack()}} transparent>
-							<Icon name="ios-close" />
+							<Icon name="ios-close" style={{color:'#757575'}}/>
 						</Button>
 					</Left>
 					<Body>
 						<Text note>Inspire Inspiration</Text>
 					</Body>
 					<Right>
-						<Button small onPress={()=>{navigation.navigate('Submit')}} /*style={{backgroundColor:'white',borderWidth:1,borderColor:'black',borderRadius:5}}*/ transparent>
-							<Text style={{color:'#cfc080',fontWeight:'bold'}}>Post</Text>
+						<Button transparent small onPress={()=>{{this.handleSubmit()}}}>
+							<Text style={{color:'#cfc080',fontWeight:'bold',fontSize:18}}>Post</Text>
 						</Button>
 					</Right>
 				</Header>
 				<Content>
-					<EditorForm navigation={navigation}/>
+					<Item>
+						<Input
+							style={{fontWeight:'bold',fontSize:23}}
+							onChangeText={(title) => this.setState({title})}
+							placeholder="Title"
+							value={title}
+						/>
+					</Item>
+					<Item style={{borderWidth:0}}>
+						<Input
+							style={{fontSize:23}}
+							multiline={true}
+							onChangeText={(content) => this.setState({content})}
+							value={content}
+							placeholder="So, what happened?" />
+					</Item>
 				</Content>
 			</Container>
 		)
 	}
 }
 
-export default Editor;
+let mapStateToProps=state=>{
+    return{
+        editor:state.editor,
+        auth:state.auth._55
+    }
+}
+export default connect(mapStateToProps,{savePost})(Editor);

@@ -47,8 +47,9 @@ class Post extends React.Component {
             <Card>
                 <CardItem>
                     <Left>
-                        <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
-                            <Thumbnail source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />
+                        <Button rounded style={{backgroundColor: '#757575'}} onPress={()=>navigation.navigate('Profile',{username})}>
+                            {/*<Thumbnail small source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />*/}
+                            <Icon name='person' style={{color:'white'}} />
                         </Button>
                         <Body>
                             <Text>{name}</Text>

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {getUnreadNotifications} from '../../actions/notifications';
+import {getUnreadNotifications,clearNotifications} from '../../actions/notifications';
 import {Icon,Text,Container,Content,Badge} from 'native-base';
 
 class Tab extends React.Component {
@@ -23,6 +23,8 @@ class Tab extends React.Component {
         this.props.getUnreadNotifications(username)
         .then(r=>{
             this.setState({notifications:r.data.notifications.length});
+            //this.props.clearNotifications(username)
+            //.then(r=>{this.setState({notifications: 0})})
         });
     }
     componentDidFocus(){
@@ -32,13 +34,11 @@ class Tab extends React.Component {
         const {focused}=this.props;
         const {notifications}=this.state;
         return(
-            <Container>
                 <Icon
                     name={focused?'ios-notifications':'ios-notifications-outline'}
                     style={{color:notifications>0?'red':'#464646'}}
                     size={16}
                 />
-            </Container>
         )
     }
 }
@@ -50,7 +50,7 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getUnreadNotifications})(Tab);
+export default connect(mapStateToProps,{getUnreadNotifications,clearNotifications})(Tab);
 /*
 <Icon
     name={notifications>0||focused?'ios-notifications':'ios-notifications-outline'}

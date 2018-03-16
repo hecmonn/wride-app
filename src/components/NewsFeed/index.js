@@ -15,7 +15,7 @@ class NewsFeed extends React.Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.screenProps.wrides.length>0){
+        if(nextProps.screenProps.wrides!=this.props.screenProps.wrides){
             this.setState({loading:false})
         }
     }
@@ -35,12 +35,14 @@ class NewsFeed extends React.Component {
         </Container>
     );
     render () {
-        const {loading,postsReceived,wrides}=this.state;
-        console.log(this.props.screenProps.loading);
+        const {postsReceived,wrides}=this.state;
+        const {loading}=this.props.screenProps;
         return(
             <Container>
                 <Content>
-                    {isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})}
+                    {loading?
+                        <H1>loading from nf...</H1>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})
+                    }
                 </Content>
             </Container>
         )

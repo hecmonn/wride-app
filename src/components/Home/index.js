@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1} from 'native-base';
 import NewsFeed from '../NewsFeed';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage,ScrollView,RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
 import {getHomePosts} from '../../actions/newsfeed';
 import isEmpty from 'is-empty';
@@ -11,8 +11,10 @@ class Home extends React.Component {
         super(props);
         this.state={
             wrides:[],
-            loading:true
+            loading:true,
+            refreshing: false
         }
+        this._onRefresh=this._onRefresh.bind(this);
     }
     componentWillMount() {
         const {isLogged,username} =this.props.auth;
@@ -22,6 +24,29 @@ class Home extends React.Component {
         }
 
     }
+
+    _onRefresh=()=> {
+        this.setState({refreshing: true});
+        const{username}=this.state;
+        this.props.getHomePosts(username)
+        .then(r=>this.setState({wrides:r.data.wrides,refreshing: false}));
+      }
+    newsFeedView=()=>{
+        const {wrides,loading,username}=this.state;
+        return(
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh}
+                    />
+                }
+            >
+                <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading}}/>
+            </ScrollView>
+        )
+    }
+
     componentDidMount() {
         const{username}=this.props.auth;
         this.props.getHomePosts(username)
@@ -46,7 +71,7 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {loading?<H1>loading..</H1>:<NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading}}/>}
+                {loading?<H1>loading..</H1>:this.newsFeedView()}
             </Container>
         )
     }

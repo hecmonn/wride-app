@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import {Card,CardItem,Thumbnail,Left,Right,Body,Button,Text} from 'native-base';
+import {elapsedTime} from '../../../lib/helpers';
 
 class Notification extends React.Component {
     render () {
         const {navigation}=this.props;
-        const {username,action,title,action_no}=this.props.not;
+        const {username,action,title,action_no,created_date}=this.props.not;
+        const elapsed=elapsedTime(created_date);
         let redirect_to=action_no==3?{route:'Profile',param:{username}}:{route:'Post',param:{content:'hey'}};
         return(
             <Card>
@@ -15,7 +17,11 @@ class Notification extends React.Component {
                         </Button>
                         <Text>{username} {action}</Text>
                         {action_no!==3 &&<Text style={{fontWeight:'bold'}}>{title}</Text>}
+
                     </Left>
+                    <Right>
+                        <Text note>{elapsed}</Text>
+                    </Right>
                 </CardItem>
             </Card>
         )
