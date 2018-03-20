@@ -21,7 +21,7 @@ class NewsFeed extends React.Component {
     }
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
-        const {username}=this.props;
+        const {username}=this.props.screenProps;
         return(
             <Content>
                 {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} />)}

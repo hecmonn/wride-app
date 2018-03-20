@@ -6,6 +6,7 @@ import {Container,Header,Content,H1,Text,Body,Title,Grid,Row} from 'native-base'
 import Notification from './Notification';
 
 
+
 class Notifications extends React.Component {
     constructor(props){
         super(props);
@@ -17,6 +18,7 @@ class Notifications extends React.Component {
         }
         this._onRefresh=this._onRefresh.bind(this);
     }
+
     componentWillMount() {
         const {username}=this.props.auth;
         this.setState({username});
@@ -24,6 +26,17 @@ class Notifications extends React.Component {
         .then(r=>{
             this.setState({notifications:r.data.notifications});
         });
+
+        this.props.navigation.addListener(
+            'willBlur',
+            payload => {
+                const {cleared}=this.state;
+                if(!cleared){
+                    this.props.clearNotifications(username)
+                    .then(r=>this.setState({cleared:1}))
+                }
+            }
+        );
     }
     _onRefresh=()=> {
         this.setState({refreshing:true});
@@ -74,6 +87,8 @@ class Notifications extends React.Component {
         )
     }
 }
+
+
 let mapStateToProps=state=>{
     return{
         auth:state.auth._55,

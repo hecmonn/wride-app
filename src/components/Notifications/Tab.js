@@ -26,6 +26,7 @@ class Tab extends React.Component {
             //this.props.clearNotifications(username)
             //.then(r=>{this.setState({notifications: 0})})
         });
+
     }
     componentDidFocus(){
         console.log('focused')
@@ -37,7 +38,7 @@ class Tab extends React.Component {
                 <Icon
                     name={focused?'ios-notifications':'ios-notifications-outline'}
                     style={{color:notifications>0?'red':'#464646'}}
-                    size={16}
+                    size={12}
                 />
         )
     }
@@ -49,6 +50,8 @@ let mapStateToProps=state=>{
         notifications: state.notifications
     }
 }
+
+
 
 export default connect(mapStateToProps,{getUnreadNotifications,clearNotifications})(Tab);
 /*

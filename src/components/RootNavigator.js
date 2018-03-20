@@ -14,7 +14,7 @@ const RootNavigator=TabNavigator({
                 <Icon
                     name={focused?'ios-home':'ios-home-outline'}
                     style={{color:'#464646'}}
-                    size={16}
+                    size={12}
                 />
             )
         }
@@ -26,7 +26,7 @@ const RootNavigator=TabNavigator({
                 <Icon
                     name={focused?'ios-search':'ios-search-outline'}
                     style={{color: '#464646'}}
-                    size={16}
+                    size={12}
                 />
             )
         }
@@ -61,10 +61,16 @@ const RootNavigator=TabNavigator({
     swipeEnabled: true,
     tabBarOptions:{
         showLabel: false,
-        activeTintColor: 'black'
+        activeTintColor: 'black',
+    },
+    iconStyle:{
+        height: 20,
+        width: 15
     }
 });
 
+// Remove the listener when you are done
+//didBlurSubscription.remove();
 
 
 export default RootNavigator;

@@ -38,7 +38,7 @@ class Profile extends React.Component {
     componentWillMount() {
         const {username,name,email}=this.props.auth;
         let username_param=this.props.navigation.state.params.username;
-        this.setState({username_param})
+        this.setState({username_param});
         this.props.getFollowing({username,username_param})
         .then(r=>{
             this.setState({following:r.data.following,own_profile:username==username_param,username})
@@ -57,7 +57,6 @@ class Profile extends React.Component {
         const {navigation}=this.props;
         const {loading,username,own_profile,user_profile,wrides,following,refreshing}=this.state;
         const username_param=this.props.navigation.state.params.username;
-        console.log(loading,'---loading profile');
         return(
             <Container>
                 <Header style={{backgroundColor:'white'}}>

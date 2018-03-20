@@ -5,6 +5,7 @@ import {AsyncStorage,ScrollView,RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
 import {getHomePosts} from '../../actions/newsfeed';
 import isEmpty from 'is-empty';
+import InfiniteScroll from 'react-native-infinite-scroll';
 
 class Home extends React.Component {
     constructor(props){
@@ -12,17 +13,18 @@ class Home extends React.Component {
         this.state={
             wrides:[],
             loading:true,
-            refreshing: false
+            refreshing: false,
+            page: 1
         }
         this._onRefresh=this._onRefresh.bind(this);
     }
     componentWillMount() {
         const {isLogged,username} =this.props.auth;
+        console.log(this.props.auth,'---auth props home');
         this.setState({username});
         if(!isLogged) {
             this.props.navigation.navigate('Login');
         }
-
     }
 
     _onRefresh=()=> {
@@ -30,11 +32,27 @@ class Home extends React.Component {
         const{username}=this.state;
         this.props.getHomePosts(username)
         .then(r=>this.setState({wrides:r.data.wrides,refreshing: false}));
-      }
+    }
+
+    _onLoadMore=()=>{
+        const {page}=this.state;
+        console.log('Pulling page: ',page+1);
+        this.setState({page: page+1});
+        const {username}=this.state;
+        this.props.getHomePosts(username)
+        .then(r=>{
+            let rows=this.state.wrides;
+            rows.push.apply(rows,r.data.wrides);
+            this.setState({wrides:rows,refreshing: false});
+        });
+    }
     newsFeedView=()=>{
         const {wrides,loading,username}=this.state;
         return(
-            <ScrollView
+            <InfiniteScroll
+                horizontal={false}
+                onLoadMoreAsync={this._onLoadMore}
+                distanceFromEnd={10}
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}
@@ -42,8 +60,9 @@ class Home extends React.Component {
                     />
                 }
             >
-                <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading}}/>
-            </ScrollView>
+
+                <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading,username}}/>
+            </InfiniteScroll>
         )
     }
 

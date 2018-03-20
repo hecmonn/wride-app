@@ -42,7 +42,7 @@ export function getUnreadNotifications(data){
 
 export function setClearNotifications(data){
     return {
-        type:'SET_NOTIFICATIONS',
+        type:'SET_CLEARED_NOTIFICATIONS',
         data
     }
 }
