@@ -48,13 +48,14 @@ class Who extends React.Component {
     }
     render () {
         const {navigation,ownProfile,following}=this.props;
-        const {name,username,bio}=this.props.person;
+        const {name,username,bio,path}=this.props.person;
+        console.log(path,'--path fro profile');
         return(
             <Content style={{padding:10,backgroundColor:'white'}}>
                 <Grid>
                     <Row>
                         <Col size={1}>
-                            <Thumbnail large source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />
+                            <Thumbnail style={{borderWidth:1,borderColor: '#969696'}} large source={{uri: path!==null? `http://localhost:5005/${path}`:'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'}} />
                         </Col>
                         <Col size={3}>
                             <H1>{name}</H1>

@@ -15,7 +15,8 @@ class Settings extends React.Component {
             uri:'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg',
             hideRoll: true,
             content: '',
-            checked: false
+            checked: false,
+            username: ''
         }
     }
     onImageChange=(r)=>{
@@ -68,9 +69,14 @@ class Settings extends React.Component {
         })
         .done();
     }
+    componentWillMount() {
+        this.setState({username:this.props.auth.username});
+    }
     handleSubmit(e){
-        const {uri}=this.state;
-        this.props.postSettings({uri})
+        const {uri,username}=this.state;
+        //const {username}=this.props.auth;
+        console.log(username,'---from settings')
+        this.props.postSettings({uri,username})
         .then(r=>console.log(r));
     }
     render () {

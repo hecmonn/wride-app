@@ -47,6 +47,7 @@ export function setAction(data){
     }
 }
 
+
 export function postAction(data){
     return dispatch=>{
         return fetch('http://localhost:5005/api/post-action',{
@@ -58,5 +59,26 @@ export function postAction(data){
         })
         .then(res=>res.json())
         .then(data=>dispatch(setAction(data)))
+    }
+}
+
+export function setHomePostsCnt(data){
+    return {
+        type: 'SET_HOME_POSTS_CNT',
+        data
+    }
+}
+
+export function getHomePostsCnt(data){
+    return dispatch=>{
+        return fetch('http://localhost:5005/api/get-home-posts-count',{
+            method:'post',
+            body:JSON.stringify({data}),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>dispatch(setHomePostsCnt(data)))
     }
 }

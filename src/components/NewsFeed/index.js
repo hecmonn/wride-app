@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import {FlatList} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
-import {Container,Content,Header,Body,H1,Text} from 'native-base';
+import {Container,Content,Header,Body,H1,Text,Spinner} from 'native-base';
 import {postAction} from '../../actions/newsfeed';
 import Post from './Post';
 import isEmpty from 'is-empty';
@@ -21,10 +21,12 @@ class NewsFeed extends React.Component {
     }
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
-        const {username}=this.props.screenProps;
+        const {username,loading_more,has_next_page}=this.props.screenProps;
         return(
             <Content>
                 {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} />)}
+                {loading_more && <Spinner />}
+                {!has_next_page && <View><H1>Wride.</H1></View>}
             </Content>
     )}
     empty=(

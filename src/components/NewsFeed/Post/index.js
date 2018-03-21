@@ -38,7 +38,7 @@ class Post extends React.Component {
         });
     }
     render () {
-        const {content,title,fname,lname,username,created_date,id}=this.props.wride;
+        const {content,title,fname,lname,username,created_date,id,path}=this.props.wride;
         const {liked,shared,shares_cnt,likes_cnt}=this.state;
         const {navigation}=this.props;
         const elapsed=elapsedTime(created_date);
@@ -47,9 +47,8 @@ class Post extends React.Component {
             <Card>
                 <CardItem>
                     <Left>
-                        <Button rounded style={{backgroundColor: '#757575'}} onPress={()=>navigation.navigate('Profile',{username})}>
-                            {/*<Thumbnail small source={{uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg'}} />*/}
-                            <Icon name='person' style={{color:'white'}} />
+                        <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
+                            <Thumbnail small source={{uri:path!==null? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png'}} />
                         </Button>
                         <Body>
                             <Text>{name}</Text>

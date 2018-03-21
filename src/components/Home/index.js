@@ -3,9 +3,11 @@ import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1} from 'native
 import NewsFeed from '../NewsFeed';
 import {AsyncStorage,ScrollView,RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
-import {getHomePosts} from '../../actions/newsfeed';
+import {getHomePosts,getHomePostsCnt} from '../../actions/newsfeed';
 import isEmpty from 'is-empty';
+import {pagination} from '../../../lib/helpers';
 import InfiniteScroll from 'react-native-infinite-scroll';
+
 
 class Home extends React.Component {
     constructor(props){
@@ -14,7 +16,9 @@ class Home extends React.Component {
             wrides:[],
             loading:true,
             refreshing: false,
-            page: 1
+            page: 1,
+            loading_more: false,
+            has_next_page: true
         }
         this._onRefresh=this._onRefresh.bind(this);
     }
@@ -27,27 +31,44 @@ class Home extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const{username}=this.props.auth;
+        this.props.getHomePosts({username,offset:0})
+        .then(r=>{
+            this.setState({wrides:r.data.wrides});
+            this.props.getHomePostsCnt(username)
+            .then(r=>{
+                console.log(r,'---home psots cnt')
+                this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+            });
+        });
+    }
+
     _onRefresh=()=> {
         this.setState({refreshing: true});
         const{username}=this.state;
-        this.props.getHomePosts(username)
-        .then(r=>this.setState({wrides:r.data.wrides,refreshing: false}));
+        this.props.getHomePosts({username,offset:0})
+        .then(r=>{
+            this.setState({wrides:r.data.wrides,refreshing: false})
+        });
     }
 
     _onLoadMore=()=>{
-        const {page}=this.state;
-        console.log('Pulling page: ',page+1);
-        this.setState({page: page+1});
-        const {username}=this.state;
-        this.props.getHomePosts(username)
-        .then(r=>{
-            let rows=this.state.wrides;
-            rows.push.apply(rows,r.data.wrides);
-            this.setState({wrides:rows,refreshing: false});
-        });
+        if(this.state.has_next_page){
+            const {page,posts_cnt}=this.state;
+            let pages=pagination(limit=5,page+1,posts_cnt);
+            this.setState({page: page+1,loading_more:true});
+            const {username}=this.state;
+            this.props.getHomePosts({username,offset:pages.nextOffset})
+            .then(r=>{
+                let rows=this.state.wrides;
+                rows.push.apply(rows,r.data.wrides);
+                this.setState({wrides:rows,loading_more: false,has_next_page:pages.hasNextPage});
+            });
+        }
     }
     newsFeedView=()=>{
-        const {wrides,loading,username}=this.state;
+        const {wrides,loading,username,loading_more,has_next_page}=this.state;
         return(
             <InfiniteScroll
                 horizontal={false}
@@ -61,16 +82,13 @@ class Home extends React.Component {
                 }
             >
 
-                <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading,username}}/>
+                <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading,username,loading_more,has_next_page}}/>
+
             </InfiniteScroll>
         )
     }
 
-    componentDidMount() {
-        const{username}=this.props.auth;
-        this.props.getHomePosts(username)
-        .then(r=>this.setState({wrides:r.data.wrides,loading:false}));
-    }
+
     render () {
         const {navigation}=this.props;
         const {wrides,loading,username}=this.state;
@@ -103,4 +121,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getHomePosts})(Home);
+export default connect(mapStateToProps,{getHomePosts,getHomePostsCnt,pagination})(Home);

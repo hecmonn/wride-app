@@ -5,6 +5,9 @@ let newsfeed=(state={},action={})=>{
 
         case 'SET_HOME_POSTS':
             return action.data;
+
+        case 'SET_HOME_POSTS_CNT':
+            return action.data;
         default: return state;
     }
 }
