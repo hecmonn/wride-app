@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react'
 import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1} from 'native-base';
 import NewsFeed from '../NewsFeed';
-import {AsyncStorage,ScrollView,RefreshControl} from 'react-native';
+import {AsyncStorage,ScrollView,RefreshControl,StyleSheet,View} from 'react-native';
 import {connect} from 'react-redux';
 import {getHomePosts,getHomePostsCnt} from '../../actions/newsfeed';
 import isEmpty from 'is-empty';
 import {pagination} from '../../../lib/helpers';
 import InfiniteScroll from 'react-native-infinite-scroll';
+import Spinner from 'react-native-spinkit';
 
 
 class Home extends React.Component {
@@ -108,11 +109,25 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {loading?<H1>loading..</H1>:this.newsFeedView()}
+                {loading?<View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={100} type='Arc' color='#757575'/></View>:this.newsFeedView()}
+
             </Container>
         )
     }
 }
+
+//Spinner stylesheet
+let styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    spinner: {
+        marginBottom: 50
+    },
+});
 
 let mapStateToProps=state=>{
     return{

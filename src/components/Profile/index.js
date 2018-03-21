@@ -8,6 +8,7 @@ import {getProfile} from '../../actions/profile';
 import {getFollowing,getUnFollow} from '../../actions/follow';
 import Navigator from './Navigator';
 
+
 class Profile extends React.Component {
     constructor(props){
         super(props);

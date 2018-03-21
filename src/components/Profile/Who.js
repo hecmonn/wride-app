@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Content,Left,Right,Body,Title,Thumbnail,Text,H1,Button,Icon,Container} from 'native-base';
 import {Grid,Col,Row} from 'react-native-easy-grid';
+import ImageModal from 'react-native-image-view';
 
 class Who extends React.Component {
     constructor(props){
@@ -8,7 +9,9 @@ class Who extends React.Component {
         this.state={
             following: this.props.following,
             followLabel: this.props.following?'Following':'Follow',
-            unFollowLoading:false
+            unFollowLoading:false,
+            image_modal_visible: false,
+            path: ''
         };
     }
 
@@ -20,7 +23,6 @@ class Who extends React.Component {
         this.setState({unFollowLoading:true})
         this.props.getUnFollow({username,username_param,following})
         .then(r=>{
-            console.log(r.data);
             this.setState({followLabel:r.data.action,unFollowLoading:false,following:r.data.following});
         })
     }
@@ -49,13 +51,23 @@ class Who extends React.Component {
     render () {
         const {navigation,ownProfile,following}=this.props;
         const {name,username,bio,path}=this.props.person;
-        console.log(path,'--path fro profile');
+        let uri=`http://localhost:5005/${this.state.path}`;
+
+        const images=[{source:{uri:`http://localhost:5005/${this.state.path}`}}];
+        console.log(images[0].source.uri,'---image uri')
         return(
             <Content style={{padding:10,backgroundColor:'white'}}>
+                <ImageModal
+                    images={[{source:{uri:`http://localhost:5005/${path}`}}]}
+                    imageIndex={0}
+                    isVisible={this.state.image_modal_visible}
+                />
                 <Grid>
                     <Row>
                         <Col size={1}>
-                            <Thumbnail style={{borderWidth:1,borderColor: '#969696'}} large source={{uri: path!==null? `http://localhost:5005/${path}`:'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'}} />
+                            <Button transparent onPress={()=>this.setState({image_modal_visible:true})}>
+                                <Thumbnail style={{borderWidth:1,borderColor: '#969696',marginTop: 15}} large source={{uri: path!==null? `http://localhost:5005/${path}`:'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'}} />
+                            </Button>
                         </Col>
                         <Col size={3}>
                             <H1>{name}</H1>

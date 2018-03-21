@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
-import {View} from 'react-native';
+import {View,StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {Container,Content,Header,Body,H1,Text,Spinner} from 'native-base';
+import {Container,Content,Header,Body,H1,Text} from 'native-base';
 import {postAction} from '../../actions/newsfeed';
 import Post from './Post';
 import isEmpty from 'is-empty';
+import Spinner from 'react-native-spinkit';
+
 class NewsFeed extends React.Component {
     constructor(props){
         super(props);
@@ -43,13 +45,26 @@ class NewsFeed extends React.Component {
             <Container>
                 <Content>
                     {loading?
-                        <H1>loading from nf...</H1>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})
+                        <View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={80} type='Arc' color='#757575'/></View>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})
                     }
                 </Content>
             </Container>
         )
     }
 }
+
+//Spinner style
+let styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    spinner: {
+        marginBottom: 50
+    },
+});
 
 let mapStateToProps=state=>{
     return {
