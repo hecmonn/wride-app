@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1} from 'native-base';
+import {Container,Header,Body,Title,Text,Right,Left,Button,Icon,H1,Drawer} from 'native-base';
 import NewsFeed from '../NewsFeed';
 import {AsyncStorage,ScrollView,RefreshControl,StyleSheet,View} from 'react-native';
 import {connect} from 'react-redux';
@@ -8,7 +8,7 @@ import isEmpty from 'is-empty';
 import {pagination} from '../../../lib/helpers';
 import InfiniteScroll from 'react-native-infinite-scroll';
 import Spinner from 'react-native-spinkit';
-
+import SideBar from './SideBar';
 
 class Home extends React.Component {
     constructor(props){
@@ -68,6 +68,13 @@ class Home extends React.Component {
             });
         }
     }
+
+    closeDrawer = () => {
+        this.drawer._root.close()
+    };
+    openDrawer = () => {
+        this.drawer._root.open()
+    };
     newsFeedView=()=>{
         const {wrides,loading,username,loading_more,has_next_page}=this.state;
         return(
@@ -95,8 +102,16 @@ class Home extends React.Component {
         const {wrides,loading,username}=this.state;
         return(
             <Container>
+                <Drawer
+                    ref={(ref) => { this.drawer = ref; }}
+                    content={<SideBar navigation={navigation} />}
+                    onClose={() => this.closeDrawer()} >
                 <Header style={{backgroundColor:'white'}}>
-                    <Left/>
+                    <Left>
+                        <Button transparent onPress={()=>this.openDrawer()}>
+                            <Icon style={{color:'#757575'}} name='menu'/>
+                        </Button>
+                    </Left>
                     <Body>
                         <Title>W</Title>
                     </Body>
@@ -109,8 +124,10 @@ class Home extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-                {loading?<View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={100} type='Arc' color='#757575'/></View>:this.newsFeedView()}
 
+
+                    {loading?<View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={50} type='Arc' color='#757575'/></View>:this.newsFeedView()}
+                </Drawer>
             </Container>
         )
     }

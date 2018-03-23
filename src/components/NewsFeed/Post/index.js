@@ -10,15 +10,17 @@ class Post extends React.Component {
         this.state={
             liked: this.props.wride.is_liked,
             shared: this.props.wride.is_shared,
+            saved: this.props.wride.is_saved,
             likes_cnt: this.props.wride.likes_cnt,
             shares_cnt: this.props.wride.shares_cnt,
         }
     }
+
     actionPost=(action)=>{
         const {id,username}=this.props.wride;
         const {auser}=this.props;
-        const{liked,shared,likes_cnt,shares_cnt}=this.state;
-        this.props.postAction({id,auser,action,liked,shared})
+        const{liked,shared,likes_cnt,shares_cnt,saved}=this.state;
+        this.props.postAction({id,auser,action,liked,shared,saved})
         .then(r=>{
             switch(r.data.wydn){
                 case 'liked':
@@ -27,19 +29,26 @@ class Post extends React.Component {
                 case 'shared':
                     this.setState({shared:1,shares_cnt:shares_cnt+1});
                     break;
+                case 'saved':
+                    this.setState({saved:1});
+                    break;
                 case 'unliked':
                     this.setState({liked:0,likes_cnt:likes_cnt-1});
                     break;
                 case 'unshared':
                     this.setState({shared:0,shares_cnt:shares_cnt-1});
                     break;
-                default: this.setState({liked,shared});
+
+                case 'unsaved':
+                    this.setState({saved:0});
+                    break;
+                default: this.setState({liked,shared,saved});
             }
         });
     }
     render () {
         const {content,title,fname,lname,username,created_date,id,path}=this.props.wride;
-        const {liked,shared,shares_cnt,likes_cnt}=this.state;
+        const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
         const {navigation}=this.props;
         const elapsed=elapsedTime(created_date);
         const name=prettyName(fname,lname);
@@ -54,6 +63,11 @@ class Post extends React.Component {
                             <Text>{name}</Text>
                             <Text note>{username}</Text>
                         </Body>
+                        <Right>
+                            <Button transparent onPress={()=>this.actionPost(3)}>
+                                <Icon name={saved?'ios-bookmark':'ios-bookmark-outline'} style={{color:'#757575'}} />
+                            </Button>
+                        </Right>
                     </Left>
                 </CardItem>
                 <CardItem cardBody>

@@ -6,6 +6,8 @@ import Register from './Register';
 import Editor from './Editor';
 import Profile from './Profile';
 import Post from './Post';
+import Drafts from './Drafts';
+import Collection from './Collection';
 const MainNavigator=StackNavigator({
     Login:{screen:Login},
     Root: {screen: RootNavigator},
@@ -14,6 +16,8 @@ const MainNavigator=StackNavigator({
     Register:{screen:Register},
     Profile:{screen:Profile},
     Post:{screen:Post},
+    Drafts:{screen:Drafts},
+    Collection:{screen:Collection},
 },{
     initialRouteName: 'Login',
     navigationOptions:{
