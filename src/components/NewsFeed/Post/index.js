@@ -61,11 +61,11 @@ class Post extends React.Component {
                         </Button>
                         <Body>
                             <Text>{name}</Text>
-                            <Text note>{username}</Text>
+                            <Text note>{username} · {elapsed}</Text>
                         </Body>
                         <Right>
-                            <Button transparent onPress={()=>this.actionPost(3)}>
-                                <Icon name={saved?'ios-bookmark':'ios-bookmark-outline'} style={{color:'#757575'}} />
+                            <Button transparent onPress={()=>console.log('show picker')}>
+                                <Icon name='ios-arrow-down' style={{color:'#757575'}} />
                             </Button>
                         </Right>
                     </Left>
@@ -79,18 +79,20 @@ class Post extends React.Component {
                 <CardItem>
                     <Left>
                         <Button transparent onPress={()=>{this.actionPost(1)}}>
-                            <Icon style={{color:'#757575'}} name={liked?'ios-thumbs-up':'ios-thumbs-up-outline'} />
-                            <Text style={{fontWeight:liked?'bold':'normal',color:'#757575'}}>{likes_cnt>0 && likes_cnt} Likes</Text>
+                            <Icon style={{color:'#757575'}} name={liked?'ios-heart':'ios-heart-outline'} />
+                            <Text style={{fontWeight:liked?'bold':'normal',color:'#757575'}}>{likes_cnt>0 && likes_cnt} </Text>
                         </Button>
                     </Left>
-                    <Body>
+                    <Left>
                         <Button transparent onPress={()=>{this.actionPost(2)}}>
                             <Icon style={{color:'#757575'}}name={liked?'ios-swap':'ios-swap-outline'} />
-                            <Text style={{fontWeight:shared?'bold':'normal',color:'#757575'}}>{shares_cnt>0 && shares_cnt} Shares</Text>
+                            <Text style={{fontWeight:shared?'bold':'normal',color:'#757575'}}>{shares_cnt>0 && shares_cnt} </Text>
                         </Button>
-                    </Body>
+                    </Left>
                     <Right>
-                        <Text style={{color:'#757575',fontSize:12}}>{elapsed} ago</Text>
+                        <Button transparent onPress={()=>this.actionPost(3)}>
+                            <Icon name={saved?'ios-bookmark':'ios-bookmark-outline'} style={{color:'#757575'}} />
+                        </Button>
                     </Right>
                 </CardItem>
             </Card>
