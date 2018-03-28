@@ -1,26 +1,31 @@
 import React, { PropTypes } from 'react'
-import {AsyncStorage,Image} from 'react-native';
+import {AsyncStorage,Image,View} from 'react-native';
 import {connect} from 'react-redux';
-import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right,Thumbnail,List,ListItem,Item,Input,Label,CheckBox} from 'native-base';
-import {postSettings} from '../../../actions/settings';
+import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right,Thumbnail,List,ListItem,Item,Input,Label,CheckBox,Spinner} from 'native-base';
+import {postSettingsImage,postSettings} from '../../../actions/settings';
 import {logout} from '../../../actions/auth';
-import RNFetchBlob from 'react-native-fetch-blob';
-//import CameraRollPicker from 'react-native-camera-roll-picker';
 import ImagePicker from 'react-native-image-picker';
+import isEmpty from 'is-empty';
 
 class Settings extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            uri:'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg',
-            hideRoll: true,
             content: '',
             checked: false,
-            username: ''
+            original:{},
+            tb_changed:{},
+            uri:'',
+            loading_image:false,
+            changed:{
+                private: null,
+                username: null,
+                bio: null
+            }
         }
     }
+
     onImageChange=(r)=>{
-        // More info on all the options is below in the README...just some common use cases shown here
         var options = {
             title: 'Select Avatar',
             customButtons: [
@@ -33,11 +38,6 @@ class Settings extends React.Component {
             quality: 0.7,
             allowsEditing: true
         };
-
-        /**
-        * The first arg is the options object for customization (it can also be null or omitted for default options),
-        * The second arg is the callback which sends object: response (more info below in README)
-        */
         ImagePicker.showImagePicker(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -54,13 +54,18 @@ class Settings extends React.Component {
                 // You can also display the image using data:
                 let source = { uri: 'data:image/jpeg;base64,' + response.data };
 
+                const {username}=this.state.original;
+                this.setState({loading_image:true})
+                this.props.postSettingsImage({uri:source.uri,username})
+                .then(r=>console.log(r));
                 this.setState({
-                    uri: source.uri
+                    uri: source.uri,
+                    loading_image:false
                 });
-
             }
         });
     }
+
     logout=()=>{
         this.props.logout();
         AsyncStorage.removeItem('auth')
@@ -70,18 +75,33 @@ class Settings extends React.Component {
         .done();
     }
     componentWillMount() {
-        this.setState({username:this.props.auth.username});
+        this.setState({original:{...this.props.auth},tb_changed:{...this.props.auth}});
+    }
+
+    checkChanges=()=>{
+        const {original,changed}=this.state;
+        let changed_vals={};
+        let tb_change={};
+        for (key in changed){
+            if(changed[key]!==null) changed_vals[key]=changed[key];
+        }
+        for (ch in changed_vals){
+            if (changed_vals[ch]!==original[ch]) tb_change[ch]=changed_vals[ch];
+        }
+        return tb_change;
     }
     handleSubmit(e){
-        const {uri,username}=this.state;
-        //const {username}=this.props.auth;
-        console.log(username,'---from settings')
-        this.props.postSettings({uri,username})
-        .then(r=>console.log(r));
+        const {uri,original,changed}=this.state;
+        let tb_change=this.checkChanges();
+        if(!isEmpty(tb_change)){
+            this.props.postSettings({changes:tb_change,username:original.username})
+            .then(r=>console.log(r));
+        } else {console.log('nothing to change');}
     }
     render () {
         const {navigation}=this.props;
-        const {uri,hideRoll,content,checked}=this.state;
+        const {hideRoll,content,tb_changed,original,loading_image}=this.state;
+        let checked_private=tb_changed.private?true:false;
         return(
             <Container>
                 <Header>
@@ -104,23 +124,24 @@ class Settings extends React.Component {
                         <ListItem itemHeader first>
                             <Text>ACCOUNT</Text>
                         </ListItem>
-                        <ListItem>
+                        <ListItem style={{backgroundColor:'white'}} itemDivider>
                             <Left />
                             <Body>
-                                <Button rounded onPress={()=>this.onImageChange()}>
-                                    <Thumbnail source={{uri}} />
+                                <Button transparent onPress={()=>this.onImageChange()}>
+                                    {loading_image?
+                                        <View style={{borderRadius:5,borderWidth:1,borderColor:'#757575'}}><Spinner /></View>
+                                        :<Thumbnail source={{uri:original.avatar!==null?`http://localhost:5005/${original.avatar}`:`http://localhost:5005/dummy.png`}} />
+                                    }
                                 </Button>
                             </Body>
                             <Right />
-                        </ListItem>
-                        <ListItem style={{display:hideRoll?'none':'flex'}}>
-                            <Text note>holder</Text>
                         </ListItem>
                         <ListItem>
                             <Item floatingLabel>
                                 <Label>Name</Label>
                                 <Input
-                                    value='Hector Monarrez'
+                                    value={original.name}
+                                    editable={false}
                                 />
                             </Item>
                         </ListItem>
@@ -128,7 +149,10 @@ class Settings extends React.Component {
                             <Item floatingLabel>
                                 <Label>Username</Label>
                                 <Input
-                                    value='hecmonn'
+                                    value={tb_changed.username}
+        							onChangeText={(username) => this.setState({changed:{...this.state.changed,username},tb_changed:{...this.state.tb_changed,username}})}
+                                    autoCorrect={false}
+                                    autoCapitalize='none'
                                 />
                             </Item>
                         </ListItem>
@@ -137,8 +161,8 @@ class Settings extends React.Component {
                                 <Label>Bio</Label>
                                 <Input
         							style={{fontSize:18}}
-        							onChangeText={(content) => this.setState({content})}
-        							value={'A fool who plays it cool'}
+        							onChangeText={(bio) => this.setState({changed:{...this.state.changed,bio},tb_changed:{...this.state.tb_changed,bio}})}
+        							value={tb_changed.bio}
                                 />
                             </Item>
                         </ListItem>
@@ -150,8 +174,8 @@ class Settings extends React.Component {
                         <ListItem itemHeader first>
                             <Text>PRIVACY</Text>
                         </ListItem>
-                        <ListItem>
-                            <CheckBox checked={checked} onPress={()=>this.setState({checked:!checked})} color={'#757575'} />
+                        <ListItem style={{backgroundColor:'white'}} itemDivider>
+                            <CheckBox checked={checked_private} onPress={()=>this.setState({changed: {...this.state.changed,private: !checked_private},tb_changed: {...this.state.tb_changed,private: !checked_private}})} color={'#757575'} />
                             <Body>
                                 <Text>Private Account</Text>
                             </Body>
@@ -177,4 +201,4 @@ let mapStateToProps=state=>{
         auth:state.auth._55
     }
 }
-export default connect(mapStateToProps,{logout,postSettings})(Settings);
+export default connect(mapStateToProps,{logout,postSettings,postSettingsImage})(Settings);
