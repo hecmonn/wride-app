@@ -6,6 +6,7 @@ import {postSettingsImage,postSettings} from '../../../actions/settings';
 import {logout} from '../../../actions/auth';
 import ImagePicker from 'react-native-image-picker';
 import isEmpty from 'is-empty';
+//import jwt from 'jsonwebtoken';
 
 class Settings extends React.Component {
     constructor(props){
@@ -96,7 +97,19 @@ class Settings extends React.Component {
         console.log('Tb changed: ',tb_change)
         if(!isEmpty(tb_change)){
             this.props.postSettings({changes:tb_change,username:original.username})
-            .then(r=>console.log(r));
+            .then(r=>{
+                console.log('Response from changed user: ',r);
+                //const {username,email,name,avatar,bio,private}=r.data.changed_user;
+                //const new_token=jwt.sign({
+                //    username:'hec',
+                //    email,
+                //    initials:,
+                //    name:,
+                //    avatar:,
+                //    bio:,
+                //    private:,
+                //})
+            });
         } else {console.log('nothing to change');}
     }
     render () {

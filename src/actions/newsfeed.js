@@ -19,6 +19,28 @@ export function getOwnPosts(data){
     }
 }
 
+export function setOwnPostsCnt(data){
+    return {
+        type:'SET_OWN_POSTS_CNT',
+        data
+    }
+}
+
+export function getOwnPostsCnt(data){
+    return dispatch=>{
+        return fetch('http://localhost:5005/api/get-own-posts-count',{
+            method:'post',
+            body:JSON.stringify({data}),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>dispatch(setOwnPostsCnt(data)))
+    }
+}
+
+
 export function setHomePosts(data){
     return {
         type: 'SET_HOME_POSTS',

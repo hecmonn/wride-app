@@ -3,11 +3,12 @@ import {connect} from 'react-redux';
 import {ScrollView,RefreshControl} from 'react-native';
 import {Container,Header,Content,H1,Text,Body,Title,Left,Button,Icon,Right} from 'native-base';
 import Who from './Who';
-import {getOwnPosts} from '../../actions/newsfeed';
+import {getOwnPosts,getOwnPostsCnt} from '../../actions/newsfeed';
 import {getProfile} from '../../actions/profile';
 import {getFollowing,getUnFollow} from '../../actions/follow';
 import Navigator from './Navigator';
-
+import InfiniteScroll from 'react-native-infinite-scroll';
+import {pagination} from '../../../lib/helpers';
 
 class Profile extends React.Component {
     constructor(props){
@@ -20,7 +21,11 @@ class Profile extends React.Component {
             user_profile:{},
             following:'',
             refreshing:false,
-            username_param:''
+            username_param:'',
+            posts_cnt:0,
+            page:1,
+            loading_more:false,
+            has_next_page: true,
         }
     }
     _onRefresh=()=> {
@@ -36,6 +41,21 @@ class Profile extends React.Component {
         });
     }
 
+    _onLoadMore=()=>{
+        if(this.state.has_next_page){
+            const {page,posts_cnt}=this.state;
+            let pages=pagination(limit=5,page+1,posts_cnt);
+            this.setState({page: page+1,loading_more:true});
+            const {username_param}=this.state;
+            this.props.getOwnPosts({username:username_param,offset:pages.nextOffset})
+            .then(r=>{
+                let rows=this.state.wrides;
+                rows.push.apply(rows,r.data.wrides);
+                this.setState({wrides:rows,loading_more: false,has_next_page:pages.hasNextPage});
+            });
+        }
+    }
+
     componentWillMount() {
         const {username,name,email}=this.props.auth;
         let username_param=this.props.navigation.state.params.username;
@@ -46,9 +66,13 @@ class Profile extends React.Component {
             this.props.getProfile(username_param)
             .then(r=>{
                 this.setState({user_profile:r.data.user})
-                this.props.getOwnPosts(username_param)
+                this.props.getOwnPosts({username:username_param,offset:0})
                 .then(r=>{
-                    this.setState({loading:false,wrides:r.data.wrides})
+                    this.setState({wrides:r.data.wrides})
+                    this.props.getOwnPostsCnt(username_param)
+                    .then(r=>{
+                        this.setState({loading:false,posts_cnt:r.data.wrides_cnt});
+                    })
                 });
             });
         });
@@ -56,7 +80,7 @@ class Profile extends React.Component {
 
     render () {
         const {navigation}=this.props;
-        const {loading,username,own_profile,user_profile,wrides,following,refreshing}=this.state;
+        const {loading,username,own_profile,user_profile,wrides,following,refreshing,loading_more,has_next_page}=this.state;
         const username_param=this.props.navigation.state.params.username;
         return(
             <Container>
@@ -72,7 +96,10 @@ class Profile extends React.Component {
                     <Right/>
                 </Header>
 
-                <ScrollView
+                <InfiniteScroll
+                    horizontal={false}
+                    onLoadMoreAsync={this._onLoadMore}
+                    distanceFromEnd={10}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
@@ -81,8 +108,8 @@ class Profile extends React.Component {
                     }
                 >
                     <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
-                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading}}/>
-                </ScrollView>
+                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page}}/>
+                </InfiniteScroll>
             </Container>
         )
     }
@@ -95,4 +122,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getOwnPosts,getProfile,getFollowing,getUnFollow})(Profile);
+export default connect(mapStateToProps,{getOwnPosts,getProfile,getFollowing,getUnFollow,getOwnPostsCnt})(Profile);

@@ -8,6 +8,7 @@ import followers from './followers';
 import likes from './likes';
 import notifications from './notifications';
 import search from './search';
+import settings from './settings';
 export const rootReducer=combineReducers({
     users,
     auth,
@@ -17,5 +18,6 @@ export const rootReducer=combineReducers({
     followers,
     likes,
     notifications,
-    search
+    search,
+    settings
 });
