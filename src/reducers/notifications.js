@@ -3,6 +3,9 @@ let notifications=(state={},action={})=>{
         case 'SET_NOTIFICATIONS':
             return action.data;
 
+        case 'SET_NOTIFICATIONS_CNT':
+            return action.data;
+
         case 'SET_CLEARED_NOTIFICATIONS':
             return action.data;
         case 'SET_UNREAD_NOTIFICATIONS':

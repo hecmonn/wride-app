@@ -19,6 +19,28 @@ export function getNotifications(data){
     }
 }
 
+export function setNotificationsCnt(data){
+    return {
+        type:'SET_NOTIFICATIONS_CNT',
+        data
+    }
+}
+
+export function getNotificationsCnt(data){
+    return dispatch=>{
+        return fetch('http://localhost:5005/api/get-notifications-count',{
+            method:'post',
+            body:JSON.stringify({data}),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>dispatch(setNotificationsCnt(data)))
+    }
+}
+
+
 export function setUnreadNotifications(data){
     return {
         type:'SET_UNREAD_NOTIFICATIONS',

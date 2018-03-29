@@ -22,6 +22,7 @@ class Home extends React.Component {
             has_next_page: true
         }
         this._onRefresh=this._onRefresh.bind(this);
+        this._onLoadMore=this._onLoadMore.bind(this);
     }
     componentWillMount() {
         const {isLogged,username} =this.props.auth;
@@ -88,9 +89,7 @@ class Home extends React.Component {
                     />
                 }
             >
-
                 <NewsFeed navigation={this.props.navigation} username={username} screenProps={{wrides,loading,username,loading_more,has_next_page}}/>
-
             </InfiniteScroll>
         )
     }

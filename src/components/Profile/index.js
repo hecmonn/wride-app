@@ -27,6 +27,8 @@ class Profile extends React.Component {
             loading_more:false,
             has_next_page: true,
         }
+        this._onRefresh=this._onRefresh.bind(this);
+        this._onLoadMore=this._onLoadMore.bind(this);
     }
     _onRefresh=()=> {
         this.setState({refreshing:true});
@@ -34,7 +36,7 @@ class Profile extends React.Component {
         this.props.getFollowing({username,username_param})
         .then(r=>{
             this.setState({following:r.data.following,own_profile:username==username_param,username});
-            this.props.getOwnPosts(username_param)
+            this.props.getOwnPosts({username:username_param,offset:0})
             .then(r=>{
                 this.setState({refreshing:false, wrides:r.data.wrides})
             });
