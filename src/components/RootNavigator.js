@@ -33,11 +33,13 @@ const RootNavigator=TabNavigator({
     },
     Notifications:{
         screen: Notifications
-        ,navigationOptions:{
-            tabBarIcon: ({focused}) => (
-                <TabNotifications focused={focused} />
-            )
-        }
+        ,navigationOptions:({navigation})=>({
+            tabBarIcon: ({focused}) => {
+                return(
+                    <TabNotifications navigation={navigation} focused={focused} />
+                )
+            }
+        })
     },
     /*Profile:{
         screen: Profile

@@ -93,6 +93,7 @@ class Settings extends React.Component {
     handleSubmit(e){
         const {uri,original,changed}=this.state;
         let tb_change=this.checkChanges();
+        console.log('Tb changed: ',tb_change)
         if(!isEmpty(tb_change)){
             this.props.postSettings({changes:tb_change,username:original.username})
             .then(r=>console.log(r));

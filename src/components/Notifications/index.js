@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {ScrollView,RefreshControl} from 'react-native';
+import {ScrollView,RefreshControl,View} from 'react-native';
 import {getNotifications,clearNotifications} from '../../actions/notifications';
 import {Container,Header,Content,H1,Text,Body,Title,Grid,Row} from 'native-base';
 import Notification from './Notification';
@@ -54,9 +54,9 @@ class Notifications extends React.Component {
         //.then(r=>this.setState({cleared:1}));
     }
     empty=(
-        <Body>
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <Text>No notiications, yet.</Text>
-        </Body>
+        </View>
     )
     notificationsList=(nots)=>{
         return(
@@ -76,7 +76,7 @@ class Notifications extends React.Component {
         const {navigation}=this.props;
         const {notifications}=this.state;
         return(
-            <Container style={{backgroundColor:'white'}}>
+            <Container>
                 <Header style={{backgroundColor:'white'}}>
                     <Body>
                         <Title>Notifications</Title>

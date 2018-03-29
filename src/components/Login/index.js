@@ -48,39 +48,41 @@ class Login extends Component {
         const {navigation}=this.props;
         return (
             <View style={{backgroundColor:'white',flex:1,justifyContent:'center',alignItems:'center'}}>
-                <View style={{backgroundColor:'rgba(200, 200, 200, 0.7)',justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{color:'#757575',fontWeight:'bold',fontSize:100}}>Wride.</Text>
+                <View style={{backgroundColor:'rgba(0, 0, 0, 0.4)',justifyContent:'center',alignItems:'center',margin:15}}>
+                    <Text style={{color:'#eeeeee',fontWeight:'bold',fontSize:100}}>Wride.</Text>
                     <Form>
                         <List>
                             <ListItem>
                                 <Item floatingLabel>
-                                    <Label>Username</Label>
+                                    <Label style={{color:'#eeeeee'}}>Username</Label>
                                     <Input
                                         value={username}
             							onChangeText={(username) => this.setState({username})}
                                         autoCorrect={false}
                                         autoCapitalize='none'
+                                        style={{color:'#eeeeee'}}
                                     />
                                 </Item>
                             </ListItem>
                             <ListItem>
                                 <Item floatingLabel>
-                                    <Label>Password</Label>
+                                    <Label style={{color:'#eeeeee'}}>Password</Label>
                                     <Input
                                         value={password}
             							onChangeText={(password) => this.setState({password})}
                                         secureTextEntry={true}
+                                        style={{color:'#eeeeee'}}
                                     />
                                 </Item>
                             </ListItem>
                         </List>
                     </Form>
-                    <Button full transparent onPress={this.handleSubmit} style={{borderWidth:1,borderColor:'#a8a8a8'}}>
-                        <Text style={{color:'#757575'}}>{isLoading?'Loading...':'Login'}</Text>
+                    <Button full onPress={this.handleSubmit} style={{backgroundColor:'rgba(0, 0, 0, 0.4)'}}>
+                        <Text style={{color:'#eeeeee'}}>{isLoading?'Loading...':'Log In'}</Text>
                     </Button>
                     <Button full style={{marginBottom:10}}>
                         <Icon name='logo-facebook' />
-                        <Text style={{color:'white'}}>Continue with facebook</Text>
+                        <Text style={{color:'white'}}>Continue With Facebook</Text>
                     </Button>
                     <Text
                         onPress={()=>{navigation.navigate('Register')}}

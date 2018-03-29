@@ -39,7 +39,6 @@ class Home extends React.Component {
             this.setState({wrides:r.data.wrides});
             this.props.getHomePostsCnt(username)
             .then(r=>{
-                console.log(r,'---home psots cnt')
                 this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
             });
         });
