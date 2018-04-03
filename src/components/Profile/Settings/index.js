@@ -1,12 +1,16 @@
 import React, { PropTypes } from 'react'
 import {AsyncStorage,Image,View} from 'react-native';
 import {connect} from 'react-redux';
-import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right,Thumbnail,List,ListItem,Item,Input,Label,CheckBox,Spinner} from 'native-base';
+import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right,Thumbnail,List,ListItem,Item,Input,Label,CheckBox,Spinner,Toast} from 'native-base';
 import {postSettingsImage,postSettings} from '../../../actions/settings';
+import {validateAuth} from '../../../actions/auth';
 import {logout} from '../../../actions/auth';
 import ImagePicker from 'react-native-image-picker';
 import isEmpty from 'is-empty';
-//import jwt from 'jsonwebtoken';
+import jwt from 'react-native-jwt-io';
+import {tokenSecret} from '../../../../config';
+import {prettyName} from '../../../../lib/helpers';
+import jwtDecode from 'jwt-decode';
 
 class Settings extends React.Component {
     constructor(props){
@@ -28,7 +32,7 @@ class Settings extends React.Component {
 
     onImageChange=(r)=>{
         var options = {
-            title: 'Select Avatar',
+            title: 'Select Image',
             customButtons: [
                 {name: 'fb', title: 'Choose Photo from Facebook'},
             ],
@@ -58,10 +62,16 @@ class Settings extends React.Component {
                 const {username}=this.state.original;
                 this.setState({loading_image:true})
                 this.props.postSettingsImage({uri:source.uri,username})
-                .then(r=>console.log(r));
-                this.setState({
-                    uri: source.uri,
-                    loading_image:false
+                .then(r=>{
+                    Toast.show({
+                        text:'Profile updated succesfully',
+                        position:'bottom',
+                        buttonText:'Okay'
+                    });
+                    this.setState({
+                        uri: source.uri,
+                        loading_image:false
+                    });
                 });
             }
         });
@@ -77,6 +87,7 @@ class Settings extends React.Component {
     }
     componentWillMount() {
         this.setState({original:{...this.props.auth},tb_changed:{...this.props.auth}});
+        console.log('Original settings:',this.props.auth);
     }
 
     checkChanges=()=>{
@@ -91,31 +102,43 @@ class Settings extends React.Component {
         }
         return tb_change;
     }
-    handleSubmit(e){
+    async handleSubmit(e){
         const {uri,original,changed}=this.state;
         let tb_change=this.checkChanges();
-        console.log('Tb changed: ',tb_change)
         if(!isEmpty(tb_change)){
-            this.props.postSettings({changes:tb_change,username:original.username})
-            .then(r=>{
-                console.log('Response from changed user: ',r);
-                //const {username,email,name,avatar,bio,private}=r.data.changed_user;
-                //const new_token=jwt.sign({
-                //    username:'hec',
-                //    email,
-                //    initials:,
-                //    name:,
-                //    avatar:,
-                //    bio:,
-                //    private:,
-                //})
+            this.props.postSettings({changes:tb_change, username:original.username})
+            .then(async r=>{
+                const {username,email,name,path,bio,private_,fname,lname}=r.data.changed_user[0];
+                const new_token=jwt.encode({
+                    username,
+                    email,
+                    name: prettyName(fname,lname),
+                    path,
+                    bio,
+                    private_,
+                },tokenSecret.jwtSecret);
+
+                const decodedToken=jwtDecode(new_token);
+                await AsyncStorage.removeItem('auth')
+                .then(r=>{
+                    AsyncStorage.setItem('auth',new_token)
+                    .then(this.props.validateAuth(decodedToken))
+                    .then(r=>{
+                        Toast.show({
+                            text:'Settings updated',
+                            position:'bottom',
+                            buttonText:'Okay'
+                        });
+                    })
+                })
             });
         } else {console.log('nothing to change');}
     }
     render () {
         const {navigation}=this.props;
         const {hideRoll,content,tb_changed,original,loading_image}=this.state;
-        let checked_private=tb_changed.private?true:false;
+        let checked_private=tb_changed.private_?true:false;
+        console.log(original.path);
         return(
             <Container>
                 <Header>
@@ -144,7 +167,7 @@ class Settings extends React.Component {
                                 <Button transparent onPress={()=>this.onImageChange()}>
                                     {loading_image?
                                         <View style={{borderRadius:5,borderWidth:1,borderColor:'#757575'}}><Spinner /></View>
-                                        :<Thumbnail source={{uri:original.avatar!==null?`http://localhost:5005/${original.avatar}`:`http://localhost:5005/dummy.png`}} />
+                                        :<Thumbnail source={{uri:original.path!==null?`http://localhost:5005/${original.path}`:`http://localhost:5005/dummy.png`}} />
                                     }
                                 </Button>
                             </Body>
@@ -189,7 +212,7 @@ class Settings extends React.Component {
                             <Text>PRIVACY</Text>
                         </ListItem>
                         <ListItem style={{backgroundColor:'white'}} itemDivider>
-                            <CheckBox checked={checked_private} onPress={()=>this.setState({changed: {...this.state.changed,private: !checked_private},tb_changed: {...this.state.tb_changed,private: !checked_private}})} color={'#757575'} />
+                            <CheckBox checked={checked_private} onPress={()=>this.setState({changed: {...this.state.changed,private_: !checked_private},tb_changed: {...this.state.tb_changed,private_: !checked_private}})} color={'#757575'} />
                             <Body>
                                 <Text>Private Account</Text>
                             </Body>
@@ -215,4 +238,4 @@ let mapStateToProps=state=>{
         auth:state.auth._55
     }
 }
-export default connect(mapStateToProps,{logout,postSettings,postSettingsImage})(Settings);
+export default connect(mapStateToProps,{logout,postSettings,postSettingsImage,validateAuth})(Settings);

@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import {rootReducer} from './src/reducers';
 import Main from './src/components';
+import {Root} from 'native-base'
 
 const store=createStore(
   rootReducer
@@ -18,7 +19,9 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Main />
+        <Root>
+          <Main />
+        </Root>
       </Provider>
     );
   }

@@ -66,7 +66,7 @@ class Who extends React.Component {
                     <Row>
                         <Col size={1}>
                             <Button transparent onPress={()=>this.setState({image_modal_visible:true})}>
-                                <Thumbnail style={{borderWidth:1,borderColor: '#969696',marginTop: 15}} large source={{uri: path!==null? `http://localhost:5005/${path}`:'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png'}} />
+                                <Thumbnail style={{borderWidth:1,borderColor: '#969696',marginTop: 15}} large source={{uri: path!==null? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png'}} />
                             </Button>
                         </Col>
                         <Col size={3}>
