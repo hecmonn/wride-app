@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
+import {Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item} from 'native-base';
 import EditorForm from './form.js';
 import {savePost} from '../../actions/editor';
+import isEmpty from 'is-empty';
 
 class Editor extends React.Component {
 	constructor(props){
@@ -20,6 +22,22 @@ class Editor extends React.Component {
             if(r.data.submitted) this.props.navigation.navigate('Root');
         });
 	}
+
+	checkDraft(){
+		if(!isEmpty(this.state.content)||!isEmpty(this.state.title)){
+			Alert.alert(
+				'Changes not saved',
+				'Do you want to save changes first?',
+				[
+					{text:'Cancel',onPress:()=>console.log('Canceled'),style:'cancel'},
+					{text:'Yes',onPress:()=>console.log('please save'),style:'OK Pressed'},
+				],
+				{cancelable: false}
+			)
+		} else {
+			this.props.navigation.goBack();
+		}
+	}
 	render () {
 		const {navigation}=this.props;
 		const {title,content}=this.state;
@@ -27,7 +45,7 @@ class Editor extends React.Component {
 			<Container style={{backgroundColor:'white'}}>
 				<Header style={{backgroundColor:'white'}}>
 					<Left>
-						<Button onPress={()=>{navigation.goBack()}} transparent>
+						<Button onPress={()=>{this.checkDraft()}} transparent>
 							<Icon name="ios-close" style={{color:'#757575'}}/>
 						</Button>
 					</Left>
