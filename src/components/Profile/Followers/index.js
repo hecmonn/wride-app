@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import {ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {Container,Content,Text,Body,Button,List,H1} from 'native-base';
 import {getFollowers} from '../../../actions/follow';
@@ -43,11 +44,9 @@ class Followers extends React.Component {
         const {navigation}=this.props;
         const {followers}=this.state;
         return(
-            <Container style={{backgroundColor:'white'}}>
-                <Content>
-                    {followers.length==0?this.empty():this.followersList()}
-                </Content>
-            </Container>
+            <ScrollView style={{backgroundColor:'white'}}>
+                {followers.length==0?this.empty():this.followersList()}
+            </ScrollView>
         )
     }
 }

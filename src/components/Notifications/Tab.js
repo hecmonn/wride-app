@@ -25,7 +25,6 @@ class Tab extends React.Component {
     iconPressed=()=>{
         const {notifications}=this.state;
         if(notifications>0) {
-            console.log('Notifications > 0');
             this.setState({notifications: 0});
         }
         this.props.navigation.navigate('Notifications');
@@ -34,7 +33,6 @@ class Tab extends React.Component {
     render () {
         const {focused}=this.props;
         const {notifications}=this.state;
-        console.log('Notifications from render: ',notifications);
         return(
             <View>
                 <Icon
