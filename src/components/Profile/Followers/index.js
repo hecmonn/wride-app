@@ -17,16 +17,18 @@ class Followers extends React.Component {
 
     componentWillMount() {
         const {username,username_param}=this.props.screenProps;
-        this.props.getFollowers(username_param)
+        console.log('ScreenProps: ',this.props.screenProps)
+        this.props.getFollowers({username,username_param})
         .then(r=>{
             this.setState({followers:r.data.followers,username_param,username})
         });
     }
 
     followersList=(followers)=>{
+        const {username_param,username}=this.props.screenProps;
         return(
             <List>
-                {this.state.followers.map((r,i)=><Follower person={r} key={i} />)}
+                {this.state.followers.map((r,i)=><Follower person={r} key={i} users={{username_param,username}} getUnFollow={this.props.screenProps.getUnFollow} />)}
             </List>
         )
     }

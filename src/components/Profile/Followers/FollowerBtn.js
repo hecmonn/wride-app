@@ -14,7 +14,6 @@ class FollowerBtn extends React.Component {
 
     followerBtn=()=>{
         const {following,followLabel,unFollowLoading}=this.state;
-        console.log('following: ',following);
         return(
             <Button small style={{backgroundColor:'white',borderColor:following?'#000aff':'#757575',borderWidth:1,borderRadius:5}} onPress={()=>this.unFollow()}>
                 <Text style={{color:following?'#000aff':'#757575', fontWeight:'bold'}}>{unFollowLoading?'loading...':followLabel}</Text>
@@ -38,7 +37,7 @@ class FollowerBtn extends React.Component {
                 <Text style={{color:'black', fontWeight:'bold'}}>Edit Profile</Text>
         </Button>
     )
-    
+
     componentWillReceiveProps(nextProps){
         if(nextProps.following!==this.props.following){
             this.setState({following:nextProps.following,followLabel:nextProps.following?'Following':'Follow'});
@@ -46,10 +45,9 @@ class FollowerBtn extends React.Component {
     }
     render () {
         const {ownProfile}=this.props;
-        console.log('Following: ',this.props.following)
         return(
             <View>
-                {ownProfile?this.editBtn: this.followerBtn()}
+                {ownProfile? !this.props.fromList && this.editBtn: this.followerBtn()}
             </View>
         )
     }

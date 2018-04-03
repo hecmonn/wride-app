@@ -34,7 +34,6 @@ class Notifications extends React.Component {
             this.setState({notifications:r.data.notifications});
             this.props.getNotificationsCnt(username)
             .then(r=>{
-                console.log('Nots cnt: ',r.data.nots_cnt);
                 this.setState({loading:false,nots_cnt:r.data.nots_cnt});
             })
         });

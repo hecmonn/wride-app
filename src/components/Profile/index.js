@@ -110,7 +110,7 @@ class Profile extends React.Component {
                     }
                 >
                     <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
-                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page}}/>
+                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page,getUnFollow:this.props.getUnFollow}}/>
                 </InfiniteScroll>
             </Container>
         )

@@ -28,7 +28,6 @@ class Who extends React.Component {
         let uri=`http://localhost:5005/${this.state.path}`;
 
         const images=[{source:{uri:`http://localhost:5005/${this.state.path}`}}];
-        console.log(images[0].source.uri,'---image uri')
         return(
             <Content style={{padding:10,backgroundColor:'white'}}>
                 <ImageModal
@@ -52,7 +51,7 @@ class Who extends React.Component {
                     <Row>
                         <Col size={2} />
                         <Col size={1}>
-                            <FollowerBtn followProps={ownProfile} following={this.state.following} navigation={navigation} users={{username:this.props.username,username_param:this.props.person.username}} getUnFollow={this.props.getUnFollow}/>
+                            <FollowerBtn ownProfile={ownProfile} following={this.state.following} navigation={navigation} users={{username:this.props.username,username_param:this.props.person.username}} getUnFollow={this.props.getUnFollow}/>
                         </Col>
                     </Row>
                 </Grid>
