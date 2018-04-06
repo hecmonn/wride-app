@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {View,TouchableHighlight} from 'react-native';
+import {View,TouchableHighlight,AsyncStorage} from 'react-native';
 import {getUnreadNotifications,clearNotifications} from '../../actions/notifications';
 import {Icon,Text,Container,Content,Badge} from 'native-base';
 
@@ -11,9 +11,10 @@ class Tab extends React.Component {
             notifications: 0
         }
     }
-    componentWillMount() {
+    async componentWillMount() {
 
         //if breaks, pass this to cdm
+        await AsyncStorage.getItem('auth');
         const {username}=this.props.auth;
         this.props.getUnreadNotifications(username)
         .then(r=>{

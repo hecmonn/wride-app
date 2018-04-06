@@ -24,17 +24,18 @@ class Home extends React.Component {
         this._onRefresh=this._onRefresh.bind(this);
         this._onLoadMore=this._onLoadMore.bind(this);
     }
-    componentWillMount() {
+
+    async componentWillMount() {
+        await AsyncStorage.getItem('auth')
         const {isLogged,username} =this.props.auth;
-        console.log(this.props.auth,'---auth props home');
+        //const username='hec';
         this.setState({username});
-        if(!isLogged) {
-            this.props.navigation.navigate('Login');
-        }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await AsyncStorage.getItem('auth')
         const{username}=this.props.auth;
+        //const username='hec';
         this.props.getHomePosts({username,offset:0})
         .then(r=>{
             this.setState({wrides:r.data.wrides});

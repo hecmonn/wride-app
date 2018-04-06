@@ -29,7 +29,7 @@ class Editor extends React.Component {
 				'Changes not saved',
 				'Do you want to save changes first?',
 				[
-					{text:'Cancel',onPress:()=>console.log('Canceled'),style:'cancel'},
+					{text:'Cancel',onPress:()=>this.props.navigation.goBack(),style:'cancel'},
 					{text:'Yes',onPress:()=>console.log('please save'),style:'OK Pressed'},
 				],
 				{cancelable: false}

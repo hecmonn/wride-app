@@ -85,7 +85,17 @@ class Profile extends React.Component {
         const {loading,username,own_profile,user_profile,wrides,following,refreshing,loading_more,has_next_page}=this.state;
         const username_param=this.props.navigation.state.params.username;
         return(
-            <ScrollView>
+            <InfiniteScroll
+                horizontal={false}
+                onLoadMoreAsync={this._onLoadMore}
+                distanceFromEnd={10}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={this._onRefresh}
+                    />
+                }
+            >
                 <Header style={{backgroundColor:'white'}}>
                     <Left>
                         <Button onPress={()=>{navigation.goBack()}} transparent>
@@ -98,21 +108,10 @@ class Profile extends React.Component {
                     <Right/>
                 </Header>
 
-                <InfiniteScroll
-                    horizontal={false}
-                    onLoadMoreAsync={this._onLoadMore}
-                    distanceFromEnd={10}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={this._onRefresh}
-                        />
-                    }
-                >
-                    <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
-                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page,getUnFollow:this.props.getUnFollow}}/>
-                </InfiniteScroll>
-            </ScrollView>
+
+                <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
+                <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page,getUnFollow:this.props.getUnFollow}}/>
+            </InfiniteScroll>
         )
     }
 }
