@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
+import {View} from 'react-native';
 import {Container,Text,H1,Left,Body,Right,Card,CardItem,Button,Thumbnail} from 'native-base';
-import Masonry from 'react-native-masonry';
 
 class Posts extends React.Component {
     constructor(props){
@@ -11,11 +11,7 @@ class Posts extends React.Component {
         const {navigation}=this.props;
         return(
             <Container style={{ borderWidth: 1,flexDirection: 'row',flexWrap: 'wrap',justifyContent: 'space-between'}}>
-                <View style={{width:'100',borderWidth:1,borderColor:'black'}}><Text>Hey</Text></View>
-                <View style={{width:'100',borderWidth:1,borderColor:'black'}}><Text>Hey</Text></View>
-                <View style={{width:'100',borderWidth:1,borderColor:'black'}}><Text>Hey</Text></View>
-                <View style={{width:'100',borderWidth:1,borderColor:'black'}}><Text>Hey</Text></View>
-                <View style={{width:'100',borderWidth:1,borderColor:'black'}}><Text>Hey</Text></View>
+                <H1>Posts search will go here</H1>
             </Container>
         )
     }

@@ -6,6 +6,7 @@ import {getSearch} from '../../actions/search';
 import isEmpty from 'is-empty';
 import Tabs from './Tabs';
 import InfiniteScroll from 'react-native-infinite-scroll';
+import MasonryList from '@appandflow/masonry-list';
 import InspirationCard from './Card';
 
 class Inspiration extends React.Component {
@@ -59,13 +60,14 @@ class Inspiration extends React.Component {
     _keyExtractor = (item, index) => item.title;
     inspiration=()=>{
         return (
-            <FlatList
+            <MasonryList
                 horizontal={false}
                 onLoadMoreAsync={this._onLoadMore}
                 distanceFromEnd={10}
                 keyExtractor={this._keyExtractor}
                 numColumns={2}
-                data={[{title:1,content:'A fool who plays it cool',username:'hecmonn'},{title:2,content:'A fool who plays it cool',username:'hecmonn'},{title:3,content:'A fool Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',username:'hecmonn'},{title:4,content:'A fool who plays it cool',username:'hecmonn'},]}
+                getHeightForItem={() => 1}
+                data={[{title:1,content:'A fool who plays it cool',username:'hecmonn'},{title:2,content:'A fool who plays it cool',username:'hecmonn'},{title:3,content:'A fool Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',username:'hecmonn'},{title:4,content:'A fool who plays it cool',username:'hecmonn'},{title:7,content:'A fool who plays it cool',username:'hecmonn'},{title:5,content:'A fool who plays it cool',username:'hecmonn'},{title:6,content:'A fool who plays it cool',username:'hecmonn'},]}
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}
@@ -75,7 +77,7 @@ class Inspiration extends React.Component {
                 renderItem={(item)=><InspirationCard item={item}/>}
             >
 
-        </FlatList>
+        </MasonryList>
         )
     }
     render () {

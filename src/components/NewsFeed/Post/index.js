@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import {Image} from 'react-native';
 import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H3} from 'native-base';
 import {prettyName,elapsedTime} from '../../../../lib/helpers';
-
+//import {Select,Option} from 'react-native-select-list'
+import ModalDropdown from 'react-native-modal-dropdown';
 
 class Post extends React.Component {
     constructor(props){
@@ -82,8 +83,6 @@ class Post extends React.Component {
                             <Icon style={{color:'#757575'}} name={liked?'ios-heart':'ios-heart-outline'} />
                             <Text style={{fontWeight:liked?'bold':'normal',color:'#757575'}}>{likes_cnt>0 && likes_cnt} </Text>
                         </Button>
-                    </Left>
-                    <Left>
                         <Button transparent onPress={()=>{this.actionPost(2)}}>
                             <Icon style={{color:'#757575'}}name={liked?'ios-swap':'ios-swap-outline'} />
                             <Text style={{fontWeight:shared?'bold':'normal',color:'#757575'}}>{shares_cnt>0 && shares_cnt} </Text>

@@ -24,7 +24,7 @@ class Collection extends React.Component {
     }
 
     componentWillMount() {
-    const {username}=this.props.auth;
+        const {username}=this.props.auth;
         this.setState({loading:true,username});
         this.props.getCollection({username,offset:0})
         .then(r=>{

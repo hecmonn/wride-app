@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {Alert} from 'react-native';
+import {ScrollView,Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item} from 'native-base';
 import EditorForm from './form.js';
@@ -10,14 +10,17 @@ class Editor extends React.Component {
 	constructor(props){
 		super(props);
 		this.state={
-			title:'',
-			content:''
+			title: null,
+			content: null,
+			draft_redirector:0,
+			id: null
 		}
 	}
-	handleSubmit(e){
-		const {title,content}=this.state;
+	handleSubmit(draft_p){
+		const {title,content,draft_redirector,id}=this.state;
 		const {username}=this.props.auth;
-		this.props.savePost({content,title,username})
+		const draft=draft_p?1:0;
+		this.props.savePost({content,title,username,draft,draft_redirector,id})
         .then(r=>{
             if(r.data.submitted) this.props.navigation.navigate('Root');
         });
@@ -29,8 +32,8 @@ class Editor extends React.Component {
 				'Changes not saved',
 				'Do you want to save changes first?',
 				[
-					{text:'Cancel',onPress:()=>this.props.navigation.goBack(),style:'cancel'},
-					{text:'Yes',onPress:()=>console.log('please save'),style:'OK Pressed'},
+					{text:'No',onPress:()=>this.props.navigation.goBack(),style:'cancel'},
+					{text:'Yes',onPress:()=>this.handleSubmit(1),style:'OK Pressed'},
 				],
 				{cancelable: false}
 			)
@@ -38,11 +41,19 @@ class Editor extends React.Component {
 			this.props.navigation.goBack();
 		}
 	}
+	componentWillMount() {
+		console.log('Navigation props from editor',this.props.navigation.state.params)
+		if(typeof this.props.navigation.state.params!=='undefined'){
+			const {title,content,id}=this.props.navigation.state.params;
+			console.log('Title from draft:',title);
+			this.setState({title,content,draft_redirector:1,id});
+		}
+	}
 	render () {
 		const {navigation}=this.props;
 		const {title,content}=this.state;
 		return(
-			<Container style={{backgroundColor:'white'}}>
+			<ScrollView style={{backgroundColor:'white'}} >
 				<Header style={{backgroundColor:'white'}}>
 					<Left>
 						<Button onPress={()=>{this.checkDraft()}} transparent>
@@ -53,7 +64,7 @@ class Editor extends React.Component {
 						<Text note>Inspire Inspiration</Text>
 					</Body>
 					<Right>
-						<Button transparent small onPress={()=>{{this.handleSubmit()}}}>
+						<Button transparent small onPress={()=>{{this.handleSubmit(0)}}}>
 							<Text style={{color:'#cfc080',fontWeight:'bold',fontSize:18}}>Post</Text>
 						</Button>
 					</Right>
@@ -76,7 +87,7 @@ class Editor extends React.Component {
 							placeholder="So, what happened?" />
 					</Item>
 				</Content>
-			</Container>
+			</ScrollView>
 		)
 	}
 }

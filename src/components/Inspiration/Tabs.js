@@ -8,11 +8,11 @@ class TabsSearch extends React.Component {
         const {navigation,people,posts,query}=this.props;
         return(
             <Container>
-                <Tabs initialPage={0}>
-                    <Tab heading="People">
+                <Tabs initialPage={0} tabBarUnderlineStyle={{color:'#757575'}}>
+                    <Tab heading="People" textStyle={{color:'#757575'}} activeTextStyle={{fontWeight:'bold',color:'#757575'}} tabStyle={{backgroundColor:'white',borderColor:'#757575'}} activeTabStyle={{backgroundColor:'white',borderColor:'#757575'}}>
                         <People navigation={navigation} people={people} query={query} />
                     </Tab>
-                    <Tab heading="Posts">
+                    <Tab heading="Posts" textStyle={{color:'#757575'}} activeTextStyle={{fontWeight:'bold',color:'#757575'}} tabStyle={{backgroundColor:'white',borderColor:'#757575'}} activeTabStyle={{backgroundColor:'white',borderColor:'#757575'}}>
                         <Posts navigation={navigation} posts={posts} query={query} />
                     </Tab>
                 </Tabs>

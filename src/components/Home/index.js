@@ -25,17 +25,17 @@ class Home extends React.Component {
         this._onLoadMore=this._onLoadMore.bind(this);
     }
 
-    async componentWillMount() {
-        await AsyncStorage.getItem('auth')
-        const {isLogged,username} =this.props.auth;
+    componentWillMount() {
+        //await AsyncStorage.getItem('auth')
+        //const {isLogged,username} =this.props.auth;
         //const username='hec';
-        this.setState({username});
     }
 
     async componentDidMount() {
         await AsyncStorage.getItem('auth')
         const{username}=this.props.auth;
         //const username='hec';
+        this.setState({username});
         this.props.getHomePosts({username,offset:0})
         .then(r=>{
             this.setState({wrides:r.data.wrides});

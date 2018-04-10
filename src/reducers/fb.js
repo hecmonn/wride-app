@@ -1,4 +1,4 @@
-let follow=(state={},action={})=>{
+let fb=(state={},action={})=>{
     switch(action.type){
         case 'SET_USER_INFO':
             return action.data;
@@ -7,4 +7,4 @@ let follow=(state={},action={})=>{
     }
 }
 
-export default follow;
+export default fb;
