@@ -13,6 +13,7 @@ import SideBar from './SideBar';
 class Home extends React.Component {
     constructor(props){
         super(props);
+        this._authAsync();
         this.state={
             wrides:[],
             loading:true,
@@ -30,8 +31,7 @@ class Home extends React.Component {
         //const {isLogged,username} =this.props.auth;
         //const username='hec';
     }
-
-    async componentDidMount() {
+    _authAsync=async()=> {
         await AsyncStorage.getItem('auth')
         const{username}=this.props.auth;
         //const username='hec';
@@ -45,6 +45,20 @@ class Home extends React.Component {
             });
         });
     }
+    /*async componentDidMount() {
+        await AsyncStorage.getItem('auth')
+        const{username}=this.props.auth;
+        //const username='hec';
+        this.setState({username});
+        this.props.getHomePosts({username,offset:0})
+        .then(r=>{
+            this.setState({wrides:r.data.wrides});
+            this.props.getHomePostsCnt(username)
+            .then(r=>{
+                this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+            });
+        });
+    }*/
 
     _onRefresh=()=> {
         this.setState({refreshing: true});
@@ -152,4 +166,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getHomePosts,getHomePostsCnt,pagination})(Home);
+export default connect(mapStateToProps,{getHomePosts,getHomePostsCnt})(Home);

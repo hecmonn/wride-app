@@ -10,11 +10,13 @@ import Post from './Post';
 import Drafts from './Drafts';
 import Collection from './Collection';
 import AuthLoadingScreen from  './AuthLoadingScreen';
+import Publish from './Editor/Publish';
 
 const AppStack=StackNavigator({
     Root: {screen: RootNavigator},
     Settings: {screen: Settings},
     Editor: {screen: Editor,mode:'modal'},
+    Publish: {screen: Publish,mode:'modal'},
     Profile:{screen:Profile},
     Post:{screen:Post},
     Drafts:{screen:Drafts},

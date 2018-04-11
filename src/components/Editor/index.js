@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import {ScrollView,Alert} from 'react-native';
 import {connect} from 'react-redux';
-import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item} from 'native-base';
-import EditorForm from './form.js';
+import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item,Toast} from 'native-base';
 import {savePost} from '../../actions/editor';
 import isEmpty from 'is-empty';
 
@@ -19,21 +18,38 @@ class Editor extends React.Component {
 	handleSubmit(draft_p){
 		const {title,content,draft_redirector,id}=this.state;
 		const {username}=this.props.auth;
+		if(isEmpty(title) || isEmpty(content)){
+			Toast.show({
+				text: "Untitled is not too attractive",
+				buttonText: "Okay",
+				type:'danger',
+				duration: 3000
+			})
+		} else {
+			this.props.navigation.navigate('Publish',{title,content,draft_redirector,id,draft_p,username});
+		}
+	}
+
+	saveDraft(draft_p){
+		const {title,content,draft_redirector,id}=this.state;
+		const {username}=this.props.auth;
 		const draft=draft_p?1:0;
 		this.props.savePost({content,title,username,draft,draft_redirector,id})
-        .then(r=>{
-            if(r.data.submitted) this.props.navigation.navigate('Root');
-        });
+		.then(r=>{
+			if(r.data.submitted) this.props.navigation.navigate('Root');
+		});
 	}
 
 	checkDraft(){
 		if(!isEmpty(this.state.content)||!isEmpty(this.state.title)){
 			Alert.alert(
 				'Changes not saved',
-				'Do you want to save changes first?',
+				'Do you want to save on drafts?',
 				[
-					{text:'No',onPress:()=>this.props.navigation.goBack(),style:'cancel'},
-					{text:'Yes',onPress:()=>this.handleSubmit(1),style:'OK Pressed'},
+
+					{text:'Yes',onPress:()=>this.saveDraft(1),style:'OK Pressed'},
+					{text:'No',onPress:()=>this.props.navigation.goBack()},
+					{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
 				],
 				{cancelable: false}
 			)
@@ -42,10 +58,8 @@ class Editor extends React.Component {
 		}
 	}
 	componentWillMount() {
-		console.log('Navigation props from editor',this.props.navigation.state.params)
 		if(typeof this.props.navigation.state.params!=='undefined'){
 			const {title,content,id}=this.props.navigation.state.params;
-			console.log('Title from draft:',title);
 			this.setState({title,content,draft_redirector:1,id});
 		}
 	}
