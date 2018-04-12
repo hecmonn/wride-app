@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
+import {connect} from 'react-redux';
 import {View,ScrollView,Image} from 'react-native';
+import {savePost} from '../../actions/editor';
 import {Header,Left,Body,Right,Icon,Button,Text} from 'native-base';
 import TagInput from '@cutii/react-native-tag-input';
 import ImagePicker from 'react-native-image-picker';
@@ -12,7 +14,8 @@ class Publish extends React.Component {
             tagsSelected:[],
             emails:[],
             text:'Add a tag',
-            uri:null
+            uri:null,
+            loading:false
         }
     }
     onImageChange=(r)=>{
@@ -48,24 +51,25 @@ class Publish extends React.Component {
             }
         });
     }
+
     handleSubmit(draft_p){
-		const {title,content,draft_redirector,id,username}=this.state;
+		const {title,content,draft_redirector,id,username,tagsSelected}=this.state;
 		const draft=draft_p?1:0;
-		this.props.savePost({content,title,username,draft,draft_redirector,id})
+        this.setState({loading:true})
+		this.props.savePost({content,title,username,draft,draft_redirector,id,tagsSelected})
         .then(r=>{
             if(r.data.submitted) this.props.navigation.navigate('Root');
         });
 	}
+
     handleDelete = index => {
         let tagsSelected = this.state.tagsSelected;
         tagsSelected.splice(index, 1);
         this.setState({ tagsSelected });
     }
-
     handleAddition = suggestion => {
         this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
     }
-
     componentWillMount() {
         const {title,content,draft_p,draft_redirector}=this.props.navigation.state.params;
         this.setState({...this.props.navigation.state.params});
@@ -127,4 +131,11 @@ class Publish extends React.Component {
     }
 }
 
-export default Publish;
+let mapStateToProps=state=>{
+    return{
+        editor:state.editor,
+        auth:state.auth._55
+    }
+}
+
+export default connect(mapStateToProps,{savePost})(Publish);

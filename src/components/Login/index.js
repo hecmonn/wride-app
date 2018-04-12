@@ -83,7 +83,19 @@ class Login extends Component {
                         const decodedToken=jwtDecode(r.data.token);
                         await AsyncStorage.setItem('auth',r.data.token)
                         .then(this.props.validateAuth(decodedToken))
-                        .then(this.props.navigation.navigate('Home',{isLogged:true}))
+                        .then(r=>{
+                            this.props.navigation.navigate('App',{isLogged:true})
+                            //this.props.navigation.dispatch(
+                            //    {
+                            //        type: 'Navigation/NAVIGATE',
+                            //        routeName: 'Root',
+                            //        action: {
+                            //            type: 'Navigation/NAVIGATE',
+                            //            routeName: 'Root',
+                            //        }
+                            //    }
+                            //);
+                        })
                         .done();
                     }
                     else{
