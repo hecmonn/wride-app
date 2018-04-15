@@ -4,7 +4,6 @@ import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H
 import {prettyName,elapsedTime} from '../../../../lib/helpers';
 //import {Select,Option} from 'react-native-select-list'
 import ModalDropdown from 'react-native-modal-dropdown';
-
 class Post extends React.Component {
     constructor(props){
         super(props);
@@ -71,7 +70,7 @@ class Post extends React.Component {
                         </Right>
                     </Left>
                 </CardItem>
-                <CardItem cardBody>
+                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved})}} cardBody>
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
                         <Text>{content}</Text>

@@ -80,7 +80,7 @@ class Publish extends React.Component {
         const {title,uri}=this.state;
         console.log(this.state.tagsSelected)
         return(
-            <ScrollView>
+            <View>
                 <Header style={{backgroundColor:'white'}}>
                     <Left>
                         <Button onPress={()=>{navigation.goBack()}} transparent>
@@ -126,7 +126,7 @@ class Publish extends React.Component {
                 </View>
 
 
-            </ScrollView>
+            </View>
         )
     }
 }

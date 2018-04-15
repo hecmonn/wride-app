@@ -11,6 +11,9 @@ import search from './search';
 import settings from './settings';
 import collection from './collection';
 import fb from './fb';
+import modal from './modal';
+import drafts from './drafts';
+
 export const rootReducer=combineReducers({
     users,
     auth,
@@ -23,5 +26,7 @@ export const rootReducer=combineReducers({
     search,
     settings,
     collection,
-    fb
+    fb,
+    modal,
+    drafts
 });

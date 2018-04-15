@@ -6,6 +6,7 @@ import {postAction} from '../../actions/newsfeed';
 import Post from './Post';
 import isEmpty from 'is-empty';
 import Spinner from 'react-native-spinkit';
+import Modal from '../Modal';
 
 class NewsFeed extends React.Component {
     constructor(props){
@@ -13,7 +14,8 @@ class NewsFeed extends React.Component {
         this.state={
             loading:true,
             postsReceived:false,
-            wrides:[]
+            wrides:[],
+            visible_modal: false
         }
     }
     componentWillReceiveProps(nextProps){
@@ -26,7 +28,7 @@ class NewsFeed extends React.Component {
         const {username,loading_more,has_next_page}=this.props.screenProps;
         return(
             <Content>
-                {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} />)}
+                {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} showModal={this._showModal}/>)}
                 {loading_more && <View style={{paddingTop:10,paddingBottom:10,justifyContent:'center',alignItems:'center'}}><Spinner isVisible={loading_more} size={30} type='Arc' color='#757575'/></View>}
                 {!has_next_page && <View style={{paddingTop:10,paddingBottom:10,justifyContent:'center',alignItems:'center'}}><H1>Wride.</H1></View>}
             </Content>
@@ -38,11 +40,18 @@ class NewsFeed extends React.Component {
             </Body>
         </Container>
     );
+
+    _showModal=(data)=>{
+        console.log('Data: ',data);
+        this.setState({modalContent:data})
+        this.setState({visible_modal:true});
+    }
     render () {
-        const {postsReceived,wrides}=this.state;
+        const {postsReceived,wrides,visible_modal,modalContent}=this.state;
         const {loading}=this.props.screenProps;
         return(
             <Container>
+                <Modal content={modalContent} visible={visible_modal} hideModal={()=>this.setState({visible_modal:false})}/>
                 <Content>
                     {loading?
                         <View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={50} type='Arc' color='#757575'/></View>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})
