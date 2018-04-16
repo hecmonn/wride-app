@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {ScrollView,Alert} from 'react-native';
+import {ScrollView,Alert,TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import {Header,Left,Right,Body,Content,Text,Container,Button,Icon,Input,Item,Toast} from 'native-base';
 import {savePost} from '../../actions/editor';
@@ -86,7 +86,7 @@ class Editor extends React.Component {
 				<Content>
 					<Item>
 						<Input
-							style={{fontWeight:'bold',fontSize:23}}
+							style={{fontWeight:'bold',fontSize:24}}
 							onChangeText={(title) => this.setState({title})}
 							placeholder="Title"
 							value={title}
@@ -94,7 +94,7 @@ class Editor extends React.Component {
 					</Item>
 					<Item style={{borderWidth:0}}>
 						<Input
-							style={{fontSize:23}}
+							style={{fontSize:24}}
 							multiline={true}
 							onChangeText={(content) => this.setState({content})}
 							value={content}

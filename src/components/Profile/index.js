@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {ScrollView,RefreshControl} from 'react-native';
+import {ScrollView,RefreshControl,View} from 'react-native';
 import {Container,Header,Content,H1,Text,Body,Title,Left,Button,Icon,Right} from 'native-base';
 import Who from './Who';
 import {getOwnPosts,getOwnPostsCnt} from '../../actions/newsfeed';
@@ -85,18 +85,8 @@ class Profile extends React.Component {
         const {loading,username,own_profile,user_profile,wrides,following,refreshing,loading_more,has_next_page}=this.state;
         const username_param=this.props.navigation.state.params.username;
         return(
-            <InfiniteScroll
-                horizontal={false}
-                onLoadMoreAsync={this._onLoadMore}
-                distanceFromEnd={10}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={this._onRefresh}
-                    />
-                }
-            >
-                <Header style={{backgroundColor:'white'}}>
+            <View>
+                <Header style={{backgroundColor:'white',shadowOffset:{width:5,height: 5},shadowColor:'#636363',shadowOpacity:0.05}}>
                     <Left>
                         <Button onPress={()=>{navigation.goBack()}} transparent>
                             <Icon name="ios-arrow-back" style={{color:'#757575'}} />
@@ -108,10 +98,22 @@ class Profile extends React.Component {
                     <Right/>
                 </Header>
 
+                <InfiniteScroll
+                    horizontal={false}
+                    onLoadMoreAsync={this._onLoadMore}
+                    distanceFromEnd={10}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={this._onRefresh}
+                        />
+                    }
+                >
 
-                <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
-                <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page,getUnFollow:this.props.getUnFollow}}/>
-            </InfiniteScroll>
+                    <Who getUnFollow={this.props.getUnFollow} ownProfile={own_profile} following={following} username={username}  person={user_profile} navigation={navigation} />
+                    <Navigator screenProps={{wrides,username_param,username,getUnFollow,loading,loading_more,has_next_page,getUnFollow:this.props.getUnFollow}}/>
+                </InfiniteScroll>
+            </View>
         )
     }
 }

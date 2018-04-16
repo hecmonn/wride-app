@@ -29,7 +29,7 @@ class Who extends React.Component {
 
         const images=[{source:{uri:`http://localhost:5005/${this.state.path}`}}];
         return(
-            <Content style={{padding:10,backgroundColor:'white'}}>
+            <Content style={{padding:10,paddingTop:15,backgroundColor:'white'}}>
                 <ImageModal
                     images={[{source:{uri:`http://localhost:5005/${path}`}}]}
                     imageIndex={0}

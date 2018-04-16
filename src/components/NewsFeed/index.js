@@ -23,6 +23,7 @@ class NewsFeed extends React.Component {
             this.setState({loading:false})
         }
     }
+
     wridesList=(wrides)=>{
         const {posts,navigation}=wrides;
         const {username,loading_more,has_next_page}=this.props.screenProps;
@@ -42,16 +43,14 @@ class NewsFeed extends React.Component {
     );
 
     _showModal=(data)=>{
-        console.log('Data: ',data);
-        this.setState({modalContent:data})
-        this.setState({visible_modal:true});
+        this.setState({modalContent:data,visible_modal:true})
     }
     render () {
         const {postsReceived,wrides,visible_modal,modalContent}=this.state;
         const {loading}=this.props.screenProps;
         return(
             <Container>
-                <Modal content={modalContent} visible={visible_modal} hideModal={()=>this.setState({visible_modal:false})}/>
+                <Modal content={modalContent} visible={visible_modal} postAction={this.props.postAction} hideModal={()=>this.setState({visible_modal:false})}/>
                 <Content>
                     {loading?
                         <View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={50} type='Arc' color='#757575'/></View>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})

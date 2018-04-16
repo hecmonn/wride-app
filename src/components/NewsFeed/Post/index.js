@@ -49,7 +49,7 @@ class Post extends React.Component {
     render () {
         const {content,title,fname,lname,username,created_date,id,path}=this.props.wride;
         const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
-        const {navigation}=this.props;
+        const {navigation,auser}=this.props;
         const elapsed=elapsedTime(created_date);
         const name=prettyName(fname,lname);
         return(
@@ -70,7 +70,7 @@ class Post extends React.Component {
                         </Right>
                     </Left>
                 </CardItem>
-                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved})}} cardBody>
+                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id})}} cardBody>
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
                         <Text>{content}</Text>

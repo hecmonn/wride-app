@@ -13,14 +13,44 @@ class ModalPost extends React.Component {
             name:null,
             created_date:null,
             shares_cnt:null,
-            likes_cnt:null
+            likes_cnt:null,
+            liked: null,
+            shared:null,
+            saved: null,
+            id:null
         }
     }
     componentWillReceiveProps(nextProps){
-        if(this.props.content!==nextProps.content){
-            console.log('NextProps: ',nextProps.content);
-            this.setState({...nextProps.content})
-        }
+        if(this.props.content!==nextProps.content) this.setState({...nextProps.content})
+    }
+
+    actionPost=(action)=>{
+        const {likes_cnt,shares_cnt,saved,id,username,auser,liked,shared}=this.state;
+        this.props.postAction({id,auser,action,liked,shared,saved})
+        .then(r=>{
+            switch(r.data.wydn){
+                case 'liked':
+                    this.setState({liked:1,likes_cnt:likes_cnt+1});
+                    break;
+                case 'shared':
+                    this.setState({shared:1,shares_cnt:shares_cnt+1});
+                    break;
+                case 'saved':
+                    this.setState({saved:1});
+                    break;
+                case 'unliked':
+                    this.setState({liked:0,likes_cnt:likes_cnt-1});
+                    break;
+                case 'unshared':
+                    this.setState({shared:0,shares_cnt:shares_cnt-1});
+                    break;
+
+                case 'unsaved':
+                    this.setState({saved:0});
+                    break;
+                default: this.setState({liked,shared,saved});
+            }
+        });
     }
     render () {
         const {title,content,username,name,created_date,shares_cnt,likes_cnt,liked,saved,shared}=this.state;
@@ -47,8 +77,8 @@ class ModalPost extends React.Component {
                             </Header>
                             <ScrollView style={{backgroundColor:'white',minHeight:'20%',maxHeight:'80%'}}>
                                 <View style={{margin:10}}>
-                                    <Text style={{fontSize:30,fontWeight:'bold'}}>{title}</Text>
-                                    <Text>{content}</Text>
+                                    <Text style={{fontSize:30,fontWeight:'bold',marginBottom: 10}}>{title}</Text>
+                                    <Text style={{marginBottom: 10}}>{content}</Text>
                                 </View>
                             </ScrollView>
                             <View style={{justifyContent:'center',alignItems:'center'}}>
