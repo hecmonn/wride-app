@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {View,ScrollView,Image} from 'react-native';
 import {savePost} from '../../actions/editor';
-import {Header,Left,Body,Right,Icon,Button,Text} from 'native-base';
+import {Header,Left,Body,Right,Icon,Button,Text,CheckBox,ListItem} from 'native-base';
 import TagInput from '@cutii/react-native-tag-input';
 import ImagePicker from 'react-native-image-picker';
+import Spinner from 'react-native-spinkit';
 
 class Publish extends React.Component {
     constructor(props){
@@ -15,7 +16,8 @@ class Publish extends React.Component {
             emails:[],
             text:'Add a tag',
             uri:null,
-            loading:false
+            loading:false,
+            anonymous: false
         }
     }
     onImageChange=(r)=>{
@@ -53,23 +55,17 @@ class Publish extends React.Component {
     }
 
     handleSubmit(draft_p){
-		const {title,content,draft_redirector,id,username,tagsSelected}=this.state;
+		const {title,content,draft_redirector,id,username,tagsSelected,anonymous}=this.state;
 		const draft=draft_p?1:0;
         this.setState({loading:true})
-		this.props.savePost({content,title,username,draft,draft_redirector,id,tagsSelected})
+		this.props.savePost({content,title,username,draft,draft_redirector,id,anonymous,tagsSelected})
         .then(r=>{
-            if(r.data.submitted) this.props.navigation.navigate('Root');
+            this.setState({loading:false});
+            console.log(r.data);
+            if(r.data.saved_post) this.props.navigation.navigate('Root');
         });
 	}
 
-    handleDelete = index => {
-        let tagsSelected = this.state.tagsSelected;
-        tagsSelected.splice(index, 1);
-        this.setState({ tagsSelected });
-    }
-    handleAddition = suggestion => {
-        this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
-    }
     componentWillMount() {
         const {title,content,draft_p,draft_redirector}=this.props.navigation.state.params;
         this.setState({...this.props.navigation.state.params});
@@ -77,8 +73,7 @@ class Publish extends React.Component {
 
     render () {
         const {navigation}=this.props;
-        const {title,uri}=this.state;
-        console.log(this.state.tagsSelected)
+        const {title,uri,anonymous,loading}=this.state;
         return(
             <View>
                 <Header style={{backgroundColor:'white'}}>
@@ -91,13 +86,16 @@ class Publish extends React.Component {
                         <Text note>Inspire Inspiration</Text>
                     </Body>
                     <Right>
-                        <Button transparent small onPress={()=>{{this.handleSubmit(0)}}}>
-                            <Text style={{color:'#cfc080',fontWeight:'bold',fontSize:18}}>Post</Text>
-                        </Button>
+                        {!loading?
+                            <Button transparent small onPress={()=>{{this.handleSubmit(0)}}}>
+                                <Text style={{color:'#cfc080',fontWeight:'bold',fontSize:18}}>Post</Text>
+                            </Button>:
+                            <Spinner isVisible={loading} size={20} type='Arc' color='#757575'/>
+                        }
                     </Right>
                 </Header>
                 <View style={{margin: 15}}>
-                    <Text style={{fontSize:22,fontWeight:'bold'}}>{title}</Text>
+                    <Text style={{fontSize:28,fontWeight:'bold'}}>{title}</Text>
 
                     {uri ?
                         <View style={{margin:10}}>
@@ -123,6 +121,13 @@ class Publish extends React.Component {
                             maxHeight={300}
                         />
                     </View>
+                    <ListItem style={{marginBottom:5}}>
+                        <CheckBox checked={anonymous} color="#757575" onPress={()=>this.setState({anonymous:!anonymous})}/>
+                        <Body>
+                            <Text>Remain anonymous?</Text>
+                        </Body>
+                    </ListItem>
+                    <Text note style={{marginBottom:10}}>If you choose to stay anonymous this post will be shown to your followers, but without your real username</Text>
                 </View>
 
 

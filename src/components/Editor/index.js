@@ -11,7 +11,7 @@ class Editor extends React.Component {
 		this.state={
 			title: null,
 			content: null,
-			draft_redirector:0,
+			draft_redirector: 0,
 			id: null
 		}
 	}
@@ -92,9 +92,9 @@ class Editor extends React.Component {
 							value={title}
 						/>
 					</Item>
-					<Item style={{borderWidth:0}}>
+					<Item>
 						<Input
-							style={{fontSize:24}}
+							style={{fontSize:24,padding: 5}}
 							multiline={true}
 							onChangeText={(content) => this.setState({content})}
 							value={content}
