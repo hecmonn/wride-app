@@ -46,7 +46,6 @@ class Editor extends React.Component {
 				'Changes not saved',
 				'Do you want to save on drafts?',
 				[
-
 					{text:'Yes',onPress:()=>this.saveDraft(1),style:'OK Pressed'},
 					{text:'No',onPress:()=>this.props.navigation.goBack()},
 					{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},

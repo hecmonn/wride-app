@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {View,ScrollView,Image} from 'react-native';
-import {savePost} from '../../actions/editor';
+import {savePost,postImage} from '../../actions/editor';
 import {Header,Left,Body,Right,Icon,Button,Text,CheckBox,ListItem} from 'native-base';
 import TagInput from '@cutii/react-native-tag-input';
 import ImagePicker from 'react-native-image-picker';
 import Spinner from 'react-native-spinkit';
+import isEmpty from 'is-empty';
 
 class Publish extends React.Component {
     constructor(props){
@@ -55,14 +56,24 @@ class Publish extends React.Component {
     }
 
     handleSubmit(draft_p){
-		const {title,content,draft_redirector,id,username,tagsSelected,anonymous}=this.state;
+        console.log('HS Props: ',this.props);
+		const {title,content,draft_redirector,id,username,tagsSelected,anonymous,uri}=this.state;
 		const draft=draft_p?1:0;
+
         this.setState({loading:true})
 		this.props.savePost({content,title,username,draft,draft_redirector,id,anonymous,tagsSelected})
         .then(r=>{
-            this.setState({loading:false});
             console.log(r.data);
-            if(r.data.saved_post) this.props.navigation.navigate('Root');
+            if(!isEmpty(uri)){
+                this.props.postImage({uri,wid:r.data.wid})
+                .then(r=>{
+                    this.setState({loading:false});
+                    console.log('Response from postImage: ',r);
+                    if(r.data.uploaded) this.props.navigation.navigate('Root');
+                });
+            } else {
+                if(r.data.saved_post) this.props.navigation.navigate('Root');
+            }
         });
 	}
 
@@ -143,4 +154,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{savePost})(Publish);
+export default connect(mapStateToProps,{savePost,postImage})(Publish);

@@ -10,6 +10,8 @@ let editor= (state=defaultState,action={})=>{
             return {
                 ...action.payload
             };
+        case 'SAVE_IMAGE_POST':
+            return action.payload;
         default: return state;
     }
 }

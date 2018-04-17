@@ -7,14 +7,13 @@ export function setPostSettingsImage(data){
 }
 
 export function postSettingsImage(data){
-    console.log(data,'---from settings actions');
     let date=df(new Date(),'ddmmyyyy');
     return dispatch=>{
         const photoUpload=new FormData();
         photoUpload.append('photo',{
             uri: data.uri,
             type: 'image/jpeg',
-            name: data.username+'_'+date+'.jpeg'
+            name: 'profile_'+data.username+'_'+date+'.jpeg'
         });
         photoUpload.append('username',data.username);
         return fetch('http://localhost:5005/api/upload-avatar',{
@@ -23,8 +22,6 @@ export function postSettingsImage(data){
         })
         .then(res=>res.json())
         .then(data=>dispatch(setPostSettingsImage(data)))
-
-
     }
 }
 
