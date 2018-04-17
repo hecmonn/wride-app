@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
-import {View,ScrollView,Modal,TouchableHighlight} from 'react-native';
+import {View,ScrollView,Modal,TouchableHighlight,Image} from 'react-native';
 import {Button,Text,Header,Footer,Icon,Left,Right,Body,Content} from 'native-base';
+import isEmpty from 'is-empty';
 
 class ModalPost extends React.Component {
     constructor(props){
@@ -53,7 +54,8 @@ class ModalPost extends React.Component {
         });
     }
     render () {
-        const {title,content,username,name,created_date,shares_cnt,likes_cnt,liked,saved,shared}=this.state;
+        const {title,content,username,name,created_date,shares_cnt,likes_cnt,liked,saved,shared,post_path}=this.state;
+        console.log('Post_path from modal: ',post_path)
         return(
             <View>
                 <Modal
@@ -78,6 +80,7 @@ class ModalPost extends React.Component {
                             <ScrollView style={{backgroundColor:'white',minHeight:'20%',maxHeight:'80%'}}>
                                 <View style={{margin:10}}>
                                     <Text style={{fontSize:30,fontWeight:'bold',marginBottom: 10}}>{title}</Text>
+                                    {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:250}} resizeMode='cover' />}
                                     <Text style={{marginBottom: 10}}>{content}</Text>
                                 </View>
                             </ScrollView>

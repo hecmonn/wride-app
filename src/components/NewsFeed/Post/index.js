@@ -4,6 +4,7 @@ import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H
 import {prettyName,elapsedTime} from '../../../../lib/helpers';
 //import {Select,Option} from 'react-native-select-list'
 import ModalDropdown from 'react-native-modal-dropdown';
+import isEmpty from 'is-empty';
 class Post extends React.Component {
     constructor(props){
         super(props);
@@ -47,7 +48,8 @@ class Post extends React.Component {
         });
     }
     render () {
-        const {content,title,fname,lname,username,created_date,id,path}=this.props.wride;
+        const {content,title,fname,lname,username,created_date,id,path,post_path}=this.props.wride;
+        console.log(post_path);
         const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
         const {navigation,auser}=this.props;
         const elapsed=elapsedTime(created_date);
@@ -70,9 +72,10 @@ class Post extends React.Component {
                         </Right>
                     </Left>
                 </CardItem>
-                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id})}} cardBody>
+                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id,post_path})}} cardBody>
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
+                        {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250}} resizeMode='cover' />}
                         <Text>{content}</Text>
                     </Content>
                 </CardItem>
