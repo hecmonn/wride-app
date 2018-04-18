@@ -138,7 +138,7 @@ class Settings extends React.Component {
         const {navigation}=this.props;
         const {hideRoll,content,tb_changed,original,loading_image}=this.state;
         let checked_private=tb_changed.private_?true:false;
-        console.log(original.path);
+
         return(
             <Container>
                 <Header>
@@ -173,7 +173,7 @@ class Settings extends React.Component {
                             </Body>
                             <Right />
                         </ListItem>
-                        <ListItem>
+                        <ListItem style={{borderBottomWidth:0}}>
                             <Item floatingLabel>
                                 <Label>Name</Label>
                                 <Input
@@ -182,7 +182,7 @@ class Settings extends React.Component {
                                 />
                             </Item>
                         </ListItem>
-                        <ListItem>
+                        <ListItem style={{borderBottomWidth:0}}>
                             <Item floatingLabel>
                                 <Label>Username</Label>
                                 <Input
@@ -190,10 +190,11 @@ class Settings extends React.Component {
         							onChangeText={(username) => this.setState({changed:{...this.state.changed,username},tb_changed:{...this.state.tb_changed,username}})}
                                     autoCorrect={false}
                                     autoCapitalize='none'
+                                    editable={false}
                                 />
                             </Item>
                         </ListItem>
-                        <ListItem>
+                        <ListItem style={{borderBottomWidth:0}}>
                             <Item floatingLabel>
                                 <Label>Bio</Label>
                                 <Input
@@ -204,7 +205,7 @@ class Settings extends React.Component {
                             </Item>
                         </ListItem>
                         <ListItem last>
-                            <Button transparent onPress={this.logout}>
+                            <Button transparent onPress={()=>navigation.navigate('ChangePsswd')}>
                                 <Text>Change password</Text>
                             </Button>
                         </ListItem>

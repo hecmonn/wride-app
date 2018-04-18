@@ -118,7 +118,7 @@ class Login extends Component {
                     <Text style={{color:'#eeeeee',fontWeight:'bold',fontSize:100}}>Wride.</Text>
                     <Form>
                         <List>
-                            <ListItem>
+                            <ListItem style={{borderBottomWidth:0}}>
                                 <Item floatingLabel>
                                     <Label style={{color:'#eeeeee'}}>Username</Label>
                                     <Input
@@ -130,7 +130,7 @@ class Login extends Component {
                                     />
                                 </Item>
                             </ListItem>
-                            <ListItem>
+                            <ListItem style={{borderBottomWidth:0}}>
                                 <Item floatingLabel>
                                     <Label style={{color:'#eeeeee'}}>Password</Label>
                                     <Input

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import {View} from 'react-native';
 import {Content,Left,Right,Body,Title,Thumbnail,Text,H1,Button,Icon,Container} from 'native-base';
 import {Grid,Col,Row} from 'react-native-easy-grid';
 import ImageModal from 'react-native-image-view';
@@ -29,7 +30,7 @@ class Who extends React.Component {
 
         const images=[{source:{uri:`http://localhost:5005/${this.state.path}`}}];
         return(
-            <Content style={{padding:10,paddingTop:15,backgroundColor:'white'}}>
+            <View style={{padding:10,paddingTop:15,backgroundColor:'white',borderBottomWidth:0}}>
                 <ImageModal
                     images={[{source:{uri:`http://localhost:5005/${path}`}}]}
                     imageIndex={0}
@@ -55,7 +56,7 @@ class Who extends React.Component {
                         </Col>
                     </Row>
                 </Grid>
-            </Content>
+            </View>
         )
     }
 }

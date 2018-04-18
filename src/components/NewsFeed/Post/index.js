@@ -49,7 +49,6 @@ class Post extends React.Component {
     }
     render () {
         const {content,title,fname,lname,username,created_date,id,path,post_path}=this.props.wride;
-        console.log(post_path);
         const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
         const {navigation,auser}=this.props;
         const elapsed=elapsedTime(created_date);
@@ -76,7 +75,7 @@ class Post extends React.Component {
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
                         {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250}} resizeMode='cover' />}
-                        <Text>{content}</Text>
+                        <Text style={{fontSize:18}}>{content}</Text>
                     </Content>
                 </CardItem>
                 <CardItem>

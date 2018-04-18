@@ -55,7 +55,6 @@ class ModalPost extends React.Component {
     }
     render () {
         const {title,content,username,name,created_date,shares_cnt,likes_cnt,liked,saved,shared,post_path}=this.state;
-        console.log('Post_path from modal: ',post_path)
         return(
             <View>
                 <Modal
