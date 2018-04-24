@@ -1,23 +1,26 @@
 import React, { PropTypes } from 'react'
 import {Card,CardItem,Left,Body,Right,Text} from 'native-base';
 import {Image} from 'react-native';
+import isEmpty from 'is-empty';
+
 class InspirationCard extends React.Component {
     render () {
-        const {content}=this.props.item.item;
+        const {content,post_path,username,title}=this.props.item.item;
         return (
             <Card>
                 <CardItem>
                     <Left>
-                        <Text style={{fontWeight:'bold'}}>{content}</Text>
+                        <Text style={{fontWeight:'bold'}}>{title}</Text>
                     </Left>
                 </CardItem>
                 <CardItem cardBody>
-                    <Image source={{uri: 'http://localhost:5005/dummy.png'}} style={{height: 150, width: null, flex: 1}}/>
+                    {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:250}} resizeMode='cover' />}
+                    <Text style={{padding: 5}}>{content}</Text>
                 </CardItem>
                 <CardItem>
                     <Left />
                     <Right>
-                        <Text note>hecmonn</Text>
+                        <Text note>{username}</Text>
                     </Right>
                 </CardItem>
             </Card>

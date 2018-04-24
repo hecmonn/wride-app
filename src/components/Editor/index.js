@@ -91,7 +91,7 @@ class Editor extends React.Component {
 							value={title}
 						/>
 					</Item>
-					<Item>
+					<Item style={{borderBottomWidth:0}}>
 						<Input
 							style={{fontSize:24,padding: 5}}
 							multiline={true}

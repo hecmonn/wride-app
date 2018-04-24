@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {ScrollView,View,FlatList,RefreshControl} from 'react-native';
 import {Container,Header,Content,Text,Title,Icon,Item,Input,H1} from 'native-base';
-import {getSearch} from '../../actions/search';
+import {getSearch,getInspiration,getInspirationCnt} from '../../actions/search';
 import isEmpty from 'is-empty';
 import Tabs from './Tabs';
 import InfiniteScroll from 'react-native-infinite-scroll';
@@ -17,6 +17,8 @@ class Inspiration extends React.Component {
             username:'',
             people:[],
             posts:[],
+            wrides:[],
+            posts_cnt: null,
             refreshing: false
         }
         this._onRefresh=this._onRefresh.bind(this);
@@ -25,6 +27,15 @@ class Inspiration extends React.Component {
     componentWillMount() {
         const {username}=this.props.auth;
         this.setState({username});
+        this.props.getInspiration({username,offset:0})
+        .then(r=>{
+            console.log('Insp Res: ',r)
+            this.setState({wrides:r.data.wrides});
+            this.props.getInspirationCnt({username})
+            .then(r=>{
+                this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+            });
+        });
     }
     onQueryChange=(query)=>{
         const {username}=this.state;
@@ -36,7 +47,7 @@ class Inspiration extends React.Component {
     _onRefresh=()=> {
         this.setState({refreshing: true});
         const{username}=this.state;
-        this.props.getHomePosts({username,offset:0})
+        this.props.getInspiration({username,offset:0})
         .then(r=>{
             this.setState({wrides:r.data.wrides,refreshing: false})
         });
@@ -48,7 +59,7 @@ class Inspiration extends React.Component {
             let pages=pagination(limit=5,page+1,posts_cnt);
             this.setState({page: page+1,loading_more:true});
             const {username}=this.state;
-            this.props.getHomePosts({username,offset:pages.nextOffset})
+            this.props.getInspiration({username,offset:pages.nextOffset})
             .then(r=>{
                 let rows=this.state.wrides;
                 rows.push.apply(rows,r.data.wrides);
@@ -67,7 +78,7 @@ class Inspiration extends React.Component {
                 keyExtractor={this._keyExtractor}
                 numColumns={2}
                 getHeightForItem={() => 1}
-                data={[{title:1,content:'A fool who plays it cool',username:'hecmonn'},{title:2,content:'A fool who plays it cool',username:'hecmonn'},{title:3,content:'A fool Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',username:'hecmonn'},{title:4,content:'A fool who plays it cool',username:'hecmonn'},{title:7,content:'A fool who plays it cool',username:'hecmonn'},{title:5,content:'A fool who plays it cool',username:'hecmonn'},{title:6,content:'A fool who plays it cool',username:'hecmonn'},]}
+                data={this.state.wrides}
                 refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}
@@ -116,4 +127,4 @@ let mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getSearch})(Inspiration);
+export default connect(mapStateToProps,{getSearch,getInspiration,getInspirationCnt})(Inspiration);
