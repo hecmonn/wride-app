@@ -15,7 +15,6 @@ class InspirationCard extends React.Component {
                 </CardItem>
                 <CardItem cardBody>
                     {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:250}} resizeMode='cover' />}
-                    <Text style={{padding: 5}}>{content}</Text>
                 </CardItem>
                 <CardItem>
                     <Left />

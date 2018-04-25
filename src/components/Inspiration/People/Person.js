@@ -3,15 +3,16 @@ import {prettyName} from '../../../../lib/helpers';
 import {List,ListItem,Left,Body,Right,Thumbnail,Text} from 'native-base';
 class Person extends React.Component {
     render () {
-        const {fname,lname,username}=this.props.person;
+        const {fname,lname,username,path}=this.props.person;
         const name=prettyName(fname,lname);
         const {navigation}=this.props;
         return(
             <List>
                 <ListItem button onPress={()=>navigation.navigate('Profile',{username})} avatar>
                     <Left>
-                        <Thumbnail source={{ uri: 'http://www.ri-ipl.org/wp-content/uploads/2016/10/dummyUser-270x270.jpg' }} />
-                    </Left>
+                        <Thumbnail small source={{ uri:path!==null? `http://localhost:5005/${path}`:'http:localhost:5005/dummy.png' }} />
+
+                </Left>
                     <Body>
                         <Text>{name}</Text>
                         <Text note>{username}</Text>

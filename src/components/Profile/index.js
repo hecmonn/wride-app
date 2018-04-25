@@ -36,7 +36,7 @@ class Profile extends React.Component {
         this.props.getFollowing({username,username_param})
         .then(r=>{
             this.setState({following:r.data.following,own_profile:username==username_param,username});
-            this.props.getOwnPosts({username:username_param,offset:0})
+            this.props.getOwnPosts({username:username_param,offset:0,auser:username})
             .then(r=>{
                 this.setState({refreshing:false, wrides:r.data.wrides})
             });
@@ -45,11 +45,11 @@ class Profile extends React.Component {
 
     _onLoadMore=()=>{
         if(this.state.has_next_page){
-            const {page,posts_cnt}=this.state;
+            const {page,posts_cnt,username}=this.state;
             let pages=pagination(limit=5,page+1,posts_cnt);
             this.setState({page: page+1,loading_more:true});
             const {username_param}=this.state;
-            this.props.getOwnPosts({username:username_param,offset:pages.nextOffset})
+            this.props.getOwnPosts({username:username_param,offset:pages.nextOffset,auser:username})
             .then(r=>{
                 let rows=this.state.wrides;
                 rows.push.apply(rows,r.data.wrides);
@@ -68,7 +68,7 @@ class Profile extends React.Component {
             this.props.getProfile(username_param)
             .then(r=>{
                 this.setState({user_profile:r.data.user})
-                this.props.getOwnPosts({username:username_param,offset:0})
+                this.props.getOwnPosts({username:username_param,offset:0,auser:username})
                 .then(r=>{
                     this.setState({wrides:r.data.wrides})
                     this.props.getOwnPostsCnt(username_param)
