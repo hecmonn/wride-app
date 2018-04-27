@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import {Image} from 'react-native';
 import {Content,Left,Right,Body,Title,Icon,Text,Card,CardItem,Thumbnail,Button,H3} from 'native-base';
 import {prettyName,elapsedTime} from '../../../../lib/helpers';
-//import {Select,Option} from 'react-native-select-list'
-import ModalDropdown from 'react-native-modal-dropdown';
+import OptionsModal from '../../Modal/Options';
+import Modal from '../../Modal';
 import isEmpty from 'is-empty';
 class Post extends React.Component {
     constructor(props){
@@ -14,6 +14,7 @@ class Post extends React.Component {
             saved: this.props.wride.is_saved,
             likes_cnt: this.props.wride.likes_cnt,
             shares_cnt: this.props.wride.shares_cnt,
+            visible_modal:false
         }
     }
 
@@ -49,12 +50,14 @@ class Post extends React.Component {
     }
     render () {
         const {content,title,fname,lname,username,created_date,id,path,post_path,anonymous}=this.props.wride;
-        const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
+        const {liked,shared,saved,shares_cnt,likes_cnt,visible_modal}=this.state;
         const {navigation,auser}=this.props;
         const elapsed=elapsedTime(created_date);
         const name=prettyName(fname,lname);
         return(
             <Card>
+                <OptionsModal opts={{id,own_post:auser==username,username,auser}} visible={visible_modal} hideModal={()=>this.setState({visible_modal:false})}/>
+                
                 <CardItem>
                     <Left>
                         <Button transparent onPress={anonymous? null: ()=>navigation.navigate('Profile',{username})}>
@@ -62,10 +65,10 @@ class Post extends React.Component {
                         </Button>
                         <Body>
                             <Text>{anonymous?'Garcia Marquez':name}</Text>
-                            <Text note>{anonymous?null:`${username} ·`}  {elapsed}</Text>
+                            <Text note>{anonymous?null:`${username} · `}{elapsed}</Text>
                         </Body>
                         <Right>
-                            <Button transparent onPress={()=>console.log('show picker')}>
+                            <Button transparent onPress={()=>this.setState({visible_modal:true})}>
                                 <Icon name='ios-arrow-down' style={{color:'#757575'}} />
                             </Button>
                         </Right>
@@ -74,7 +77,7 @@ class Post extends React.Component {
                 <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id,post_path})}} cardBody>
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
-                        {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250}} resizeMode='cover' />}
+                        {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250,marginTop:5,marginBottom:5}} resizeMode='cover' />}
                         <Text style={{fontSize:18}}>{content}</Text>
                     </Content>
                 </CardItem>
