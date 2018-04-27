@@ -29,7 +29,6 @@ class Inspiration extends React.Component {
         this.setState({username});
         this.props.getInspiration({username,offset:0})
         .then(r=>{
-            console.log('Insp Res: ',r)
             this.setState({wrides:r.data.wrides});
             this.props.getInspirationCnt({username})
             .then(r=>{

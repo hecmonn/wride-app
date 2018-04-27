@@ -11,15 +11,12 @@ class Person extends React.Component {
                 <ListItem button onPress={()=>navigation.navigate('Profile',{username})} avatar>
                     <Left>
                         <Thumbnail small source={{ uri:path!==null? `http://localhost:5005/${path}`:'http:localhost:5005/dummy.png' }} />
-
                 </Left>
                     <Body>
-                        <Text>{name}</Text>
-                        <Text note>{username}</Text>
+                        <Text style={{fontWeight:'bold'}}>{username}</Text>
+                        <Text note>{name}</Text>
                     </Body>
-                    <Right>
-                        <Text note>3:43 pm</Text>
-                    </Right>
+                    <Right />
                 </ListItem>
             </List>
         )

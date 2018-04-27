@@ -48,7 +48,7 @@ class Post extends React.Component {
         });
     }
     render () {
-        const {content,title,fname,lname,username,created_date,id,path,post_path}=this.props.wride;
+        const {content,title,fname,lname,username,created_date,id,path,post_path,anonymous}=this.props.wride;
         const {liked,shared,saved,shares_cnt,likes_cnt}=this.state;
         const {navigation,auser}=this.props;
         const elapsed=elapsedTime(created_date);
@@ -57,12 +57,12 @@ class Post extends React.Component {
             <Card>
                 <CardItem>
                     <Left>
-                        <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
-                            <Thumbnail small source={{uri:path!==null? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png'}} />
+                        <Button transparent onPress={anonymous? null: ()=>navigation.navigate('Profile',{username})}>
+                            <Thumbnail small source={{uri:path!==null&&!anonymous ? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png'}} />
                         </Button>
                         <Body>
-                            <Text>{name}</Text>
-                            <Text note>{username} · {elapsed}</Text>
+                            <Text>{anonymous?'Garcia Marquez':name}</Text>
+                            <Text note>{anonymous?null:`${username} ·`}  {elapsed}</Text>
                         </Body>
                         <Right>
                             <Button transparent onPress={()=>console.log('show picker')}>
