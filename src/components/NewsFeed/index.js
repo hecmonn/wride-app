@@ -6,7 +6,6 @@ import {postAction} from '../../actions/newsfeed';
 import Post from './Post';
 import isEmpty from 'is-empty';
 import Spinner from 'react-native-spinkit';
-import Modal from '../Modal';
 
 class NewsFeed extends React.Component {
     constructor(props){
@@ -15,7 +14,6 @@ class NewsFeed extends React.Component {
             loading:true,
             postsReceived:false,
             wrides:[],
-            visible_modal: false
         }
     }
     componentWillReceiveProps(nextProps){
@@ -42,11 +40,8 @@ class NewsFeed extends React.Component {
         </Container>
     );
 
-    _showModal=(data)=>{
-        this.setState({modalContent:data,visible_modal:true})
-    }
     render () {
-        const {postsReceived,wrides,visible_modal,modalContent}=this.state;
+        const {postsReceived,wrides}=this.state;
         const {loading}=this.props.screenProps;
         return(
             <Container>

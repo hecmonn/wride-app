@@ -5,7 +5,7 @@ import isEmpty from 'is-empty';
 
 class InspirationCard extends React.Component {
     render () {
-        const {content,post_path,username,title}=this.props.item.item;
+        const {content,post_path,username,title,id,anonymous}=this.props.item.item;
         return (
             <Card>
                 <CardItem>
@@ -14,12 +14,12 @@ class InspirationCard extends React.Component {
                     </Left>
                 </CardItem>
                 <CardItem cardBody>
-                    {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:250}} resizeMode='cover' />}
+                    {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:200,width:'100%'}} resizeMode='cover' />}
                 </CardItem>
                 <CardItem>
                     <Left />
                     <Right>
-                        <Text note>{username}</Text>
+                        <Text note>{anonymous?'GGM':username}</Text>
                     </Right>
                 </CardItem>
             </Card>
