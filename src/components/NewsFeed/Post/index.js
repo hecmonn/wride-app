@@ -14,7 +14,8 @@ class Post extends React.Component {
             saved: this.props.wride.is_saved,
             likes_cnt: this.props.wride.likes_cnt,
             shares_cnt: this.props.wride.shares_cnt,
-            visible_modal:false
+            visible_modal:false,
+            post_visible_modal:false
         }
     }
 
@@ -50,14 +51,15 @@ class Post extends React.Component {
     }
     render () {
         const {content,title,fname,lname,username,created_date,id,path,post_path,anonymous}=this.props.wride;
-        const {liked,shared,saved,shares_cnt,likes_cnt,visible_modal}=this.state;
+        const {liked,shared,saved,shares_cnt,likes_cnt,visible_modal,post_visible_modal}=this.state;
         const {navigation,auser}=this.props;
+        const modalContent={title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id,post_path};
         const elapsed=elapsedTime(created_date);
         const name=prettyName(fname,lname);
         return(
             <Card>
                 <OptionsModal opts={{id,own_post:auser==username,username,auser}} visible={visible_modal} hideModal={()=>this.setState({visible_modal:false})}/>
-                
+                <Modal content={modalContent} visible={post_visible_modal} actionPost={this.actionPost} postAction={this.props.postAction} hideModal={()=>this.setState({post_visible_modal:false})} />
                 <CardItem>
                     <Left>
                         <Button transparent onPress={anonymous? null: ()=>navigation.navigate('Profile',{username})}>
@@ -74,7 +76,7 @@ class Post extends React.Component {
                         </Right>
                     </Left>
                 </CardItem>
-                <CardItem button onPress={()=>{this.props.showModal({title,content,name,username,created_date,path,likes_cnt,shares_cnt,saved,liked,shared,auser,id,post_path})}} cardBody>
+                <CardItem button onPress={()=>this.setState({post_visible_modal:true})} cardBody>
                     <Content>
                         <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
                         {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250,marginTop:5,marginBottom:5}} resizeMode='cover' />}

@@ -50,7 +50,6 @@ class NewsFeed extends React.Component {
         const {loading}=this.props.screenProps;
         return(
             <Container>
-                <Modal content={modalContent} visible={visible_modal} postAction={this.props.postAction} hideModal={()=>this.setState({visible_modal:false})}/>
                 <Content>
                     {loading?
                         <View style={styles.container}><Spinner style={styles.spinner} isVisible={loading} size={50} type='Arc' color='#757575'/></View>: isEmpty(this.props.screenProps.wrides)?this.empty:this.wridesList({posts:this.props.screenProps.wrides})
