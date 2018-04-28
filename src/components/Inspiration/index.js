@@ -13,8 +13,8 @@ class Inspiration extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            query:'',
-            username:'',
+            query:null,
+            username:null,
             people:[],
             posts:[],
             wrides:[],
@@ -72,22 +72,15 @@ class Inspiration extends React.Component {
         return (
             <MasonryList
                 horizontal={false}
-                onLoadMoreAsync={this._onLoadMore}
-                distanceFromEnd={10}
+                onEndReached={this._onLoadMore}
                 keyExtractor={this._keyExtractor}
                 numColumns={2}
                 getHeightForItem={() => 1}
                 data={this.state.wrides}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        onRefresh={this._onRefresh}
-                    />
-                }
-                renderItem={(item)=><InspirationCard item={item}/>}
-            >
-
-        </MasonryList>
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+                renderItem={(item)=><InspirationCard auser={this.state.username} item={item}/>}
+            />
         )
     }
     render () {
