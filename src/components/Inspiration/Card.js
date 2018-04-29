@@ -53,9 +53,9 @@ class InspirationCard extends React.Component {
     }
 
     render () {
-        const {anonymous,id,title,post_path,username}=this.props.item.item;
+        const {anonymous,id,title,post_path,username,content}=this.props.item.item;
         const {post_visible_modal,visible_modal,liked,shared,saved,likes_cnt,shares_cnt}=this.state;
-        const modalContent={id,title,post_path,username,anonymous,liked,shared,saved,likes_cnt,shares_cnt};
+        const modalContent={id,title,post_path,content,username,anonymous,liked,shared,saved,likes_cnt,shares_cnt};
         const {auser}=this.props;
         return (
             <Card>
