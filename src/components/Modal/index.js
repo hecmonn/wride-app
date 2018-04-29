@@ -27,6 +27,7 @@ class ModalPost extends React.Component {
 
     render () {
         const {title,content,username,name,created_date,shares_cnt,likes_cnt,liked,saved,shared,post_path}=this.state;
+        console.log('Liked: ',liked)
         return(
             <View>
                 <Modal

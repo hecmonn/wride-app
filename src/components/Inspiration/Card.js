@@ -24,7 +24,7 @@ class InspirationCard extends React.Component {
     actionPost=(action)=>{
         const {id,username}=this.props.item.item;
         const {auser}=this.props;
-        const{liked,shared,likes_cnt,shares_cnt,saved}=this.props.item.item;
+        const{liked,shared,likes_cnt,shares_cnt,saved}=this.state;
         this.props.postAction({id,auser,action,liked,shared,saved})
         .then(r=>{
             switch(r.data.wydn){
@@ -55,7 +55,7 @@ class InspirationCard extends React.Component {
     render () {
         const {anonymous,id,title,post_path,username}=this.props.item.item;
         const {post_visible_modal,visible_modal,liked,shared,saved,likes_cnt,shares_cnt}=this.state;
-        const modalContent={...this.props.item.item,liked,shared,saved,likes_cnt,shares_cnt};
+        const modalContent={id,title,post_path,username,anonymous,liked,shared,saved,likes_cnt,shares_cnt};
         const {auser}=this.props;
         return (
             <Card>
