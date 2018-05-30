@@ -46,7 +46,7 @@ class Profile extends React.Component {
     _onLoadMore=()=>{
         if(this.state.has_next_page){
             const {page,posts_cnt,username}=this.state;
-            let pages=pagination(limit=5,page+1,posts_cnt);
+            let pages=pagination(limit=30,page+1,posts_cnt);
             this.setState({page: page+1,loading_more:true});
             const {username_param}=this.state;
             this.props.getOwnPosts({username:username_param,offset:pages.nextOffset,auser:username})

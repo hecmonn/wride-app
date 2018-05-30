@@ -43,8 +43,8 @@ class ModalPost extends React.Component {
                                 <Left />
                                 <Body />
                                 <Right>
-                                    <TouchableHighlight transparent onPress={() => {this.props.hideModal()}} style={{backgroundColor:'white',borderRadius:100,width:50,height:50,alignItems:'center',justifyContent:'center'}}>
-                                        <Icon name='ios-close' style={{color:'black'}} />
+                                    <TouchableHighlight transparent onPress={() => {this.props.hideModal()}} style={{alignItems:'center',justifyContent:'center'}}>
+                                        <Icon name='ios-close' style={{color:'white'}} />
                                     </TouchableHighlight>
                                 </Right>
                             </Header>

@@ -1,6 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
+import {connect} from 'react-redux';
 import {View,Modal,TouchableHighlight} from 'react-native';
-import {List,ListItem,Left,Body,Right,Thumbnail,Text,Icon,Header} from 'native-base';
+import {List,ListItem,Left,Body,Right,Thumbnail,Text,Icon,Header,Toast} from 'native-base';
+import {blockUser,deletePost,reportPost} from '../../actions/options';
+
 
 class ModalOptions extends React.Component {
     constructor(props){
@@ -9,9 +12,43 @@ class ModalOptions extends React.Component {
             own_post:false
         }
     }
+    blockUser=()=>{
+        const {username,auser,id}=this.props.opts;
+        this.props.blockUser({username,auser,id})
+        .then(r=>{
+            Toast.show({
+                text:'User blocked succesfully',
+                position:'bottom',
+                buttonText:'Okay'
+            });
+        })
+    }
+    deletePost=()=>{
+        const {id}=this.props.opts;
+        this.props.deletePost({id})
+        .then(r=>{
+            Toast.show({
+                text:'Post deleted succesfully',
+                position:'bottom',
+                buttonText:'Okay'
+            });
+        })
+    }
+    reportPost=()=>{
+        const {id,auser}=this.props.opts;
+        this.props.reportPost({id,auser})
+        .then(r=>{
+            console.log('Report res: ',r);
+            Toast.show({
+                text:'Thanks! We will take a look',
+                position:'bottom',
+                buttonText:'Okay'
+            });
+        })
+    }
     componentWillMount() {
         const {own_post,username,auser,id}=this.props.opts;
-        this.setState({own_post:this.props.op})
+        this.setState({own_post:this.props.op});
     }
     componentWillReceiveProps(nextProps){
         if(this.props.ownPost!==nextProps.ownPost){
@@ -35,14 +72,14 @@ class ModalOptions extends React.Component {
                             <Left />
                             <Body />
                             <Right>
-                                <TouchableHighlight transparent onPress={() => {this.props.hideModal()}} style={{backgroundColor:'white',borderRadius:100,width:50,height:50,alignItems:'center',justifyContent:'center'}}>
-                                    <Icon name='ios-close' style={{color:'black'}} />
+                                <TouchableHighlight transparent onPress={() => {this.props.hideModal()}} style={{alignItems:'center',justifyContent:'center'}}>
+                                    <Icon name='ios-close' style={{color:'white'}} />
                                 </TouchableHighlight>
                             </Right>
                         </Header>
                         <List style={{backgroundColor:'white'}}>
                             {own_post &&
-                                <ListItem button onPress={()=>conosole.log('clicked delete')} avatar>
+                                <ListItem button onPress={()=>this.deletePost()} avatar>
                                     <Left>
                                         <Icon name='ios-close' style={{color:'#757575'}} />
                                     </Left>
@@ -52,33 +89,28 @@ class ModalOptions extends React.Component {
                                     <Right />
                                 </ListItem>
                             }
-                            <ListItem button onPress={()=>console.log('clciked second options')} avatar>
-                                <Left>
-                                    <Icon name='ios-close' style={{color:'#757575'}} />
-                                </Left>
-                                <Body>
-                                    <Text>Delete2</Text>
-                                </Body>
-                                <Right />
-                            </ListItem>
-                            <ListItem button onPress={()=>console.log('clciked second options')} avatar>
-                                <Left>
-                                    <Icon name='ios-close' style={{color:'#757575'}} />
-                                </Left>
-                                <Body>
-                                    <Text>Report</Text>
-                                </Body>
-                                <Right />
-                            </ListItem>
-                            <ListItem button onPress={()=>console.log('clciked second options')} avatar>
-                                <Left>
-                                    <Icon name='ios-close' style={{color:'#757575'}} />
-                                </Left>
-                                <Body>
-                                    <Text>Block user</Text>
-                                </Body>
-                                <Right />
-                            </ListItem>
+                            {!own_post &&
+                                <ListItem button onPress={()=>this.reportPost()} avatar>
+                                    <Left>
+                                        <Icon name='ios-close' style={{color:'#757575'}} />
+                                    </Left>
+                                    <Body>
+                                        <Text>Report</Text>
+                                    </Body>
+                                    <Right />
+                                </ListItem>
+                            }
+                            {!own_post &&
+                                <ListItem button onPress={()=>this.blockUser()} avatar>
+                                    <Left>
+                                        <Icon name='ios-close' style={{color:'#757575'}} />
+                                    </Left>
+                                    <Body>
+                                        <Text>Block user</Text>
+                                    </Body>
+                                    <Right />
+                                </ListItem>
+                            }
                             <ListItem button onPress={()=>console.log('clciked second options')} avatar>
                                 <Left>
                                     <Icon name='ios-close' style={{color:'#757575'}} />
@@ -96,4 +128,11 @@ class ModalOptions extends React.Component {
     }
 }
 
-export default ModalOptions;
+let mapStateToProps=state=>{
+    return{
+        options: state.options,
+        auth: state.auth._55
+    }
+}
+
+export default connect(mapStateToProps,{blockUser,deletePost,reportPost})(ModalOptions);

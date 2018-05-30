@@ -12,6 +12,7 @@ import Collection from './Collection';
 import AuthLoadingScreen from  './AuthLoadingScreen';
 import Publish from './Editor/Publish';
 import ChangePsswd from './Profile/Settings/ChangePsswd';
+import Blocked from './Profile/Settings/Blocked';
 
 const AppStack=StackNavigator({
     Root: {screen: RootNavigator},
@@ -22,6 +23,7 @@ const AppStack=StackNavigator({
     Post:{screen:Post},
     Drafts:{screen:Drafts},
     ChangePsswd:{screen:ChangePsswd},
+    Blocked:{screen:Blocked},
     Collection:{screen:Collection},
 },{
     initialRouteName: 'Root',

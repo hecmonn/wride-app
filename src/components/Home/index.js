@@ -72,7 +72,7 @@ class Home extends React.Component {
     _onLoadMore=()=>{
         if(this.state.has_next_page){
             const {page,posts_cnt}=this.state;
-            let pages=pagination(limit=5,page+1,posts_cnt);
+            let pages=pagination(limit=30,page+1,posts_cnt);
             this.setState({page: page+1,loading_more:true});
             const {username}=this.state;
             this.props.getHomePosts({username,offset:pages.nextOffset})

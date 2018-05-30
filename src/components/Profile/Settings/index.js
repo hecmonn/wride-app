@@ -3,8 +3,7 @@ import {AsyncStorage,Image,View} from 'react-native';
 import {connect} from 'react-redux';
 import {Container,Header,Content,Body,Title,Text,Left,Icon,Button,Right,Thumbnail,List,ListItem,Item,Input,Label,CheckBox,Spinner,Toast} from 'native-base';
 import {postSettingsImage,postSettings} from '../../../actions/settings';
-import {validateAuth} from '../../../actions/auth';
-import {logout} from '../../../actions/auth';
+import {validateAuth,logout} from '../../../actions/auth';
 import ImagePicker from 'react-native-image-picker';
 import isEmpty from 'is-empty';
 import jwt from 'react-native-jwt-io';
@@ -220,6 +219,11 @@ class Settings extends React.Component {
                         </ListItem>
                         <ListItem>
                             <Text note>When your account is private only the users you approve to follow you will be able to see the content in your profile.</Text>
+                        </ListItem>
+                        <ListItem last>
+                            <Button transparent onPress={()=>navigation.navigate('Blocked',{username:tb_changed.username})}>
+                                <Text>Blocked users</Text>
+                            </Button>
                         </ListItem>
                         <ListItem>
                             <Button transparent onPress={this.logout}>

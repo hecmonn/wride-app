@@ -13,6 +13,7 @@ import collection from './collection';
 import fb from './fb';
 import modal from './modal';
 import drafts from './drafts';
+import options from './options';
 
 export const rootReducer=combineReducers({
     users,
@@ -28,5 +29,6 @@ export const rootReducer=combineReducers({
     collection,
     fb,
     modal,
-    drafts
+    drafts,
+    options
 });
