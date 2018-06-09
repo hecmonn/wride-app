@@ -126,7 +126,7 @@ class Home extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>W</Title>
+                        <Title style={{fontFamily:'Cochin'}}>W</Title>
                     </Body>
                     <Right>
                         <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>

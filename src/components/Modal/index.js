@@ -50,9 +50,9 @@ class ModalPost extends React.Component {
                             </Header>
                             <ScrollView style={{backgroundColor:'white',minHeight:'20%',maxHeight:'80%'}}>
                                 <View style={{margin:10}}>
-                                    <Text style={{fontSize:30,fontWeight:'bold',marginBottom: 10}}>{title}</Text>
+                                    <Text style={{fontSize:30,fontWeight:'bold',marginBottom: 10,fontFamily:'Cochin'}}>{title}</Text>
                                     {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{marginBottom:10,height:250}} resizeMode='cover' />}
-                                    <Text style={{marginBottom: 10}}>{content}</Text>
+                                    <Text style={{marginBottom: 10,fontFamily:'Cochin'}}>{content}</Text>
                                 </View>
                             </ScrollView>
                             <View style={{justifyContent:'center',alignItems:'center'}}>

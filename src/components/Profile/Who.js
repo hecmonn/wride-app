@@ -46,7 +46,7 @@ class Who extends React.Component {
                         <Col size={3}>
                             <H1>{name}</H1>
                             <Text note>{username}</Text>
-                            {bio&& <Text style={{fontSize: 13, paddingTop: 2, paddingBottom: 2}}>{bio}</Text> }
+                            {bio&& <Text style={{fontSize: 15, paddingTop: 2, paddingBottom: 2, fontFamily:'Cochin'}}>{bio}</Text> }
                         </Col>
                     </Row>
                     <Row>

@@ -66,8 +66,8 @@ class Post extends React.Component {
                             <Thumbnail small source={{uri:path!==null&&!anonymous ? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png'}} />
                         </Button>
                         <Body>
-                            <Text>{anonymous?'Garcia Marquez':name}</Text>
-                            <Text note>{anonymous?null:`${username} · `}{elapsed}</Text>
+                            <Text style={{fontFamily:'Cochin'}}>{anonymous?'Garcia Marquez':name}</Text>
+                            <Text style={{fontFamily:'Cochin'}} note>{anonymous?null:`${username} · `}{elapsed}</Text>
                         </Body>
                         <Right>
                             <Button transparent onPress={()=>this.setState({visible_modal:true})}>
@@ -78,9 +78,9 @@ class Post extends React.Component {
                 </CardItem>
                 <CardItem button onPress={()=>this.setState({post_visible_modal:true})} cardBody>
                     <Content>
-                        <Text style={{fontWeight:'bold',fontSize:20,marginBottom:5}}>{title}</Text>
+                        <Text style={{fontWeight:'bold',fontSize:18,margin:5,fontFamily:'Cochin'}}>{title}</Text>
                         {!isEmpty(post_path) && <Image source={{uri:`http://localhost:5005/${post_path}`}} style={{height:250,marginTop:5,marginBottom:5}} resizeMode='cover' />}
-                        <Text style={{fontSize:18}}>{content}</Text>
+                        <Text style={{fontSize:16, margin: 7, lineHeight: 22,fontFamily:'Cochin'}}>{content}</Text>
                     </Content>
                 </CardItem>
                 <CardItem>

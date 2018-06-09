@@ -72,18 +72,18 @@
 		<string>Feather.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
 	</array>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb403066563486119</string>
-      </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>403066563486119</string>
-  <key>FacebookDisplayName</key>
-  <string>wrideApp</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb403066563486119</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>403066563486119</string>
+	<key>FacebookDisplayName</key>
+	<string>wrideApp</string>
 </dict>
 </plist>

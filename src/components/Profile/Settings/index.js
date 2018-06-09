@@ -123,6 +123,7 @@ class Settings extends React.Component {
                     AsyncStorage.setItem('auth',new_token)
                     .then(this.props.validateAuth(decodedToken))
                     .then(r=>{
+                        this.props.navigation.goBack();
                         Toast.show({
                             text:'Settings updated',
                             position:'bottom',
@@ -165,7 +166,7 @@ class Settings extends React.Component {
                             <Body>
                                 <Button transparent onPress={()=>this.onImageChange()}>
                                     {loading_image?
-                                        <View style={{borderRadius:5,borderWidth:1,borderColor:'#757575'}}><Spinner /></View>
+                                        <View style={{borderRadius:5}}><Spinner /></View>
                                         :<Thumbnail source={{uri:original.path!==null?`http://localhost:5005/${original.path}`:`http://localhost:5005/dummy.png`}} />
                                     }
                                 </Button>
@@ -211,6 +212,10 @@ class Settings extends React.Component {
                         <ListItem itemHeader first>
                             <Text>PRIVACY</Text>
                         </ListItem>
+                        {/*
+                            Not gonna deploy privacy feauture yet
+                            Working on settings, havent developed hide profile
+
                         <ListItem style={{backgroundColor:'white'}} itemDivider>
                             <CheckBox checked={checked_private} onPress={()=>this.setState({changed: {...this.state.changed,private_: !checked_private},tb_changed: {...this.state.tb_changed,private_: !checked_private}})} color={'#757575'} />
                             <Body>
@@ -220,6 +225,7 @@ class Settings extends React.Component {
                         <ListItem>
                             <Text note>When your account is private only the users you approve to follow you will be able to see the content in your profile.</Text>
                         </ListItem>
+                        */}
                         <ListItem last>
                             <Button transparent onPress={()=>navigation.navigate('Blocked',{username:tb_changed.username})}>
                                 <Text>Blocked users</Text>

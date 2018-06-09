@@ -94,7 +94,7 @@ class Publish extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Text note>Inspire Inspiration</Text>
+                        <Text style={{fontFamily:'Cochin'}} note>Inspire Inspiration</Text>
                     </Body>
                     <Right>
                         {!loading?
@@ -106,7 +106,7 @@ class Publish extends React.Component {
                     </Right>
                 </Header>
                 <View style={{margin: 15}}>
-                    <Text style={{fontSize:28,fontWeight:'bold'}}>{title}</Text>
+                    <Text style={{fontSize:28,fontWeight:'bold',fontFamily:'Cochin'}}>{title}</Text>
 
                     {uri ?
                         <View style={{margin:10}}>

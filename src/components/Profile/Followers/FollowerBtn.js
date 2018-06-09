@@ -46,7 +46,7 @@ class FollowerBtn extends React.Component {
     render () {
         const {ownProfile}=this.props;
         return(
-            <View>
+            <View style={{marginTop:8}}>
                 {ownProfile? !this.props.fromList && this.editBtn: this.followerBtn()}
             </View>
         )

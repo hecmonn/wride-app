@@ -58,7 +58,7 @@ class ModalOptions extends React.Component {
     render () {
         const {own_post,username,auser,id}=this.props.opts;
         return (
-            <View>
+            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -67,7 +67,7 @@ class ModalOptions extends React.Component {
                         alert('Modal has been closed.');
                     }}
                 >
-                    <View style={{flex:1,backgroundColor:'rgba(0, 0, 0, 0.6)'}}>
+                    <View style={{flex:1,justifyContent:'center', backgroundColor:'rgba(0, 0, 0, 0.6)'}}>
                         <Header style={{backgroundColor:'transparent'}}>
                             <Left />
                             <Body />
@@ -81,7 +81,7 @@ class ModalOptions extends React.Component {
                             {own_post &&
                                 <ListItem button onPress={()=>this.deletePost()} avatar>
                                     <Left>
-                                        <Icon name='ios-close' style={{color:'#757575'}} />
+                                        <Icon name='ios-trash-outline' style={{color:'#757575'}} />
                                     </Left>
                                     <Body>
                                         <Text>Delete</Text>
@@ -92,7 +92,7 @@ class ModalOptions extends React.Component {
                             {!own_post &&
                                 <ListItem button onPress={()=>this.reportPost()} avatar>
                                     <Left>
-                                        <Icon name='ios-close' style={{color:'#757575'}} />
+                                        <Icon name='ios-warning-outline' style={{color:'#757575'}} />
                                     </Left>
                                     <Body>
                                         <Text>Report</Text>
@@ -103,7 +103,7 @@ class ModalOptions extends React.Component {
                             {!own_post &&
                                 <ListItem button onPress={()=>this.blockUser()} avatar>
                                     <Left>
-                                        <Icon name='ios-close' style={{color:'#757575'}} />
+                                        <Icon name='ios-close-circle-outline' style={{color:'#757575'}} />
                                     </Left>
                                     <Body>
                                         <Text>Block user</Text>
@@ -113,7 +113,7 @@ class ModalOptions extends React.Component {
                             }
                             <ListItem button onPress={()=>console.log('clciked second options')} avatar>
                                 <Left>
-                                    <Icon name='ios-close' style={{color:'#757575'}} />
+                                    <Icon name='ios-thumbs-up-outline' style={{color:'#757575'}} />
                                 </Left>
                                 <Body>
                                     <Text>More like this</Text>

@@ -115,7 +115,7 @@ class Login extends Component {
             <View style={{backgroundColor:'white',flex:1,justifyContent:'center',alignItems:'center'}}>
                 <Video repeat source={bgVideo} volume={0} resizeMode="cover" style={StyleSheet.absoluteFill} />
                 <View style={{backgroundColor:'rgba(0, 0, 0, 0.4)',justifyContent:'center',alignItems:'center',margin:15}}>
-                    <Text style={{color:'#eeeeee',fontWeight:'bold',fontSize:100}}>Wride.</Text>
+                    <Text style={{color:'#eeeeee',fontWeight:'bold',fontSize:100,fontFamily:'Cochin'}}>Wride.</Text>
                     <Form>
                         <List>
                             <ListItem style={{borderBottomWidth:0}}>

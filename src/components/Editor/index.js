@@ -36,7 +36,14 @@ class Editor extends React.Component {
 		const draft=draft_p?1:0;
 		this.props.savePost({content,title,username,draft,draft_redirector,id})
 		.then(r=>{
+			console.log('Data res: ',r);
 			if(r.data.submitted) this.props.navigation.navigate('Root');
+
+			Toast.show({
+				text:'Draft saved',
+				position:'bottom',
+				buttonText:'Okay'
+			});
 		});
 	}
 
@@ -74,7 +81,7 @@ class Editor extends React.Component {
 						</Button>
 					</Left>
 					<Body>
-						<Text note>Inspire Inspiration</Text>
+						<Text style={{fontFamily:'Cochin'}} note>Inspire Inspiration</Text>
 					</Body>
 					<Right>
 						<Button transparent small onPress={()=>{{this.handleSubmit(0)}}}>
@@ -85,7 +92,7 @@ class Editor extends React.Component {
 				<Content>
 					<Item>
 						<Input
-							style={{fontWeight:'bold',fontSize:24}}
+							style={{fontWeight:'bold',fontSize:24,fontFamily:'Cochin'}}
 							onChangeText={(title) => this.setState({title})}
 							placeholder="Title"
 							value={title}
@@ -93,7 +100,7 @@ class Editor extends React.Component {
 					</Item>
 					<Item style={{borderBottomWidth:0}}>
 						<Input
-							style={{fontSize:24,padding: 5}}
+							style={{fontSize:24,padding: 5,fontFamily:'Cochin'}}
 							multiline={true}
 							onChangeText={(content) => this.setState({content})}
 							value={content}
