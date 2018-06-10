@@ -8,21 +8,14 @@ class CollectionCard extends React.Component {
         return(
             <Card>
                 <CardItem header>
-                    <Title>{title} </Title>
+                    <Title style={{fontFamily:'Cochin'}}>{title} </Title>
                 </CardItem>
                 <CardItem button onPress={()=>{navigation.navigate('Editor',{content,title,id})}}>
                     <Body>
-                        <Text>
+                        <Text style={{fontFamily:'Cochin'}}>
                             {content}
                         </Text>
                     </Body>
-                </CardItem>
-                <CardItem footer button onPress={()=>{console.log('clicked post:',id)}}>
-                    <Left />
-                    <Body />
-                    <Right>
-                        <Text>{username}</Text>
-                    </Right>
                 </CardItem>
             </Card>
         )

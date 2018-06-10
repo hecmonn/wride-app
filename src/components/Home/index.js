@@ -13,8 +13,8 @@ import SideBar from './SideBar';
 class Home extends React.Component {
     constructor(props){
         super(props);
-        this._authAsync();
         this.state={
+            username:null,
             wrides:[],
             loading:true,
             refreshing: false,
@@ -26,39 +26,57 @@ class Home extends React.Component {
         this._onLoadMore=this._onLoadMore.bind(this);
     }
 
-    componentWillMount() {
-        //await AsyncStorage.getItem('auth')
-        //const {isLogged,username} =this.props.auth;
-        //const username='hec';
-    }
-    _authAsync=async()=> {
-        await AsyncStorage.getItem('auth')
-        const{username}=this.props.auth;
-        //const username='hec';
-        this.setState({username});
-        this.props.getHomePosts({username,offset:0})
-        .then(r=>{
-            this.setState({wrides:r.data.wrides});
-            this.props.getHomePostsCnt(username)
+    componentWillMount(){
+        console.log('thisProps not: ',this.props);
+        if(!isEmpty(this.props.auth)){
+            console.log('Entered...');
+            const {username}=this.props.auth;
+            this.setState({username});
+            this.props.getHomePosts({username,offset:0})
             .then(r=>{
-                this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+                this.setState({wrides:r.data.wrides});
+                this.props.getHomePostsCnt(username)
+                .then(r=>{
+                    this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+                });
             });
-        });
+        }
     }
-    /*async componentDidMount() {
-        await AsyncStorage.getItem('auth')
-        const{username}=this.props.auth;
-        //const username='hec';
-        this.setState({username});
-        this.props.getHomePosts({username,offset:0})
-        .then(r=>{
-            this.setState({wrides:r.data.wrides});
-            this.props.getHomePostsCnt(username)
+
+    componentWillReceiveProps(nextProps){
+        if(!isEmpty(nextProps.auth) || !isEmpty(this.props.auth)){
+            console.log('Entered receive props')
+            console.log('nextProps not: ',nextProps);
+            console.log('thisProps not: ',this.props);
+            const {username}=isEmpty(this.props.auth.username)?nextProps.auth:this.props.auth;
+            this.setState({username});
+            this.props.getHomePosts({username,offset:0})
             .then(r=>{
-                this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+                this.setState({wrides:r.data.wrides});
+                this.props.getHomePostsCnt(username)
+                .then(r=>{
+                    this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+                });
             });
-        });
-    }*/
+        }
+    }
+    async componentDidMount() {
+        //console.log('This props: ',this.props)
+        /*if(!isEmpty(this.props.auth)){
+            console.log('Entered...');
+            const {username}=this.props.auth;
+            await this.setState({username});
+            this.props.getHomePosts({username,offset:0})
+            .then(r=>{
+                this.setState({wrides:r.data.wrides});
+                this.props.getHomePostsCnt(username)
+                .then(r=>{
+                    console.log('Home response: ',r)
+                    this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
+                });
+            });
+        }*/
+    }
 
     _onRefresh=()=> {
         this.setState({refreshing: true});

@@ -8,11 +8,11 @@ class Like extends React.Component {
         return(
             <Card>
                 <CardItem header>
-                    <Title>{title} </Title>
+                    <Title style={{fontFamily:'Cochin'}}>{title} </Title>
                 </CardItem>
                 <CardItem button onPress={()=>{console.log('clicked post:',id)}}>
                     <Body>
-                        <Text>
+                        <Text style={{fontFamily:'Cochin'}}>
                             {content}
                         </Text>
                     </Body>
@@ -21,7 +21,7 @@ class Like extends React.Component {
                     <Left />
                     <Body />
                     <Right>
-                        <Text>{username}</Text>
+                        <Text style={{fontFamily:'Cochin'}}>{username}</Text>
                     </Right>
                 </CardItem>
             </Card>

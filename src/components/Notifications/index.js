@@ -85,7 +85,7 @@ class Notifications extends React.Component {
 
     empty=(
         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <Text>No notiications, yet.</Text>
+            <Text style={{fontFamily:'Cochin',fontWeight:'bold'}}>No notifications, yet</Text>
         </View>
     )
     notificationsList=(nots)=>{

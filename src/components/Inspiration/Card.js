@@ -63,7 +63,7 @@ class InspirationCard extends React.Component {
                 <Modal content={modalContent} visible={post_visible_modal} actionPost={this.actionPost} postAction={this.props.postAction} hideModal={()=>this.setState({post_visible_modal:false})} />
                 <CardItem button onPress={()=>this.setState({post_visible_modal:true})}>
                     <Left>
-                        <Text style={{fontWeight:'bold'}}>{title}</Text>
+                        <Text style={{fontWeight:'bold',fontFamily:'Cochin'}}>{title}</Text>
                     </Left>
                 </CardItem>
                 <CardItem cardBody button onPress={()=>this.setState({post_visible_modal:true})}>
@@ -72,7 +72,7 @@ class InspirationCard extends React.Component {
                 <CardItem>
                     <Left />
                     <Right>
-                        <Text note>{anonymous?'GGM':username}</Text>
+                        <Text style={{fontFamily:'Cochin'}} note>{anonymous?'GGM':username}</Text>
                     </Right>
                 </CardItem>
             </Card>

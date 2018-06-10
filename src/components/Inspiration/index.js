@@ -77,8 +77,12 @@ class Inspiration extends React.Component {
                 numColumns={2}
                 getHeightForItem={() => 1}
                 data={this.state.wrides}
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh}
+                    />
+                }
                 renderItem={(item)=><InspirationCard auser={this.state.username} item={item}/>}
             />
         )

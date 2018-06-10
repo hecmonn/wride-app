@@ -36,9 +36,7 @@ class Editor extends React.Component {
 		const draft=draft_p?1:0;
 		this.props.savePost({content,title,username,draft,draft_redirector,id})
 		.then(r=>{
-			console.log('Data res: ',r);
-			if(r.data.submitted) this.props.navigation.navigate('Root');
-
+			if(r.data.saved_post) this.props.navigation.navigate('Home');
 			Toast.show({
 				text:'Draft saved',
 				position:'bottom',
