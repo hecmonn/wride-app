@@ -50,7 +50,7 @@ class Notifications extends React.Component {
         );
     }
     componentDidMount(){
-        const {username}=this.props.auth;
+        //const {username}=this.props.auth;
         //console.log(username,'---notificaitons did mount')
         //console.log('already mount');
         //this.props.clearNotifications(username)

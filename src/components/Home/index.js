@@ -9,6 +9,7 @@ import {pagination} from '../../../lib/helpers';
 import InfiniteScroll from 'react-native-infinite-scroll';
 import Spinner from 'react-native-spinkit';
 import SideBar from './SideBar';
+import jwtDecode from 'jwt-decode';
 
 class Home extends React.Component {
     constructor(props){
@@ -27,10 +28,12 @@ class Home extends React.Component {
     }
 
     componentWillMount(){
-        console.log('thisProps not: ',this.props);
-        if(!isEmpty(this.props.auth)){
-            console.log('Entered...');
-            const {username}=this.props.auth;
+        console.log('thisProps: ',this.props);
+        AsyncStorage.getItem('auth')
+        .then(r=>{
+            const auth={...jwtDecode(r)};
+            console.log('Home auth: ',auth);
+            const {username}=auth;
             this.setState({username});
             this.props.getHomePosts({username,offset:0})
             .then(r=>{
@@ -40,10 +43,10 @@ class Home extends React.Component {
                     this.setState({loading:false,posts_cnt:r.data.wrides_cnt})
                 });
             });
-        }
+        })
     }
 
-    componentWillReceiveProps(nextProps){
+    /*componentWillReceiveProps(nextProps){
         if(!isEmpty(nextProps.auth) || !isEmpty(this.props.auth)){
             console.log('Entered receive props')
             console.log('nextProps not: ',nextProps);
@@ -59,7 +62,7 @@ class Home extends React.Component {
                 });
             });
         }
-    }
+    }*/
     async componentDidMount() {
         //console.log('This props: ',this.props)
         /*if(!isEmpty(this.props.auth)){

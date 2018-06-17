@@ -36,12 +36,14 @@ class Editor extends React.Component {
 		const draft=draft_p?1:0;
 		this.props.savePost({content,title,username,draft,draft_redirector,id})
 		.then(r=>{
-			if(r.data.saved_post) this.props.navigation.navigate('Home');
-			Toast.show({
-				text:'Draft saved',
-				position:'bottom',
-				buttonText:'Okay'
-			});
+			//if(r.data.saved_post){
+				this.props.navigation.navigate('Root');
+				Toast.show({
+					text:'Draft saved',
+					position:'bottom',
+					buttonText:'Okay'
+				});
+			//}
 		});
 	}
 

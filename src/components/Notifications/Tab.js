@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {View,TouchableHighlight,AsyncStorage} from 'react-native';
 import {getUnreadNotifications,clearNotifications} from '../../actions/notifications';
 import {Icon,Text,Container,Content,Badge} from 'native-base';
+import jwtDecode from 'jwt-decode';
 
 class Tab extends React.Component {
     constructor(props){
@@ -14,14 +15,18 @@ class Tab extends React.Component {
     async componentWillMount() {
 
         //if breaks, pass this to cdm
-        await AsyncStorage.getItem('auth');
-        const {username}=this.props.auth;
-        this.props.getUnreadNotifications(username)
+        AsyncStorage.getItem('auth')
         .then(r=>{
-            this.setState({notifications:r.data.notifications.length});
-            //this.props.clearNotifications(username)
-            //.then(r=>{this.setState({notifications: 0})})
+            const auth={...jwtDecode(r)};
+            const {username}=auth;
+            this.props.getUnreadNotifications(username)
+            .then(r=>{
+                this.setState({notifications:r.data.notifications.length});
+                //this.props.clearNotifications(username)
+                //.then(r=>{this.setState({notifications: 0})})
+            });
         });
+
     }
     iconPressed=()=>{
         const {notifications}=this.state;
