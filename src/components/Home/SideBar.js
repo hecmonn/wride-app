@@ -8,13 +8,13 @@ class SideBar extends React.Component {
             <Container style={{backgroundColor:'white'}}>
                 <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                     <Button transparent onPress={()=>navigation.navigate('Drafts')}>
-                        <Text style={{color:'#757575'}} >Drafts</Text>
+                        <Text style={{fontFamily:'Cochin',color:'#757575'}} >Drafts</Text>
                     </Button>
                     <Button transparent onPress={()=>navigation.navigate('Collection')}>
-                        <Text style={{color:'#757575'}}>Collection</Text>
+                        <Text style={{fontFamily:'Cochin',color:'#757575'}}>Collection</Text>
                     </Button>
                     <Button transparent onPress={()=>navigation.navigate('x')}>
-                        <Text style={{color:'#757575'}}>Interests</Text>
+                        <Text style={{fontFamily:'Cochin',color:'#757575'}}>Interests</Text>
                     </Button>
                 </View>
             </Container>

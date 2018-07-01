@@ -6,11 +6,72 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		KICClDT9WdSn5QRUYkeMtksoLWM=
+		cQPzJ0HO9gLFKV5E/qoZNiPSBBE=
+		</data>
+		<key>RobotoSlab-Bold.ttf</key>
+		<data>
+		l1Ea/C4ZKiL9WUb1U+4yC1cFAlg=
+		</data>
+		<key>RobotoSlab-Light.ttf</key>
+		<data>
+		d7t7iT2/uZRcpbrcyZlEURduFhY=
+		</data>
+		<key>RobotoSlab-Regular.ttf</key>
+		<data>
+		kSiV5rueBa86Hlih2kF+mSpxoyQ=
+		</data>
+		<key>RobotoSlab-Thin.ttf</key>
+		<data>
+		6d2CVJYsHXg2MFJrpN4Cx3Z/Aw8=
 		</data>
 	</dict>
 	<key>files2</key>
-	<dict/>
+	<dict>
+		<key>RobotoSlab-Bold.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			l1Ea/C4ZKiL9WUb1U+4yC1cFAlg=
+			</data>
+			<key>hash2</key>
+			<data>
+			uhLS6rH6dltrBTmPp+BH3XYpPwwFHOV6j3sMWRwU1Cs=
+			</data>
+		</dict>
+		<key>RobotoSlab-Light.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			d7t7iT2/uZRcpbrcyZlEURduFhY=
+			</data>
+			<key>hash2</key>
+			<data>
+			FTv1tCjVzQsnpj+aNpQc19bHUjp6/VnHahL3mOTDMSc=
+			</data>
+		</dict>
+		<key>RobotoSlab-Regular.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kSiV5rueBa86Hlih2kF+mSpxoyQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			E6pfVMby+i44j+Dmdc28xqgfYnCov5wDpd+K+csCKBA=
+			</data>
+		</dict>
+		<key>RobotoSlab-Thin.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6d2CVJYsHXg2MFJrpN4Cx3Z/Aw8=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ti8mCXU4klFiytKj5gUfZZuYlThlWaGJCkZk2OmpoME=
+			</data>
+		</dict>
+	</dict>
 	<key>rules</key>
 	<dict>
 		<key>^</key>

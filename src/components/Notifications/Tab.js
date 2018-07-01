@@ -12,8 +12,7 @@ class Tab extends React.Component {
             notifications: 0
         }
     }
-    async componentWillMount() {
-
+    componentWillMount() {
         //if breaks, pass this to cdm
         AsyncStorage.getItem('auth')
         .then(r=>{
@@ -21,7 +20,7 @@ class Tab extends React.Component {
             const {username}=auth;
             this.props.getUnreadNotifications(username)
             .then(r=>{
-                this.setState({notifications:r.data.notifications.length});
+                this.setState({notifications:r.data.notifications});
                 //this.props.clearNotifications(username)
                 //.then(r=>{this.setState({notifications: 0})})
             });

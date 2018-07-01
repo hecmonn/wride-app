@@ -10,7 +10,7 @@ class Person extends React.Component {
             <List>
                 <ListItem button onPress={()=>navigation.navigate('Profile',{username})} avatar>
                     <Left>
-                        <Thumbnail small source={{ uri:path!==null? `http://localhost:5005/${path}`:'http:localhost:5005/dummy.png' }} />
+                        <Thumbnail small source={{ uri:path!==null? `http://localhost:5005/${path}`:'http://localhost:5005/dummy.png' }} />
                 </Left>
                     <Body>
                         <Text style={{fontWeight:'bold'}}>{username}</Text>

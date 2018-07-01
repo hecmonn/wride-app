@@ -6,7 +6,7 @@
 	<dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		rifhuNgZSZDWDXatGhADibXs0Ro=
+		Bv8lSsMwINXqE7mmu/Sol8wWVeU=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -71,7 +71,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		M4BBTMavkhgWJKHw8kqoajpr0BY=
+		CIk7MVODfnF6oXSV5hnKjcV7GO0=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -99,7 +99,7 @@
 		</data>
 		<key>PlugIns/wrideAppTests.xctest.dSYM/Contents/Resources/DWARF/wrideAppTests</key>
 		<data>
-		yP3pBGzaNLussRXMOMpfs2qiic0=
+		/H1gIKHHn2RoKrlOWTskJlwZF60=
 		</data>
 		<key>PlugIns/wrideAppTests.xctest/Info.plist</key>
 		<data>
@@ -111,7 +111,23 @@
 		</data>
 		<key>PlugIns/wrideAppTests.xctest/wrideAppTests</key>
 		<data>
-		XKAASSqxdqLMHXLwpDejHzGqqM4=
+		EdMULLucFWHqp671nRleu+APTLM=
+		</data>
+		<key>RobotoSlab-Bold.ttf</key>
+		<data>
+		l1Ea/C4ZKiL9WUb1U+4yC1cFAlg=
+		</data>
+		<key>RobotoSlab-Light.ttf</key>
+		<data>
+		d7t7iT2/uZRcpbrcyZlEURduFhY=
+		</data>
+		<key>RobotoSlab-Regular.ttf</key>
+		<data>
+		kSiV5rueBa86Hlih2kF+mSpxoyQ=
+		</data>
+		<key>RobotoSlab-Thin.ttf</key>
+		<data>
+		6d2CVJYsHXg2MFJrpN4Cx3Z/Aw8=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -128,11 +144,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			rifhuNgZSZDWDXatGhADibXs0Ro=
+			Bv8lSsMwINXqE7mmu/Sol8wWVeU=
 			</data>
 			<key>hash2</key>
 			<data>
-			q3cr9VXjPXWwQGCQro0PIkHNB7qlgUzA8BmU9XFK9bg=
+			oRtAKDxJaj4LoYvE5asn37In1QGYvV2uXcLqFK/iMxM=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -350,11 +366,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yP3pBGzaNLussRXMOMpfs2qiic0=
+			/H1gIKHHn2RoKrlOWTskJlwZF60=
 			</data>
 			<key>hash2</key>
 			<data>
-			lllN/cnDL+TVu5TU5zld5zFITM+6qz6BtBaguPPSJUs=
+			CMry+vte09M8DC9RNQEbYipOcLpcAlrx7NotyTiJ+Bo=
 			</data>
 		</dict>
 		<key>PlugIns/wrideAppTests.xctest/Info.plist</key>
@@ -383,11 +399,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XKAASSqxdqLMHXLwpDejHzGqqM4=
+			EdMULLucFWHqp671nRleu+APTLM=
 			</data>
 			<key>hash2</key>
 			<data>
-			jSCy5emr6CIpKowBNoh+bJx1S2UtB9YVWiNhhtqCg3s=
+			yGu37N8gYtQk6MMEn6SxbtGoJBm7Hj4ORvxohP7DuzA=
+			</data>
+		</dict>
+		<key>RobotoSlab-Bold.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			l1Ea/C4ZKiL9WUb1U+4yC1cFAlg=
+			</data>
+			<key>hash2</key>
+			<data>
+			uhLS6rH6dltrBTmPp+BH3XYpPwwFHOV6j3sMWRwU1Cs=
+			</data>
+		</dict>
+		<key>RobotoSlab-Light.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			d7t7iT2/uZRcpbrcyZlEURduFhY=
+			</data>
+			<key>hash2</key>
+			<data>
+			FTv1tCjVzQsnpj+aNpQc19bHUjp6/VnHahL3mOTDMSc=
+			</data>
+		</dict>
+		<key>RobotoSlab-Regular.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kSiV5rueBa86Hlih2kF+mSpxoyQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			E6pfVMby+i44j+Dmdc28xqgfYnCov5wDpd+K+csCKBA=
+			</data>
+		</dict>
+		<key>RobotoSlab-Thin.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6d2CVJYsHXg2MFJrpN4Cx3Z/Aw8=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ti8mCXU4klFiytKj5gUfZZuYlThlWaGJCkZk2OmpoME=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>

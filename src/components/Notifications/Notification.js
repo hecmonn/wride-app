@@ -15,8 +15,8 @@ class Notification extends React.Component {
                         <Button transparent onPress={()=>navigation.navigate('Profile',{username})}>
                             <Thumbnail small source={{uri:path!==null? `http://localhost:5005/${path}`:'http:localhost:5005/dummy.png'}} />
                         </Button>
-                        <Text>{username} {action}</Text>
-                        {action_no!==3 &&<Text style={{fontWeight:'bold'}}>{title}</Text>}
+                        <Text>{username} {action} {action_no!==3 &&<Text style={{fontWeight:'bold'}}>{title}</Text>}</Text>
+
 
                     </Left>
                     <Right>
