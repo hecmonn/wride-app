@@ -28,11 +28,9 @@ class Home extends React.Component {
     }
 
     componentWillMount(){
-        console.log('thisProps: ',this.props);
         AsyncStorage.getItem('auth')
         .then(r=>{
             const auth={...jwtDecode(r)};
-            console.log('Home auth: ',auth);
             const {username}=auth;
             this.setState({username});
             this.props.getHomePosts({username,offset:0})

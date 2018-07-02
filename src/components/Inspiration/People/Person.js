@@ -6,6 +6,7 @@ class Person extends React.Component {
         const {fname,lname,username,path}=this.props.person;
         const name=prettyName(fname,lname);
         const {navigation}=this.props;
+        console.log('Path insp:', path);
         return(
             <List>
                 <ListItem button onPress={()=>navigation.navigate('Profile',{username})} avatar>

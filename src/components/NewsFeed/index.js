@@ -29,7 +29,7 @@ class NewsFeed extends React.Component {
             <Content>
                 {posts.map((r,i)=><Post auser={username} postAction={this.props.postAction} navigation={this.props.navigation} wride={r} key={i} showModal={this._showModal}/>)}
                 {loading_more && <View style={{paddingTop:10,paddingBottom:10,justifyContent:'center',alignItems:'center'}}><Spinner isVisible={loading_more} size={30} type='Arc' color='#757575'/></View>}
-                {!has_next_page && <View style={{paddingTop:10,paddingBottom:10,justifyContent:'center',alignItems:'center'}}><H1 style={{fontWeight:'bold'}}>Wride.</H1></View>}
+                {!has_next_page && <View style={{paddingTop:10,paddingBottom:10,justifyContent:'center',alignItems:'center'}}><H1 style={{fontFamily:'Cochin'}}>Wride.</H1></View>}
             </Content>
     )}
     empty=(

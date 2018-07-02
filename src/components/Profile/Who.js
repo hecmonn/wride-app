@@ -51,7 +51,7 @@ class Who extends React.Component {
                     </Row>
                     <Row>
                         <Col size={2} />
-                        <Col size={1}>
+                        <Col size={1} style={{alignItems:'flex-end'}}>
                             <FollowerBtn ownProfile={ownProfile} following={this.state.following} navigation={navigation} users={{username:this.props.username,username_param:this.props.person.username}} getUnFollow={this.props.getUnFollow}/>
                         </Col>
                     </Row>

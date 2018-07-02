@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import {View} from 'react-native';
 import {Container,Text,Content,H1} from 'native-base';
 import Person from './Person';
 import isEmpty from 'is-empty';
@@ -14,15 +15,15 @@ class People extends React.Component {
         </Container>
     )
     empty=()=>(
-        <Container>
-            <Text>No results for {this.props.query}</Text>
-        </Container>
+        <View style={{flex: 1,alignItems: 'center',marginTop:5}}>
+            <Text style={{fontFamily:'Cochin'}}>No results for {this.props.query}</Text>
+        </View>
     )
     render () {
         return(
-            <Content>
+            <Container>
                 {isEmpty(this.props.people)?this.empty():this.peopleList()}
-            </Content>
+            </Container>
         )
     }
 }

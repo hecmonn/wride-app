@@ -16,6 +16,7 @@ class ModalOptions extends React.Component {
         const {username,auser,id}=this.props.opts;
         this.props.blockUser({username,auser,id})
         .then(r=>{
+            this.props.hideModal();
             Toast.show({
                 text:'User blocked succesfully',
                 position:'bottom',
@@ -27,6 +28,7 @@ class ModalOptions extends React.Component {
         const {id}=this.props.opts;
         this.props.deletePost({id})
         .then(r=>{
+            this.props.hideModal();
             Toast.show({
                 text:'Post deleted succesfully',
                 position:'bottom',
@@ -38,7 +40,7 @@ class ModalOptions extends React.Component {
         const {id,auser}=this.props.opts;
         this.props.reportPost({id,auser})
         .then(r=>{
-            console.log('Report res: ',r);
+            this.props.hideModal();
             Toast.show({
                 text:'Thanks! We will take a look',
                 position:'bottom',

@@ -1,17 +1,31 @@
 import React, { PropTypes } from 'react';
 import {View} from 'react-native';
 import {Container,Text,H1,Left,Body,Right,Card,CardItem,Button,Thumbnail} from 'native-base';
+import Post from './Post';
+import isEmpty from 'is-empty';
 
 class Posts extends React.Component {
     constructor(props){
         super(props);
     }
+    postsList=()=>(
+        <Container>
+            {this.props.posts.map((r,i)=>(
+                <Post navigation={this.props.navigation} post={r} key={i} />
+            ))}
+        </Container>
+    )
+    empty=()=>(
+        <View style={{flex: 1,alignItems: 'center',marginTop:5}}>
+            <Text style={{fontFamily:'Cochin'}}>No results for {this.props.query}</Text>
+        </View>
+    )
     render () {
         console.log(this.props.posts,'---posts tab');
         const {navigation}=this.props;
         return(
-            <Container style={{ borderWidth: 1,flexDirection: 'row',flexWrap: 'wrap',justifyContent: 'space-between'}}>
-                <H1>Posts search will go here</H1>
+            <Container>
+                {isEmpty(this.props.posts)?this.empty():this.postsList()}
             </Container>
         )
     }

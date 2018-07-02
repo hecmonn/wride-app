@@ -45,6 +45,7 @@ class Inspiration extends React.Component {
 
     _onRefresh=()=> {
         this.setState({refreshing: true});
+        console.log('Refreshing...');
         const{username}=this.state;
         this.props.getInspiration({username,offset:0})
         .then(r=>{
@@ -53,6 +54,7 @@ class Inspiration extends React.Component {
     }
 
     _onLoadMore=()=>{
+        console.log('Loading more...')
         if(this.state.has_next_page){
             const {page,posts_cnt}=this.state;
             let pages=pagination(limit=5,page+1,posts_cnt);
@@ -71,25 +73,22 @@ class Inspiration extends React.Component {
     inspiration=()=>{
         return (
             <MasonryList
+                onRefresh={this._onRefresh}
+                refreshing={this.state.refreshing}
                 horizontal={false}
                 onEndReached={this._onLoadMore}
                 keyExtractor={this._keyExtractor}
                 numColumns={2}
                 getHeightForItem={() => 1}
                 data={this.state.wrides}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        onRefresh={this._onRefresh}
-                    />
-                }
                 renderItem={(item)=><InspirationCard auser={this.state.username} item={item}/>}
             />
         )
     }
     render () {
-        const {query,people,posts}=this.state;
+        const {query,people,posts,refreshing}=this.state;
         const {navigation}=this.props;
+        console.log('Refresh: ',refreshing);
         return(
             <Container>
                 <Header searchBar style={{backgroundColor:'white',shadowOffset:{width:5,height: 5},shadowColor:'#636363',shadowOpacity:0.05}}>
